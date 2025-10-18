@@ -49,7 +49,7 @@ export default function EscolhaPlano(props) {
         }
 
         try {
-            const res = await fetch(`/api/mercadopago/checkout/${planoSelecionado.idPlano}`, {
+            const res = await fetch(`https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ cupom: desconto }) // cupom enviado
