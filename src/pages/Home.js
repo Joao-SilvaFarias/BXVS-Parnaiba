@@ -1,0 +1,231 @@
+import { Link } from 'react-router-dom';
+import styles from './Home.module.css';
+import Header from "../components/Header"
+import Footer from "../components/Footer"
+
+export default function Home() {
+
+    return (
+        <>
+            <Header />
+            <div className={styles.container}>
+                <div className={styles.imgInicio}>
+                    <div className={styles.boxInicio}>
+                        <p className={styles.titleInicio}>
+                            <span className={styles.verde}>BXVS</span> VIDA SAUDÁVEL
+                        </p>
+                        <p className={styles.txtDescricao}>
+                            MUITO MAIS QUE UM TREINO, UM ESTILO DE VIDA
+                        </p>
+                        <a href="#planos">
+                            <button className={styles.btnConferirPlanos}>CONFERIR PLANOS</button>
+                        </a>
+                    </div>
+                    <div className={styles.gradientBottom}></div>
+                    <hr className={styles.hrInicio}></hr>
+                    <div className={styles.boxRight}></div>
+                    <div className={styles.gradientRight}></div>
+                </div>
+                <main>
+                    <h1 className={styles.sobreh1} id="sobre">SOBRE O BXVS</h1>
+                    <div className={styles.descricaoContainer}>
+                        <div className={styles.txtDescricaoContainer}>
+                            <h2 className={styles.tituloDescricao}>UM ESTILO DE VIDA</h2>
+                            <p className={styles.txtDescricao}>
+                                O <span className={styles.verde}>BOX VIDA SAUDÁVEL</span> É UM CENTRO DE TREINAMENTO FOCADO<br></br>
+                                EM PROPORCIONAR EXPERIÊNCIAS TRANSFORMADORAS,<br></br> UNINDO MÉTODOS MODERNOS DE{' '}
+                                <span className={styles.verde}>CROSS TRAINING</span>, <br></br> ACOMPANHAMENTO PRÓXIMO E UM AMBIENTE ACOLHEDOR.
+                            </p>
+                        </div>
+                        <img src="/img/imgDescricao1.png" alt="Mulher treinando" className={styles.imgDescricao} />
+
+                    </div>
+                    <div className={styles.descricaoContainer}>
+                        <img src="/img/imgDescricao2.png" alt="Mulher treinando" className={styles.imgDescricao} />
+                        <div className={styles.txtDescricaoContainer}>
+                            <h2 className={styles.tituloDescricao}>COMUNIDADE ATIVA</h2>
+                            <p className={styles.txtDescricao}>
+                                Criamos uma comunidade onde alunos e treinadores<br></br>
+                                <span className={styles.verde}>se apoiam</span>, compartilham conquistas e se motivam<br></br>
+                                todos os dias. Aqui, cada vitória é celebrada <span className={styles.verde}>em grupo</span>.
+                            </p>
+                        </div>
+                    </div>
+                    <div className={styles.professoresContainer} id="professores">
+                        <p className={styles.tituloProfessores}>PROFESSORES ESPECIALIZADOS</p>
+                        <div className={styles.cardsProfessor}>
+                            <div className={styles.cardProfessor}>
+                                <img src="/img/professor1.png" alt="Professor 1" className={styles.imgProfessor} />
+                                <p className={styles.nomeProfessor}>PEDRO FRANCISCO</p>
+                            </div>
+                            <div className={styles.cardProfessor}>
+                                <img src="/img/professor2.png" alt="Professor 1" className={styles.imgProfessor} />
+                                <p className={styles.nomeProfessor}>JIN JEN</p>
+                            </div>
+                            <div className={styles.cardProfessor}>
+                                <img src="/img/professor3.png" alt="Professor 1" className={styles.imgProfessor} />
+                                <p className={styles.nomeProfessor}>AMIEL SHARON</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.descricaoContainer}>
+                        <div className={styles.txtDescricaoContainer}>
+                            <h2 className={styles.tituloDescricao}>Venha nos conhecer!</h2>
+                            <p className={styles.txtDescricao}>
+                                Estamos localizados na R. Padre Luís Alves de<br></br>
+                                Siqueira e Castro, 527 - C6 - Jardim Parnaiba, Santana <br></br>
+                                de Parnaíba - SP, 06501-210
+                                <br></br>
+                                <br></br>
+                                Próximo à secretaria da mulher
+                            </p>
+                        </div>
+                        <img src="/img/imgDescricao3.png" alt="Mulher treinando" className={styles.imgDescricao} />
+                    </div>
+                    <div className={styles.planosContainer} id="planos">
+                        <hr className={styles.hr}></hr>
+                        <p className={styles.tituloPlanos}>PLANOS</p>
+                        <div className={styles.cardsPlanosContainer}>
+                            <div className={styles.cardPlano}>
+                                <img src="/img/logo.png" alt="Plano 1" className={styles.logoPlano} />
+                                <p className={styles.nomePlano}>PLANO BÁSICO</p>
+                                <p className={styles.descricaoPlano}>Acesso aos treinos essenciais e suporte dos professores para dar os primeiros passos na comunidade BXVS.</p>
+                                <p className={styles.precoPlano}>R$ 99,90<span>/mês</span></p>
+                                <p className={styles.tituloBeneficios}>BENEFÍCIOS</p>
+                                <ul className={styles.listaBeneficios}>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                </ul>
+                                <button className={styles.btnAssinarPlano}>ASSINAR</button>
+                            </div>
+                            <div className={styles.cardPlano} id={styles.planoDestaque}>
+                                <img src="/img/logo.png" alt="Plano 1" className={styles.logoPlano} />
+                                <p className={styles.nomePlano}>plano médio</p>
+                                <p className={styles.descricaoPlano}>A escolha de quem busca equilíbrio. Além dos treinos completos, inclui acompanhamento mais próximo e flexibilidade de horários.</p>
+                                <p className={styles.precoPlano}>R$ 119,99<span>/mês</span></p>
+                                <p className={styles.tituloBeneficios}>BENEFÍCIOS</p>
+                                <ul className={styles.listaBeneficios}>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                </ul>
+                                <button className={styles.btnAssinarPlano}>ASSINAR</button>
+                            </div>
+                            <div className={styles.cardPlano}>
+                                <img src="/img/logo.png" alt="Plano 1" className={styles.logoPlano} />
+                                <p className={styles.nomePlano}>plano pro</p>
+                                <p className={styles.descricaoPlano}>Pensado para quem quer performance máxima. Acesso total às aulas, suporte exclusivo dos coaches e prioridade em eventos e desafios da comunidade BXVS.</p>
+                                <p className={styles.precoPlano}>R$ 150,00<span>/mês</span></p>
+                                <p className={styles.tituloBeneficios}>BENEFÍCIOS</p>
+                                <ul className={styles.listaBeneficios}>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                    <div className={styles.beneficioItem}>
+                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
+                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
+                                    </div>
+                                </ul>
+                                <button className={styles.btnAssinarPlano}>ASSINAR</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.treinosEspeciaisContainer}>
+                        <hr className={styles.hr}></hr>
+                        <p className={styles.tituloTreinosEspeciais}>TREINOS ESPECIAIS</p>
+                        <div className={styles.cardsTreinosEspeciais}>
+                            <div className={styles.cardTreinoEspecial}>
+                                <img src="/img/imgTreinoEspecial1.png" alt="Treino Especial 1" className={styles.imgTreinoEspecial} />
+                                <div className={styles.txtCardTreinoEspecial}>
+                                    <p className={styles.nomeTreinoEspecial}>CROSS FIT <span className={styles.greenGradient}>RAIZ</span></p>
+                                    <p className={styles.descricaoTreinoEspecial}>No Treino Raiz, a pegada é <span className={styles.verde}>old scholl</span>: movimentos clássicos, <span className={styles.verde}>intensidade máxima</span> e aquele espírito de superação que faz a diferença.</p>
+                                </div>
+                                <div className={styles.gradientTreinoEspecial}></div>
+                            </div>
+                            <div className={styles.cardTreinoEspecial}>
+                                <img src="/img/imgTreinoEspecial2.png" alt="Treino Especial 2" className={styles.imgTreinoEspecial}></img>
+                                <div className={styles.txtCardTreinoEspecial}>
+                                    <p className={styles.nomeTreinoEspecial}>hyrox</p>
+                                    <p className={styles.descricaoTreinoEspecial}>corrida funcional que combina <span className={styles.verde}>8 km</span> de corrida intercalados com 8 estações de exercícios que envolvem resistência, força e condicionamento.</p>
+                                </div>
+                                <div className={styles.gradientTreinoEspecial}></div>
+                            </div>
+                        </div>
+                        <div className={styles.cardsTreinosEspeciais}>
+                            <div className={styles.cardTreinoEspecial}>
+                                <img src="/img/imgTreinoEspecial3.png" alt="Treino Especial 3" className={styles.imgTreinoEspecial} />
+                                <div className={styles.txtCardTreinoEspecial}>
+                                    <p className={styles.nomeTreinoEspecial}>treino de corrida</p>
+                                    <p className={styles.descricaoTreinoEspecial}>Ou papa-léguas, Aqui o foco é desenvolver velocidade, resistência e técnica. Um treino que desafia seus limites a cada quilômetro.</p>
+                                </div>
+                                <div className={styles.gradientTreinoEspecial}></div>
+                            </div>
+                            <div className={styles.cardTreinoEspecial}>
+                                <img src="/img/imgTreinoEspecial4.png" alt="Treino Especial 4" className={styles.imgTreinoEspecial} />
+                                <div className={styles.txtCardTreinoEspecial}>
+                                    <p className={styles.nomeTreinoEspecial}>força <span className={styles.greenGradient}>total</span></p>
+                                    <p className={styles.descricaoTreinoEspecial}>No Força Total, a sexta-feira é dia de explosão, com exercícios pesados, foco absoluto e aquela energia coletiva que faz você ir além do limite.</p>
+                                </div>
+                                <div className={styles.gradientTreinoEspecial}></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.garantirVagaContainer} id="matricula">
+                        <hr className={styles.hr}></hr>
+                        <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
+                        <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>
+                    </div>
+                </main>
+            </div>
+            <Footer />
+        </>
+    )
+}
