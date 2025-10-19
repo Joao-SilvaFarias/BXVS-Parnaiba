@@ -3,6 +3,7 @@ import styles from "./EscolhaPlano.module.css"
 import Plano from "./Plano";
 import parseReal from "../ParseReal";
 import { useLocation, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 export default function EscolhaPlano(props) {
     const [planos, setPlanos] = useState([]);
