@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import * as faceapi from "face-api.js";
 import styles from "./BiometriaFacial.module.css";
+import { useSearchParams } from "react-router-dom";
 
 // INSTRUÇÃO "OLHAR PARA BAIXO" REMOVIDA
 const instrucoes = [
@@ -23,6 +24,7 @@ export default function BiometriaFacial({ email, setBiometria }) {
     const [faceEmbedding, setFaceEmbedding] = useState(null);
     const [finalizado, setFinalizado] = useState(false);
     const [modelsLoaded, setModelsLoaded] = useState(false);
+     const [searchParams] = useSearchParams();
 
     // Options de detecção com threshold um pouco mais alto para mais confiança
     const detectorOptions = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.6 });

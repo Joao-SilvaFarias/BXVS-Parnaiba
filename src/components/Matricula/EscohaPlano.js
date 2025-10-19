@@ -67,7 +67,7 @@ export default function EscolhaPlano(props) {
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ cupom: desconto, idCliente: props.cliente.idCliente }) // cupom enviado
+                    body: JSON.stringify({ cupom: desconto, idCliente: props.cliente.idCliente, email: props.cliente.email }) // cupom enviado
                 }
             );
 
@@ -124,6 +124,11 @@ export default function EscolhaPlano(props) {
         }
     }, [location]);
 
+     useEffect(() => {
+        const email = searchParams.get("email");
+        props.setCliente(prev => ({...prev, email: email}));
+        
+    }, [searchParams]);
 
     return (
         <div className={styles.container}>
