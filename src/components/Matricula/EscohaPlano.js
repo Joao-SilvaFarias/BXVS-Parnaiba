@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import styles from "./EscolhaPlano.module.css"
 import Plano from "./Plano";
 import parseReal from "../ParseReal";
-import {useSearchParams} from "react-router-dom"
 
 export default function EscolhaPlano(props) {
-    const [searchParams] = useSearchParams();
     const [planos, setPlanos] = useState([]);
     const [planoSelecionado, setPlanoSelecionado] = useState(null);
     const [cupom, setCupom] = useState("");
@@ -25,14 +23,6 @@ export default function EscolhaPlano(props) {
         };
         fetchPlanos();
     }, []);
-
-    useEffect(() => {
-        const status = searchParams.get("status");
-        if (status === "approved"){
-            concluir();
-        }
-    }, [searchParams]);
-
 
     const concluir = () => {
         props.setEscolhaPlano("concluido");
