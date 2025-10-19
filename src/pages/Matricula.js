@@ -12,7 +12,6 @@ export default function Matricula(props) {
     const [dadosPessoais, setDadosPessoais] = useState("andamento");
     const [escolhaPlano, setEscolhaPlano] = useState("andamento");
     const [biometria, setBiometria] = useState("andamento");
-    const [cliente, setCliente] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const [searchParams] = useSearchParams();
@@ -26,7 +25,7 @@ export default function Matricula(props) {
                 const res = await axios.get(`https://joaofarias16.pythonanywhere.com/api/cliente/por_email?email=${email}`);
                 const data = res.data;
 
-                setCliente(data.cliente);
+                props.setCliente(data.cliente);
 
                 // Atualiza etapas
                 if (data.statusEtapas.dadosPessoaisConcluidos) setDadosPessoais("concluido");
@@ -62,18 +61,18 @@ export default function Matricula(props) {
                         setDadosPessoais={setDadosPessoais}
                         setEscolhaPlano={setEscolhaPlano}
                         setCliente={props.setCliente}
-                        cliente={cliente}
+                        cliente={props.cliente}
                     />
                 ) : escolhaPlano === "andamento" ? (
                     <EscolhaPlano
                         setEscolhaPlano={setEscolhaPlano}
                         setBiometria={setBiometria}
-                        cliente={cliente}
+                        cliente={props.cliente}
                     />
                 ) : biometria === "andamento" ? (
                     <BiometriaFacial
                         setBiometria={setBiometria}
-                        email={cliente?.email}
+                        email={props.cliente?.email}
                     />
                 ) : (
                     <p>✅ Matrícula concluída!</p>
