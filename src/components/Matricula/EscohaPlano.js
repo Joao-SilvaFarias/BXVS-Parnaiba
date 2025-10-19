@@ -57,10 +57,6 @@ export default function EscolhaPlano(props) {
         }
 
         try {
-            // ⚠️ Salva o e-mail atual antes de sair da página
-            if (props.form?.email) {
-                localStorage.setItem("emailUsuario", props.form.email);
-            }
 
             const res = await fetch(
                 `https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`,
