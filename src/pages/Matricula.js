@@ -4,7 +4,8 @@ import DadosPessoais from "../components/Matricula/DadosPessoais";
 import EscolhaPlano from "../components/Matricula/EscohaPlano";
 import ProgressoMatricula from "../components/Matricula/ProgressoMatricula"
 import styles from "./Matricula.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export default function Matricula() {
     const [form, setForm] = useState({
@@ -21,6 +22,15 @@ export default function Matricula() {
     const [dadosPessoais, setDadosPessoais] = useState("andamento");
     const [escolhaPlano, setEscolhaPlano] = useState("");
     const [biometria, setBiometria] = useState("");
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const status = searchParams.get("status");
+        if(status === "approved"){
+            setDadosPessoais("concluido");
+            setEscolhaPlano("andemento");
+        }
+    }, [searchParams]);
     return (
         <>
             <Header />

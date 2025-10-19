@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./EscolhaPlano.module.css"
 import Plano from "./Plano";
 import parseReal from "../ParseReal";
+import { useSearchParams } from "react-router-dom";
 
 export default function EscolhaPlano(props) {
     const [planos, setPlanos] = useState([]);
@@ -69,25 +70,14 @@ export default function EscolhaPlano(props) {
         }
     }
 
+    const searchParams = useSearchParams();
+
     useEffect(() => {
-        const verificarPagamento = async () => {
-            try {
-                const res = await fetch("https://joaofarias16.pythonanywhere.com/api/pagamento/status", {
-                    method: "GET",
-                    credentials: "include"
-                });
-                const data = await res.json();
-
-                if (data.status === "Pago") {
-                    setPagamento(true);
-                }
-            } catch (err) {
-                console.error("Erro ao verificar pagamento:", err);
-            }
-        };
-
-        verificarPagamento();
-    }, []);
+        const status = searchParams.get("status");
+        if(status === "approved"){
+            setPagamento(true);
+        }
+    }, [searchParams]);
 
 
     return (
