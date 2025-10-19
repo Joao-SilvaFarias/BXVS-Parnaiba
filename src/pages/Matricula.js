@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import BiometriaFacial from "../components/Matricula/BiometriaFacial";
 import DadosPessoais from "../components/Matricula/DadosPessoais";
-import EscolhaPlano from "../components/Matricula/EscolhaPlano";
+import EscolhaPlano from "../components/Matricula/EscohaPlano";
 import ProgressoMatricula from "../components/Matricula/ProgressoMatricula";
 import styles from "./Matricula.module.css";
 import { useEffect, useState } from "react";
