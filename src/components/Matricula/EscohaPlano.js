@@ -88,12 +88,6 @@ export default function EscolhaPlano(props) {
         const status = searchParams.get("status");
         if (status === "approved") {
             setPagamento(true);
-
-            // ⚙️ Recupera o email salvo e devolve pro estado principal
-            const emailSalvo = localStorage.getItem("emailUsuario");
-            if (emailSalvo) {
-                props.setForm((prev) => ({ ...prev, email: emailSalvo }));
-            }
         }
     }, [searchParams]);
 
