@@ -7,7 +7,7 @@ import styles from "./Matricula.module.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-export default function Matricula() {
+export default function Matricula(props) {
     const [form, setForm] = useState({
         nome: "",
         email: "",
@@ -56,6 +56,8 @@ export default function Matricula() {
                         setEscolhaPlano={setEscolhaPlano}
                         setForm={setForm}
                         form={form}
+                        setCliente={props.setCliente}
+                        cliente={props.cliente}
                     />
                 ) : escolhaPlano === "andamento" ? (
                     <EscolhaPlano

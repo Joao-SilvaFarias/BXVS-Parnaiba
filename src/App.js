@@ -3,15 +3,19 @@ import Home from "./pages/Home"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Matricula from "./pages/Matricula"
 import ScrollToTop from "./components/ScrollToTop"
+import { useState } from "react"
 
 export default function App() {
+
+  const [cliente, setCliente] = useState({});
+
   return (
     <div className={styles.container}>
       <BrowserRouter>
       <ScrollToTop/>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/matricula" element={<Matricula />} />
+          <Route path="/matricula" element={<Matricula cliente={cliente} setCliente={setCliente} />} />
         </Routes>
       </BrowserRouter>
     </div>
