@@ -2,48 +2,73 @@ import Header from "../components/Header";
 import BiometriaFacial from "../components/Matricula/BiometriaFacial";
 import DadosPessoais from "../components/Matricula/DadosPessoais";
 import EscolhaPlano from "../components/Matricula/EscohaPlano";
-import ProgressoMatricula from "../components/Matricula/ProgressoMatricula"
-import styles from "./Matricula.module.css"
+import ProgressoMatricula from "../components/Matricula/ProgressoMatricula";
+import styles from "./Matricula.module.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function Matricula() {
     const [form, setForm] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-    telefone: "",
-    sexo: "",
-    rg: "",
-    cpf: "",
-    dataNascimento: "",
-    estadoCivil: "",
-  });
+        nome: "",
+        email: "",
+        senha: "",
+        telefone: "",
+        sexo: "",
+        rg: "",
+        cpf: "",
+        dataNascimento: "",
+        estadoCivil: "",
+    });
+
     const [dadosPessoais, setDadosPessoais] = useState("andamento");
     const [escolhaPlano, setEscolhaPlano] = useState("");
     const [biometria, setBiometria] = useState("");
     const [searchParams] = useSearchParams();
 
+    // 🔹 Recuperar email do localStorage caso o usuário volte do pagamento
     useEffect(() => {
-        const status = searchParams.get("status");
-        if(status === "approved"){
-            setDadosPessoais("concluido");
-            setEscolhaPlano("andamento");
+        const emailSalvo = localStorage.getItem("emailUsuario");
+        if (emailSalvo) {
+            setForm(prev => ({ ...prev, email: emailSalvo }));
         }
-    }, []);
+
+        const status = searchParams.get("status");
+        if (status === "approved") {
+            // Se a etapa de dados pessoais já estiver concluída, passar para escolha do plano
+            if (dadosPessoais !== "concluido") setDadosPessoais("concluido");
+            setEscolhaPlano("concluido"); // marca plano como concluído
+            setBiometria("andamento");    // libera etapa de biometria
+        }
+    }, [searchParams]);
+
     return (
         <>
             <Header />
             <div className={styles.container}>
-                <ProgressoMatricula dadosPessoais={{ dadosPessoais: dadosPessoais, setDadosPessoais: setDadosPessoais }} escolhaPlano={{ escolhaPlano: escolhaPlano, setEscolhaPlano }} biometria={{ biometria: biometria, setBiometria: setBiometria }} />
-                {dadosPessoais === "andamento" ?
-                    <DadosPessoais setDadosPessoais={setDadosPessoais} setEscolhaPlano={setEscolhaPlano} setForm={setForm} form={form}/>
-                    : escolhaPlano === "andamento" ?
-                        <EscolhaPlano setEscolhaPlano={setEscolhaPlano} setBiometria={setBiometria} form={form}/>
-                        : biometria === "andamento" ?
-                            <BiometriaFacial setBiometria={setBiometria} email={form.email}/>
-                            : null}
+                <ProgressoMatricula
+                    dadosPessoais={{ dadosPessoais, setDadosPessoais }}
+                    escolhaPlano={{ escolhaPlano, setEscolhaPlano }}
+                    biometria={{ biometria, setBiometria }}
+                />
+
+                {dadosPessoais === "andamento" ? (
+                    <DadosPessoais
+                        setDadosPessoais={setDadosPessoais}
+                        setEscolhaPlano={setEscolhaPlano}
+                        setForm={setForm}
+                        form={form}
+                    />
+                ) : escolhaPlano === "andamento" ? (
+                    <EscolhaPlano
+                        setEscolhaPlano={setEscolhaPlano}
+                        setBiometria={setBiometria}
+                        form={form}
+                        setForm={setForm} // passamos setForm para salvar o email
+                    />
+                ) : biometria === "andamento" ? (
+                    <BiometriaFacial setBiometria={setBiometria} email={form.email} />
+                ) : null}
             </div>
         </>
-    )
+    );
 }

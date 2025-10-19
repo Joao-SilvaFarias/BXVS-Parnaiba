@@ -10,9 +10,10 @@ export default function EscolhaPlano(props) {
     const [cupom, setCupom] = useState("");
     const [pagamento, setPagamento] = useState(false);
     const [desconto, setDesconto] = useState("");
+    const [searchParams] = useSearchParams();
 
+    // 🔹 Buscar planos do backend
     useEffect(() => {
-        // Buscar planos do backend
         const fetchPlanos = async () => {
             try {
                 const res = await fetch("https://joaofarias16.pythonanywhere.com/api/planos");
@@ -25,15 +26,18 @@ export default function EscolhaPlano(props) {
         fetchPlanos();
     }, []);
 
+    // 🔹 Concluir etapa e ir para biometria
     const concluir = () => {
         props.setEscolhaPlano("concluido");
         props.setBiometria("andamento");
-    }
+    };
 
+    // 🔹 Selecionar plano
     const escolherPlano = (plano) => {
         setPlanoSelecionado(plano);
-    }
+    };
 
+    // 🔹 Calcular total com desconto
     const total = () => {
         if (!planoSelecionado) return "R$ 0,00";
         let preco = parseFloat(planoSelecionado.preco);
@@ -41,8 +45,9 @@ export default function EscolhaPlano(props) {
             preco -= (parseFloat(desconto) / 100) * preco;
         }
         return parseReal(preco);
-    }
+    };
 
+    // 🔹 Iniciar pagamento (com salvamento do email)
     const iniciarPagamento = async () => {
         if (!planoSelecionado) {
             alert("Selecione um plano antes de prosseguir com o pagamento.");
@@ -50,11 +55,19 @@ export default function EscolhaPlano(props) {
         }
 
         try {
-            const res = await fetch(`https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ cupom: desconto }) // cupom enviado
-            });
+            // ⚠️ Salva o e-mail atual antes de sair da página
+            if (props.form?.email) {
+                localStorage.setItem("emailUsuario", props.form.email);
+            }
+
+            const res = await fetch(
+                `https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ cupom: desconto }) // cupom enviado
+                }
+            );
 
             const data = await res.json();
 
@@ -68,17 +81,21 @@ export default function EscolhaPlano(props) {
             console.error("Erro ao iniciar pagamento:", err);
             alert("Erro ao iniciar pagamento. Tente novamente.");
         }
-    }
+    };
 
-    const [searchParams] = useSearchParams();
-
+    // 🔹 Detectar retorno do pagamento
     useEffect(() => {
         const status = searchParams.get("status");
-        if(status === "approved"){
+        if (status === "approved") {
             setPagamento(true);
+
+            // ⚙️ Recupera o email salvo e devolve pro estado principal
+            const emailSalvo = localStorage.getItem("emailUsuario");
+            if (emailSalvo) {
+                props.setForm((prev) => ({ ...prev, email: emailSalvo }));
+            }
         }
     }, [searchParams]);
-
 
     return (
         <div className={styles.container}>
