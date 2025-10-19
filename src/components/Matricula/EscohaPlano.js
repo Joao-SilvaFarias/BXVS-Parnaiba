@@ -67,7 +67,7 @@ export default function EscolhaPlano(props) {
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ cupom: desconto, idCliente: props.cliente.idCliente, email: props.cliente.email }) // cupom enviado
+                    body: JSON.stringify({ cupom: desconto, idCliente: props.cliente.idCliente }) // cupom enviado
                 }
             );
 
@@ -123,15 +123,6 @@ export default function EscolhaPlano(props) {
             processarEVerificarPagamento(payment_id, external_reference);
         }
     }, [location]);
-
-    useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const email = params.get("email");
-    if (email && props.setCliente) {
-        props.setCliente(prev => ({ ...prev, email }));
-    }
-}, [location.search, props.setCliente]);
-
 
 
     return (

@@ -47,7 +47,6 @@ export default function Matricula(props) {
                         setEscolhaPlano={setEscolhaPlano}
                         setBiometria={setBiometria}
                         cliente={props.cliente}
-                        setCliente={props.setCliente}
                     />
                 ) : biometria === "andamento" ? (
                     <BiometriaFacial setBiometria={setBiometria} email={props.cliente.email}/>
