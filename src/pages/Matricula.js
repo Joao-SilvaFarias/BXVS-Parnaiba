@@ -35,9 +35,7 @@ export default function Matricula() {
         const status = searchParams.get("status");
         if (status === "approved") {
             // Se a etapa de dados pessoais já estiver concluída, passar para escolha do plano
-            if (dadosPessoais !== "concluido") setDadosPessoais("concluido");
-            setEscolhaPlano("concluido"); // marca plano como concluído
-            setBiometria("andamento");    // libera etapa de biometria
+            if (dadosPessoais !== "concluido") setDadosPessoais("concluido"); // libera etapa de biometria
         }
     }, [searchParams]);
 
