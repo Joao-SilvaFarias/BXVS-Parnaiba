@@ -113,9 +113,6 @@ export default function EscolhaPlano(props) {
                 // Atualiza estado do cliente no frontend
                 props.setCliente(clienteResponse.data);
 
-                // Avança etapas da matrícula
-                setDadosPessoais("concluido");
-                setEscolhaPlano("andamento");
             } else {
                 setPagamento(false);
             }
