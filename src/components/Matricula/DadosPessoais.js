@@ -33,7 +33,6 @@ export default function DadosPessoais(props) {
       console.log("Cliente cadastrado:", res.data);
       const response = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", {params: {email: form.email}});
       props.setCliente(response.data);
-      alert(JSON.stringify(response.data, null, 2));
 
       // Atualiza o fluxo de etapas (caso esteja em um fluxo de cadastro)
       if (props.setDadosPessoais && props.setEscolhaPlano) {
