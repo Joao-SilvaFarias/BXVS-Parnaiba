@@ -88,16 +88,12 @@ export default function EscolhaPlano(props) {
 
     const processarPagamento = async (params) => {
         try {
-            // Exemplo: params = {
-            //   payment_id: "130549166368",
-            //   external_reference: "8"
-            // }
             const response = await axios.post(
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/processar_pagamento",
                 params
             );
             console.log("Resposta do backend:", response.data);
-            alert("Pagamento processado com sucesso!");
+            setPagamento(true);
         } catch (err) {
             console.error("Erro ao processar pagamento:", err);
             alert("Erro ao processar pagamento. Tente novamente.");
@@ -113,15 +109,6 @@ export default function EscolhaPlano(props) {
       processarPagamento({ payment_id, external_reference });
     }
   }, [location]);
-
-
-    // 🔹 Detectar retorno do pagamento
-    useEffect(() => {
-        const status = searchParams.get("status");
-        if (status === "approved") {
-            setPagamento(true);
-        }
-    }, [searchParams]);
 
     return (
         <div className={styles.container}>
