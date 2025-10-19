@@ -126,12 +126,11 @@ export default function BiometriaFacial({ email, setBiometria }) {
         return null;
     };
 
-    /**
-     * FUNÇÃO MODIFICADA: Envia o Embedding Facial para o Flask.
 /**
  * FUNÇÃO MODIFICADA: Envia o Embedding Facial para o Flask usando email.
  * @param {number[]} embedding - O vetor de características do rosto.
  */
+
     const enviarBiometria = async (embedding) => {
         setMensagem("⌛ Enviando Embedding Biomérico...");
         try {
