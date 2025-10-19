@@ -1,29 +1,51 @@
 import Header from "../components/Header";
 import BiometriaFacial from "../components/Matricula/BiometriaFacial";
 import DadosPessoais from "../components/Matricula/DadosPessoais";
-import EscolhaPlano from "../components/Matricula/EscohaPlano";
+import EscolhaPlano from "../components/Matricula/EscolhaPlano";
 import ProgressoMatricula from "../components/Matricula/ProgressoMatricula";
 import styles from "./Matricula.module.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 export default function Matricula(props) {
-
     const [dadosPessoais, setDadosPessoais] = useState("andamento");
-    const [escolhaPlano, setEscolhaPlano] = useState("");
-    const [biometria, setBiometria] = useState("");
+    const [escolhaPlano, setEscolhaPlano] = useState("andamento");
+    const [biometria, setBiometria] = useState("andamento");
+    const [cliente, setCliente] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     const [searchParams] = useSearchParams();
 
-    // 🔹 Recuperar email do localStorage caso o usuário volte do pagamento
     useEffect(() => {
+        const fetchCliente = async () => {
+            try {
+                const email = props.cliente?.email || searchParams.get("email");
+                if (!email) return;
 
-        const status = searchParams.get("status");
-        if (status === "approved") {
-            // Se a etapa de dados pessoais já estiver concluída, passar para escolha do plano
-            if (dadosPessoais !== "concluido") setDadosPessoais("concluido");
-            setEscolhaPlano("andamento"); // marca plano como concluído// libera etapa de biometria
-        }
-    }, [searchParams]);
+                const res = await axios.get(`https://joaofarias16.pythonanywhere.com/api/cliente/por_email?email=${email}`);
+                const data = res.data;
+
+                setCliente(data.cliente);
+
+                // Atualiza etapas
+                if (data.statusEtapas.dadosPessoaisConcluidos) setDadosPessoais("concluido");
+                if (data.statusEtapas.planoSelecionado) setEscolhaPlano("concluido");
+                if (data.statusEtapas.biometriaConcluida) setBiometria("concluido");
+
+            } catch (err) {
+                console.error("Erro ao buscar cliente:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCliente();
+    }, [props.cliente, searchParams]);
+
+    if (loading) {
+        return <p className={styles.loading}>Carregando dados do cliente...</p>;
+    }
 
     return (
         <>
@@ -40,17 +62,22 @@ export default function Matricula(props) {
                         setDadosPessoais={setDadosPessoais}
                         setEscolhaPlano={setEscolhaPlano}
                         setCliente={props.setCliente}
-                        cliente={props.cliente}
+                        cliente={cliente}
                     />
                 ) : escolhaPlano === "andamento" ? (
                     <EscolhaPlano
                         setEscolhaPlano={setEscolhaPlano}
                         setBiometria={setBiometria}
-                        cliente={props.cliente}
+                        cliente={cliente}
                     />
                 ) : biometria === "andamento" ? (
-                    <BiometriaFacial setBiometria={setBiometria} email={props.cliente.email}/>
-                ) : null}
+                    <BiometriaFacial
+                        setBiometria={setBiometria}
+                        email={cliente?.email}
+                    />
+                ) : (
+                    <p>✅ Matrícula concluída!</p>
+                )}
             </div>
         </>
     );
