@@ -86,29 +86,44 @@ export default function EscolhaPlano(props) {
     };
 
 
-    const processarPagamento = async (params) => {
+    // 🔹 Função que processa e verifica pagamento
+    const processarEVerificarPagamento = async (payment_id, external_reference) => {
         try {
-            const response = await axios.post(
+            // 1️⃣ Processa pagamento no backend (insere/atualiza matricula e pagamento)
+            await axios.post(
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/processar_pagamento",
-                params
+                { payment_id, external_reference }
             );
-            console.log("Resposta do backend:", response.data);
-            setPagamento(true);
+
+            // 2️⃣ Verifica no backend se o pagamento está realmente pago
+            const response = await axios.get(
+                "https://joaofarias16.pythonanywhere.com/api/mercadopago/status_pagamento",
+                { params: { external_reference } }
+            );
+
+            if (response.data.pago) {
+                setPagamento(true);
+            } else {
+                setPagamento(false);
+            }
         } catch (err) {
-            console.error("Erro ao processar pagamento:", err);
-            alert("Erro ao processar pagamento. Tente novamente.");
+            console.error("Erro ao processar/verificar pagamento:", err);
+            setPagamento(false);
+            alert("Erro ao processar/verificar pagamento. Tente novamente.");
         }
     };
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const payment_id = searchParams.get("payment_id");
-    const external_reference = searchParams.get("external_reference");
+    // 🔹 Chamar a função ao detectar parâmetros do checkout na URL
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const payment_id = searchParams.get("payment_id");
+        const external_reference = searchParams.get("external_reference");
 
-    if (payment_id && external_reference) {
-      processarPagamento({ payment_id, external_reference });
-    }
-  }, [location]);
+        if (payment_id && external_reference) {
+            processarEVerificarPagamento(payment_id, external_reference);
+        }
+    }, [location]);
+
 
     return (
         <div className={styles.container}>
