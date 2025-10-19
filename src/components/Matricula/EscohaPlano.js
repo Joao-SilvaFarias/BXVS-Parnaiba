@@ -124,6 +124,31 @@ export default function EscolhaPlano(props) {
         }
     }, [location]);
 
+     useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const payment_id = searchParams.get("payment_id");
+        const external_reference = searchParams.get("external_reference");
+
+        if (payment_id && external_reference) {
+            const obterClienteCompleto = async () => {
+                try {
+                    // 1️⃣ Pega os dados completos do cliente
+                    const response = await axios.get(
+                        "https://joaofarias16.pythonanywhere.com/api/mercadopago/cliente_completo",
+                        { params: { external_reference } }
+                    );
+
+                    props.setCliente(response.data.cliente);
+                    console.log("Cliente completo:", response.data.cliente);
+
+                } catch (err) {
+                    console.error("Erro ao buscar cliente completo:", err.response?.data || err.message);
+                }
+            };
+
+            obterClienteCompleto();
+        }
+    }, [location]);
 
     return (
         <div className={styles.container}>
