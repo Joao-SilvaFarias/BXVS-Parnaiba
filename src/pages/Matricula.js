@@ -8,17 +8,6 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function Matricula(props) {
-    const [form, setForm] = useState({
-        nome: "",
-        email: "",
-        senha: "",
-        telefone: "",
-        sexo: "",
-        rg: "",
-        cpf: "",
-        dataNascimento: "",
-        estadoCivil: "",
-    });
 
     const [dadosPessoais, setDadosPessoais] = useState("andamento");
     const [escolhaPlano, setEscolhaPlano] = useState("");
@@ -27,10 +16,6 @@ export default function Matricula(props) {
 
     // 🔹 Recuperar email do localStorage caso o usuário volte do pagamento
     useEffect(() => {
-        const emailSalvo = localStorage.getItem("emailUsuario");
-        if (emailSalvo) {
-            setForm(prev => ({ ...prev, email: emailSalvo }));
-        }
 
         const status = searchParams.get("status");
         if (status === "approved") {
@@ -54,8 +39,6 @@ export default function Matricula(props) {
                     <DadosPessoais
                         setDadosPessoais={setDadosPessoais}
                         setEscolhaPlano={setEscolhaPlano}
-                        setForm={setForm}
-                        form={form}
                         setCliente={props.setCliente}
                         cliente={props.cliente}
                     />
@@ -63,11 +46,9 @@ export default function Matricula(props) {
                     <EscolhaPlano
                         setEscolhaPlano={setEscolhaPlano}
                         setBiometria={setBiometria}
-                        form={form}
-                        setForm={setForm} // passamos setForm para salvar o email
                     />
                 ) : biometria === "andamento" ? (
-                    <BiometriaFacial setBiometria={setBiometria} email={form.email} />
+                    <BiometriaFacial setBiometria={setBiometria} email={props.cliente.email}/>
                 ) : null}
             </div>
         </>

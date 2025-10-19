@@ -3,24 +3,35 @@ import axios from "axios";
 import styles from "./DadosPessoais.module.css";
 
 export default function DadosPessoais(props) {
+  const [form, setForm] = useState({
+        nome: "",
+        email: "",
+        senha: "",
+        telefone: "",
+        sexo: "",
+        rg: "",
+        cpf: "",
+        dataNascimento: "",
+        estadoCivil: "",
+    });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    props.setForm({ ...props.form, [name]: value });
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const dadosCliente = {
-      ...props.form,
+      ...form,
       dataCadastro: new Date().toISOString().slice(0, 19).replace("T", " "),
     };
 
     try {
       const res = await axios.post("https://joaofarias16.pythonanywhere.com/api/cliente/cadastrar", dadosCliente);
       console.log("Cliente cadastrado:", res.data);
-      const response = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", {params: {email: props.form.email}});
+      const response = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", {params: {email: form.email}});
       props.setCliente(response.data);
       alert(JSON.stringify(response.data, null, 2));
 
@@ -56,7 +67,7 @@ export default function DadosPessoais(props) {
               type="text"
               name="nome"
               placeholder="Digite seu nome"
-              value={props.form.nome}
+              value={form.nome}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -69,7 +80,7 @@ export default function DadosPessoais(props) {
               type="email"
               name="email"
               placeholder="Ex: aluno@bxvs.com"
-              value={props.form.email}
+              value={form.email}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -82,7 +93,7 @@ export default function DadosPessoais(props) {
               type="password"
               name="senha"
               placeholder="Crie uma senha segura"
-              value={props.form.senha}
+              value={form.senha}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -96,7 +107,7 @@ export default function DadosPessoais(props) {
                 type="tel"
                 name="telefone"
                 placeholder="(00) 00000-0000"
-                value={props.form.telefone}
+                value={form.telefone}
                 className={styles.inputDados}
                 required
                 onChange={handleChange}
@@ -108,7 +119,7 @@ export default function DadosPessoais(props) {
               <select
                 name="sexo"
                 className={styles.inputDados}
-                value={props.form.sexo}
+                value={form.sexo}
                 onChange={handleChange}
                 required
               >
@@ -126,7 +137,7 @@ export default function DadosPessoais(props) {
               type="text"
               name="rg"
               placeholder="000.000.000-0"
-              value={props.form.rg}
+              value={form.rg}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -139,7 +150,7 @@ export default function DadosPessoais(props) {
               type="text"
               name="cpf"
               placeholder="000.000.000-00"
-              value={props.form.cpf}
+              value={form.cpf}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -151,7 +162,7 @@ export default function DadosPessoais(props) {
             <input
               type="date"
               name="dataNascimento"
-              value={props.form.dataNascimento}
+              value={form.dataNascimento}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -163,7 +174,7 @@ export default function DadosPessoais(props) {
             <select
               name="estadoCivil"
               className={styles.inputDados}
-              value={props.form.estadoCivil}
+              value={form.estadoCivil}
               onChange={handleChange}
               required
             >
