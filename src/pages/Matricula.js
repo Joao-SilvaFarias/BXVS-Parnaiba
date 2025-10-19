@@ -29,7 +29,7 @@ export default function Matricula() {
                 {dadosPessoais === "andamento" ?
                     <DadosPessoais setDadosPessoais={setDadosPessoais} setEscolhaPlano={setEscolhaPlano} setForm={setForm} form={form}/>
                     : escolhaPlano === "andamento" ?
-                        <EscolhaPlano setEscolhaPlano={setEscolhaPlano} setBiometria={setBiometria} form={form} setDadosPessoais={setDadosPessoais}/>
+                        <EscolhaPlano setEscolhaPlano={setEscolhaPlano} setBiometria={setBiometria} form={form}/>
                         : biometria === "andamento" ?
                             <BiometriaFacial setBiometria={setBiometria} email={form.email}/>
                             : null}
