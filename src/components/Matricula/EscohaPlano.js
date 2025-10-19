@@ -89,30 +89,20 @@ export default function EscolhaPlano(props) {
     // 🔹 Função que processa e verifica pagamento
     const processarEVerificarPagamento = async (payment_id, external_reference) => {
         try {
-            // 1️⃣ Processa pagamento no backend (atualiza matrícula e pagamento)
+            // 1️⃣ Processa pagamento no backend (insere/atualiza matricula e pagamento)
             await axios.post(
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/processar_pagamento",
                 { payment_id, external_reference }
             );
 
             // 2️⃣ Verifica no backend se o pagamento está realmente pago
-            const statusResponse = await axios.get(
+            const response = await axios.get(
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/status_pagamento",
                 { params: { external_reference } }
             );
 
-            if (statusResponse.data.pago) {
+            if (response.data.pago) {
                 setPagamento(true);
-
-                // 3️⃣ Recupera os dados do cliente associados à matrícula
-                const clienteResponse = await axios.get(
-                    "https://joaofarias16.pythonanywhere.com/api/cliente/recuperar_por_matricula",
-                    { params: { id_matricula: external_reference } }
-                );
-
-                // Atualiza estado do cliente no frontend
-                props.setCliente(clienteResponse.data);
-
             } else {
                 setPagamento(false);
             }
@@ -133,7 +123,6 @@ export default function EscolhaPlano(props) {
             processarEVerificarPagamento(payment_id, external_reference);
         }
     }, [location]);
-
 
 
     return (
