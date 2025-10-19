@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./EscolhaPlano.module.css"
 import Plano from "./Plano";
 import parseReal from "../ParseReal";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 export default function EscolhaPlano(props) {
     const [planos, setPlanos] = useState([]);
@@ -11,6 +11,7 @@ export default function EscolhaPlano(props) {
     const [pagamento, setPagamento] = useState(false);
     const [desconto, setDesconto] = useState("");
     const [searchParams] = useSearchParams();
+    const location = useLocation();
 
     // 🔹 Buscar planos do backend
     useEffect(() => {
@@ -82,6 +83,36 @@ export default function EscolhaPlano(props) {
             alert("Erro ao iniciar pagamento. Tente novamente.");
         }
     };
+
+
+    const processarPagamento = async (params) => {
+        try {
+            // Exemplo: params = {
+            //   payment_id: "130549166368",
+            //   external_reference: "8"
+            // }
+            const response = await axios.post(
+                "https://joaofarias16.pythonanywhere.com/api/mercadopago/processar_pagamento",
+                params
+            );
+            console.log("Resposta do backend:", response.data);
+            alert("Pagamento processado com sucesso!");
+        } catch (err) {
+            console.error("Erro ao processar pagamento:", err);
+            alert("Erro ao processar pagamento. Tente novamente.");
+        }
+    };
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const payment_id = searchParams.get("payment_id");
+    const external_reference = searchParams.get("external_reference");
+
+    if (payment_id && external_reference) {
+      processarPagamento({ payment_id, external_reference });
+    }
+  }, [location]);
+
 
     // 🔹 Detectar retorno do pagamento
     useEffect(() => {
