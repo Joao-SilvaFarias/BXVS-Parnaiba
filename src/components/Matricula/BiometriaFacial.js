@@ -294,6 +294,7 @@ export default function BiometriaFacial({ email, setBiometria }) {
 
     useEffect(() => {
         if (finalizado) {
+            alert(email);
             setBiometria("concluido");
         }
     }, [finalizado]);
