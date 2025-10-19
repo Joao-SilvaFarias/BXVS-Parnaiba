@@ -70,7 +70,7 @@ export default function EscolhaPlano(props) {
         }
     }
 
-    const searchParams = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         const status = searchParams.get("status");

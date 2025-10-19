@@ -22,15 +22,15 @@ export default function Matricula() {
     const [dadosPessoais, setDadosPessoais] = useState("andamento");
     const [escolhaPlano, setEscolhaPlano] = useState("");
     const [biometria, setBiometria] = useState("");
-    const searchParams = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         const status = searchParams.get("status");
         if(status === "approved"){
             setDadosPessoais("concluido");
-            setEscolhaPlano("andemento");
+            setEscolhaPlano("andamento");
         }
-    }, [searchParams]);
+    }, []);
     return (
         <>
             <Header />
