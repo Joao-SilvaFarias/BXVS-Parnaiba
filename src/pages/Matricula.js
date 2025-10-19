@@ -6,7 +6,6 @@ import ProgressoMatricula from "../components/Matricula/ProgressoMatricula";
 import styles from "./Matricula.module.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
 
 export default function Matricula(props) {
 
@@ -14,41 +13,15 @@ export default function Matricula(props) {
     const [escolhaPlano, setEscolhaPlano] = useState("");
     const [biometria, setBiometria] = useState("");
     const [searchParams] = useSearchParams();
-    const [loading, setLoading] = useState(true);
 
     // 🔹 Recuperar email do localStorage caso o usuário volte do pagamento
     useEffect(() => {
+
         const status = searchParams.get("status");
-        const email = searchParams.get("email"); // espera que a query string tenha o email do usuário
-
-        if (status === "approved" && email) {
-            setLoading(true);
-            // 🔹 Recupera dados do usuário do backend via Axios
-            axios.get(`/api/cliente/recuperar?email=${encodeURIComponent(email)}`)
-                .then(response => {
-                    const data = response.data;
-
-                    if (data.cliente) {
-                        props.setCliente(data.cliente); // atualiza cliente no estado global
-                        setDadosPessoais("concluido");
-
-                        if (data.matricula) {
-                            setEscolhaPlano("concluido");
-
-                            if (data.matricula._status === "Ativa") {
-                                setBiometria("andamento"); // libera biometria
-                            }
-                        } else {
-                            setEscolhaPlano("andamento");
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro ao recuperar dados do cliente:", error);
-                })
-                .finally(() => setLoading(false));
-        } else {
-            setLoading(false);
+        if (status === "approved") {
+            // Se a etapa de dados pessoais já estiver concluída, passar para escolha do plano
+            if (dadosPessoais !== "concluido") setDadosPessoais("concluido");
+            setEscolhaPlano("andamento"); // marca plano como concluído// libera etapa de biometria
         }
     }, [searchParams]);
 
