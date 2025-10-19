@@ -67,7 +67,7 @@ export default function EscolhaPlano(props) {
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ cupom: desconto, idCliente: props.cliente.idCliente }) // cupom enviado
+                    body: JSON.stringify({ cupom: desconto, idCliente: props.cliente.idCliente, email: props.cliente.email }) // cupom enviado
                 }
             );
 
