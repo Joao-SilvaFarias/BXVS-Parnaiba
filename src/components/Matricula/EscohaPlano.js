@@ -124,11 +124,15 @@ export default function EscolhaPlano(props) {
         }
     }, [location]);
 
-     useEffect(() => {
-        const email = searchParams.get("email");
-        props.setCliente(prev => ({...prev, email: email}));
-        
-    }, [searchParams]);
+    useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const email = params.get("email");
+    if (email && props.setCliente) {
+        props.setCliente(prev => ({ ...prev, email }));
+    }
+}, [location.search, props.setCliente]);
+
+
 
     return (
         <div className={styles.container}>
