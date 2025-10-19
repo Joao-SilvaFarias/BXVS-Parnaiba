@@ -69,6 +69,27 @@ export default function EscolhaPlano(props) {
         }
     }
 
+    useEffect(() => {
+        const verificarPagamento = async () => {
+            try {
+                const res = await fetch("https://joaofarias16.pythonanywhere.com/api/pagamento/status", {
+                    method: "GET",
+                    credentials: "include"
+                });
+                const data = await res.json();
+
+                if (data.status === "Pago") {
+                    setPagamento(true);
+                }
+            } catch (err) {
+                console.error("Erro ao verificar pagamento:", err);
+            }
+        };
+
+        verificarPagamento();
+    }, []);
+
+
     return (
         <div className={styles.container}>
             <div className={styles.conteudo}>
