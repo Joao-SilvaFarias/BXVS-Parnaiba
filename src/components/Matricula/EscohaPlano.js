@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import styles from "./EscolhaPlano.module.css"
 import Plano from "./Plano";
 import parseReal from "../ParseReal";
-import { useSearchParams } from "react-router-dom";
 
 export default function EscolhaPlano(props) {
     const [planos, setPlanos] = useState([]);
@@ -10,14 +9,6 @@ export default function EscolhaPlano(props) {
     const [cupom, setCupom] = useState("");
     const [pagamento, setPagamento] = useState(false);
     const [desconto, setDesconto] = useState("");
-    const searchParams = useSearchParams();
-    const status = searchParams.get("status");
-
-    useEffect(() => {
-        if (status === "approved") {
-            setPagamento(true);
-        }
-    }, [status]);
 
     useEffect(() => {
         // Buscar planos do backend
@@ -58,24 +49,25 @@ export default function EscolhaPlano(props) {
         }
 
         try {
-            const email = localStorage.getItem("email"); // supondo que você guarda isso no login
             const res = await fetch(`https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ cupom: desconto, email })
+                body: JSON.stringify({ cupom: desconto }) // cupom enviado
             });
 
             const data = await res.json();
+
             if (data && data.init_point) {
-                window.location.href = data.init_point;
+                window.location.href = data.init_point; // redireciona para o checkout
             } else {
-                alert("Erro ao iniciar pagamento.");
+                console.error("Erro ao criar preferência do Mercado Pago:", data);
+                alert("Erro ao iniciar pagamento. Tente novamente.");
             }
         } catch (err) {
-            console.error("Erro:", err);
+            console.error("Erro ao iniciar pagamento:", err);
+            alert("Erro ao iniciar pagamento. Tente novamente.");
         }
-    };
-
+    }
 
     return (
         <div className={styles.container}>
