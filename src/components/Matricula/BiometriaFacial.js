@@ -143,14 +143,15 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
                 params: { matricula: matricula }
             });
-            setCliente(res.data.cliente); // cuidado: a API retorna {"cliente": {...}}
+            setCliente(res.data); // cuidado: a API retorna {"cliente": {...}}
+            const email = res.data.email;
             const response = await fetch('https://joaofarias16.pythonanywhere.com/api/biometria/upload_embedding_email', { // endpoint com email
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: res.data.cliente.email,      // usamos o email passado via props
+                    email: email,      // usamos o email passado via props
                     embedding: embedding,
                 }),
             });
