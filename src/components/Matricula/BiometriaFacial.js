@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import * as faceapi from "face-api.js";
 import styles from "./BiometriaFacial.module.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 // INSTRUÇÃO "OLHAR PARA BAIXO" REMOVIDA
@@ -25,9 +25,8 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     const [faceEmbedding, setFaceEmbedding] = useState(null);
     const [finalizado, setFinalizado] = useState(false);
     const [modelsLoaded, setModelsLoaded] = useState(false);
-    // Novo estado para rastrear o carregamento inicial do cliente
-    const [clienteCarregado, setClienteCarregado] = useState(false);
     const location = useLocation();
+    const [clienteB, setClienteB] = useState(null);
 
     // Options de detecção com threshold um pouco mais alto para mais confiança
     const detectorOptions = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.6 });
@@ -45,7 +44,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                     faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
                 ]);
                 setModelsLoaded(true);
-                setMensagem("Modelos de biometria carregados. Aguardando dados do cliente...");
+                setMensagem("Modelos de biometria carregados. Clique em Continuar.");
             } catch (err) {
                 console.error("Erro ao carregar modelos:", err);
                 setErro("Erro ao carregar modelos. Verifique a pasta /models.");
@@ -131,12 +130,12 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
         return null;
     };
 
-    /**
-    * FUNÇÃO MODIFICADA: Envia o Embedding Facial para o Flask usando email.
-    * @param {number[]} embedding - O vetor de características do rosto.
-    * @param {string} email - O email do cliente. <--- NOVO PARÂMETRO
-    */
-    const enviarBiometria = async (embedding, email) => { // <--- RECEBE O EMAIL
+/**
+ * FUNÇÃO MODIFICADA: Envia o Embedding Facial para o Flask usando email.
+ * @param {number[]} embedding - O vetor de características do rosto.
+ */
+
+    const enviarBiometria = async (embedding) => {
         setMensagem("⌛ Enviando Embedding Biomérico...");
         try {
             const response = await fetch('https://joaofarias16.pythonanywhere.com/api/biometria/upload_embedding_email', { // endpoint com email
@@ -145,7 +144,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: email,      // <--- USA O ARGUMENTO
+                    email: clienteB.email,      // usamos o email passado via props
                     embedding: embedding,
                 }),
             });
@@ -154,24 +153,23 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                 const data = await response.json();
                 console.log("Resposta da API:", data);
                 setMensagem("✅ Cadastro facial concluído e enviado com sucesso! Você será redirecionado(a) em breve.");
-                // O estado finalizado já é definido em validarRosto, mas o feedback visual aqui é importante
-                // setFinalizado(true); 
+                setFinalizado(true);
             } else {
                 const errorData = await response.json();
                 console.error("Erro no envio da biometria:", errorData);
                 setErro(`Falha ao enviar dados: ${errorData.message || response.statusText}. Por favor, tente novamente.`);
-                setFinalizado(false); // Permite uma nova tentativa
+                setFinalizado(false);
             }
         } catch (error) {
             console.error("Erro na comunicação de rede:", error);
             setErro("Erro de rede ao tentar enviar os dados. Verifique sua conexão.");
-            setFinalizado(false); // Permite uma nova tentativa
+            setFinalizado(false);
         }
     };
 
     // Função de validação de pose e expressão
     const validarRosto = async () => {
-        if (!cameraAtiva || finalizado || !videoRef.current || !cliente?.email) return; // Adiciona verificação do email
+        if (!cameraAtiva || finalizado || !videoRef.current) return;
 
         // Detectar com landmarks e expressões (NÃO precisamos de descriptor aqui)
         const detection = await faceapi.detectSingleFace(videoRef.current, detectorOptions)
@@ -270,13 +268,12 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                 setFinalizado(true);
                 setCameraAtiva(false);
 
-                // 3. CHAMA O ENVIO COM O EMBEDDING GERADO ANTERIORMENTE E O EMAIL
-                const finalEmbedding = embeddingParaSalvar || faceEmbedding;
-
-                if (finalEmbedding && cliente?.email) {
-                    enviarBiometria(finalEmbedding, cliente.email); // <--- CHAMA COM EMAIL
+                // 3. CHAMA O ENVIO COM O EMBEDDING GERADO ANTERIORMENTE
+                // O array 'fotos' foi removido, pois enviamos apenas o vetor
+                if (faceEmbedding) {
+                    enviarBiometria(embeddingParaSalvar || faceEmbedding);
                 } else {
-                    setErro("Erro interno: O código biométrico ou o email do cliente não foram gerados/encontrados. Recarregue.");
+                    setErro("Erro interno: O código biométrico não foi gerado. Recarregue.");
                 }
 
             } else {
@@ -297,58 +294,35 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
         if (!cameraAtiva || finalizado) return;
         const interval = setInterval(validarRosto, 1000);
         return () => clearInterval(interval);
-    }, [cameraAtiva, instrucoesIndex, finalizado, faceEmbedding, cliente]); // Adicionado 'cliente' para garantir que validarRosto use o valor mais recente
+    }, [cameraAtiva, instrucoesIndex, finalizado, faceEmbedding]); // Adicione faceEmbedding às dependências
 
-    // Monitora a finalização
     useEffect(() => {
         if (finalizado) {
             setBiometria("concluido");
         }
-    }, [finalizado, setBiometria]); // Adicionei setBiometria às dependências
+    }, [finalizado]);
 
-    // Buscador de Cliente (Mantido)
     useEffect(() => {
-        const buscarCliente = async () => {
-            try {
-                const searchParams = new URLSearchParams(location.search);
-                const matricula = searchParams.get("external_reference");
+    const buscarCliente = async () => {
+        try {
+            const searchParams = new URLSearchParams(location.search);
+            const matricula = searchParams.get("external_reference");
 
-                if (!matricula) {
-                    setErro("Parâmetro 'external_reference' (matrícula) não encontrado na URL.");
-                    setClienteCarregado(true);
-                    return;
-                }
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+                params: { matricula: matricula }
+            });
+            setCliente(res.data.cliente);
+            setClienteB(res.data.cliente) // cuidado: a API retorna {"cliente": {...}}
+        } catch (error) {
+            console.error("Erro ao buscar cliente:", error);
+        }
+    };
 
-                const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
-                    params: { matricula: matricula }
-                });
-                setCliente(res.data.cliente); // cuidado: a API retorna {"cliente": {...}}
-                setClienteCarregado(true);
-                setMensagem("Modelos de biometria carregados. Dados do cliente prontos. Clique em Continuar.");
-
-
-            } catch (error) {
-                console.error("Erro ao buscar cliente:", error);
-                setErro(`Falha ao carregar dados do cliente: ${error.message}.`);
-                setClienteCarregado(true);
-            }
-        };
-
-        buscarCliente();
-    }, [location.search, setCliente]); // Adicionei setCliente às dependências
+    buscarCliente();
+}, [location.search]);
 
 
     // Seu bloco JSX (Visual) permanece inalterado
-    const canStart = modelsLoaded && clienteCarregado && cliente?.email && !erro;
-    const btnText = !modelsLoaded
-        ? "Carregando Modelos..."
-        : !clienteCarregado
-            ? "Carregando Dados do Cliente..."
-            : !cliente?.email
-                ? "Erro: Email do cliente ausente"
-                : "Iniciar Captura Facial";
-
-
     return (
         <div className={styles.container}>
             <div className={styles.conteudo}>
@@ -406,18 +380,15 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                         </div>
                         <button
                             className={styles.btnContinuar}
-                            onClick={() => canStart && setCameraAtiva(true)}
-                            disabled={!canStart || finalizado}
+                            onClick={() => modelsLoaded && setCameraAtiva(true)}
+                            disabled={!modelsLoaded || finalizado}
                         >
-                            {btnText}
+                            {modelsLoaded ? "Iniciar Captura Facial" : "Carregando Modelos..."}
                         </button>
                     </>
                 )}
 
                 {erro && <p style={{ color: "red", marginTop: '10px' }}>⚠️ **Erro de Sistema:** {erro}</p>}
-                {!erro && clienteCarregado && !cliente?.email && (
-                    <p style={{ color: "red", marginTop: '10px' }}>⚠️ **Erro de Dados:** O email do cliente é necessário, mas não foi encontrado.</p>
-                )}
             </div>
             <p className={styles.leiDados}>
                 Seus dados biométricos são classificados como dados sensíveis e serão utilizados exclusivamente para **autenticação e segurança** da sua conta, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), garantindo criptografia e confidencialidade.
