@@ -30,24 +30,6 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     // Options de detecção com threshold um pouco mais alto para mais confiança
     const detectorOptions = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.6 });
 
-
-    useEffect(() => {
-        const buscarCliente = async () => {
-            try {
-                const searchParams = new URLSearchParams(location.search);
-                const matricula = searchParams.get("external_reference");
-
-                const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
-                    params: { matricula: matricula }
-                });
-                setCliente(res.data.cliente); // cuidado: a API retorna {"cliente": {...}}
-            } catch (error) {
-                console.error("Erro ao buscar cliente:", error);
-            }
-        };
-
-        buscarCliente();
-    }, [location.search]);
     // Carregar modelos
     useEffect(() => {
         const loadModels = async () => {
@@ -155,13 +137,20 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     const enviarBiometria = async (embedding) => {
         setMensagem("⌛ Enviando Embedding Biomérico...");
         try {
+            const searchParams = new URLSearchParams(location.search);
+            const matricula = searchParams.get("external_reference");
+
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+                params: { matricula: matricula }
+            });
+            setCliente(res.data.cliente); // cuidado: a API retorna {"cliente": {...}}
             const response = await fetch('https://joaofarias16.pythonanywhere.com/api/biometria/upload_embedding_email', { // endpoint com email
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: cliente.email,      // usamos o email passado via props
+                    email: res.data.cliente.email,      // usamos o email passado via props
                     embedding: embedding,
                 }),
             });
