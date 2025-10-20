@@ -137,21 +137,14 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     const enviarBiometria = async (embedding) => {
         setMensagem("⌛ Enviando Embedding Biomérico...");
         try {
-            const searchParams = new URLSearchParams(location.search);
-            const matricula = searchParams.get("external_reference");
 
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
-                params: { matricula: matricula }
-            });
-            setCliente(res.data); // cuidado: a API retorna {"cliente": {...}}
-            const email = res.data.email;
             const response = await fetch('https://joaofarias16.pythonanywhere.com/api/biometria/upload_embedding_email', { // endpoint com email
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: email,      // usamos o email passado via props
+                    email: cliente.email,      // usamos o email passado via props
                     embedding: embedding,
                 }),
             });
@@ -310,7 +303,19 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     }, [finalizado]);
 
 
+    useEffect(() => {
+        const buscarCliente = async () => {
+            const searchParams = new URLSearchParams(location.search);
+            const matricula = searchParams.get("external_reference");
 
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+                params: { matricula: 29 }
+            });
+            setCliente(res.data); // cuidado: a API retorna {"cliente": {...}}
+            alert(res.data.email)
+        }
+        buscarCliente();
+    }, [setCliente, location.search]);
 
     // Seu bloco JSX (Visual) permanece inalterado
     return (
@@ -319,7 +324,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                 {cameraAtiva ? (
                     <>
                         <div className={styles.tituloContainer}>
-                            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
+                            <p className={styles.txtEtapa} onClick={() => alert(cliente.email)}>3° Etapa de Verificação</p>
                             <h2 className={styles.txtBiometriaFacial}>
                                 Biometria Facial <span className={styles.txtFoto}>{"<"} Liveness</span> {/* Mudança de Foto para Liveness */}
                             </h2>
