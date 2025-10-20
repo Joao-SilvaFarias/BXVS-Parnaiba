@@ -14,6 +14,7 @@ export default function Matricula(props) {
     const [biometria, setBiometria] = useState("");
     const [searchParams] = useSearchParams();
 
+    
     // 🔹 Recuperar email do localStorage caso o usuário volte do pagamento
     useEffect(() => {
 
