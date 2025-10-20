@@ -277,74 +277,87 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
 
     // 🔹 Layout (não alterado)
     return (
-        <div className={styles.container}>
-            <div className={styles.conteudo}>
-                {cameraAtiva ? (
-                    <>
-                        <div className={styles.tituloContainer}>
-                            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
-                            <h2 className={styles.txtBiometriaFacial}>
-                                Biometria Facial <span className={styles.txtFoto}>{"<"} Liveness</span>
-                            </h2>
-                        </div>
+  <div className={styles.container}>
+    <div className={styles.conteudo}>
+      {cameraAtiva ? (
+        <>
+          <div className={styles.tituloContainer}>
+            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
+            <h2 className={styles.txtBiometriaFacial}>
+              Biometria Facial <span className={styles.txtFoto}>{"<"} Liveness</span>
+            </h2>
+          </div>
 
-                        <div className={styles.containerVideo}>
-                            <div className={styles.boxVideo} style={{ position: "relative" }}>
-                                <video ref={videoRef} autoPlay playsInline muted className={styles.video} />
-                                <canvas
-                                    ref={canvasRef}
-                                    style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}
-                                />
-                                <div className={styles.moldura}></div>
-                                <p className={styles.mensagemRosto}>{mensagem}</p>
-                            </div>
-
-                            <div className={styles.containerBoasPraticas}>
-                                <p className={styles.tituloBoasPraticas}>Requisitos de Segurança para Bancos Digitais:</p>
-                                <div className={styles.listaBoasPraticas}>
-                                    <p className={styles.boaPratica}>1. Limpe a câmera do seu aparelho</p>
-                                    <p className={styles.boaPratica}>2. Mantenha o rosto centralizado e totalmente visível na área indicada.</p>
-                                    <p className={styles.boaPratica}>3. Esteja em um ambiente bem iluminado, evitando sombras no rosto.</p>
-                                    <p className={styles.boaPratica}>4. Não use óculos escuros, bonés ou acessórios que cubram o rosto.</p>
-                                    <p className={styles.boaPratica}>5. Olhe diretamente para a câmera e evite movimentos durante a captura.</p>
-                                    <p className={styles.boaPratica}>6. Apenas uma pessoa por foto.</p>
-                                </div>
-
-                                <div className={styles.tirarFotoContainer}>
-                                    <p className={styles.txtImagem}>
-                                        Sua biometria será tratada como **dado sensível** e usada exclusivamente para validação de identidade e controle de acesso, em total conformidade com a **LGPD**.
-                                    </p>
-                                    <hr className={styles.linhaImagem} />
-                                    <p className={styles.txtInstrucaoAtual}>
-                                        **Instrução Atual ({instrucoesIndex + 1} de {instrucoes.length}):** **{instrucoes[instrucoesIndex]}**
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <div className={styles.tituloContainer}>
-                            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
-                            <h2 className={styles.txtTitulo}>Cadastro de Biometria Facial</h2>
-                            <p className={styles.txtDescricao}>
-                                Para completar sua assinatura, realize as etapas necessárias para cadastrar sua biometria facial para o ingresso em nossa academia!
-                            </p>
-                        </div>
-                        <button
-                            className={styles.btnContinuar}
-                            onClick={() => modelsLoaded && setCameraAtiva(true)}
-                            disabled={!modelsLoaded || finalizado}
-                        >
-                            {modelsLoaded ? "Iniciar Captura Facial" : "Carregando Modelos..."}
-                        </button>
-                    </>
-                )}
-                {erro && <p style={{ color: "red", marginTop: '10px' }}>⚠️ **Erro de Sistema:** {erro}</p>}
+          <div className={styles.containerVideo}>
+            <div className={styles.boxVideo} style={{ position: "relative" }}>
+              <video ref={videoRef} autoPlay playsInline muted className={styles.video} />
+              <canvas
+                ref={canvasRef}
+                style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}
+              />
+              <div className={styles.moldura}></div>
+              <p className={styles.mensagemRosto}>{mensagem}</p>
             </div>
-            <p className={styles.leiDados}>
-                Seus dados biométricos são classificados como dados sensíveis e serão utilizados exclusivamente para **autenticação e segurança** da sua conta, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), garantindo criptografia e confidencialidade.
+
+            <div className={styles.containerBoasPraticas}>
+              <p className={styles.tituloBoasPraticas}>Requisitos de Segurança para Bancos Digitais:</p>
+              <div className={styles.listaBoasPraticas}>
+                <p className={styles.boaPratica}>1. Limpe a câmera do seu aparelho</p>
+                <p className={styles.boaPratica}>2. Mantenha o rosto centralizado e totalmente visível na área indicada.</p>
+                <p className={styles.boaPratica}>3. Esteja em um ambiente bem iluminado, evitando sombras no rosto.</p>
+                <p className={styles.boaPratica}>4. Não use óculos escuros, bonés ou acessórios que cubram o rosto.</p>
+                <p className={styles.boaPratica}>5. Olhe diretamente para a câmera e evite movimentos durante a captura.</p>
+                <p className={styles.boaPratica}>6. Apenas uma pessoa por foto.</p>
+              </div>
+
+              <div className={styles.tirarFotoContainer}>
+                <p className={styles.txtImagem}>
+                  Sua biometria será tratada como **dado sensível** e usada exclusivamente para validação de identidade e controle de acesso, em total conformidade com a **LGPD**.
+                </p>
+                <hr className={styles.linhaImagem} />
+                <p className={styles.txtInstrucaoAtual}>
+                  **Instrução Atual ({instrucoesIndex + 1} de {instrucoes.length}):** **{instrucoes[instrucoesIndex]}**
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={styles.tituloContainer}>
+            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
+            <h2 className={styles.txtTitulo}>Cadastro de Biometria Facial</h2>
+            <p className={styles.txtDescricao}>
+              Para completar sua assinatura, realize as etapas necessárias para cadastrar sua biometria facial para o ingresso em nossa academia!
             </p>
-        </div>
-    );
+          </div>
+
+          {/* 🔒 Botão atualizado — só habilita quando o cliente e modelos estiverem prontos */}
+          <button
+            className={styles.btnContinuar}
+            onClick={() => modelsLoaded && cliente && setCameraAtiva(true)}
+            disabled={!modelsLoaded || !cliente || finalizado}
+          >
+            {!modelsLoaded
+              ? "Carregando Modelos..."
+              : !cliente
+                ? "Carregando Cliente..."
+                : "Iniciar Captura Facial"}
+          </button>
+        </>
+      )}
+
+      {erro && (
+        <p style={{ color: "red", marginTop: "10px" }}>
+          ⚠️ <strong>Erro de Sistema:</strong> {erro}
+        </p>
+      )}
+    </div>
+
+    <p className={styles.leiDados}>
+      Seus dados biométricos são classificados como dados sensíveis e serão utilizados exclusivamente para **autenticação e segurança** da sua conta, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), garantindo criptografia e confidencialidade.
+    </p>
+  </div>
+);
+
 }
