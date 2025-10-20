@@ -26,11 +26,28 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     const [finalizado, setFinalizado] = useState(false);
     const [modelsLoaded, setModelsLoaded] = useState(false);
     const location = useLocation();
-    const [clienteB, setClienteB] = useState(null);
 
     // Options de detecção com threshold um pouco mais alto para mais confiança
     const detectorOptions = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.6 });
 
+
+    useEffect(() => {
+        const buscarCliente = async () => {
+            try {
+                const searchParams = new URLSearchParams(location.search);
+                const matricula = searchParams.get("external_reference");
+
+                const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+                    params: { matricula: matricula }
+                });
+                setCliente(res.data.cliente); // cuidado: a API retorna {"cliente": {...}}
+            } catch (error) {
+                console.error("Erro ao buscar cliente:", error);
+            }
+        };
+
+        buscarCliente();
+    }, [location.search]);
     // Carregar modelos
     useEffect(() => {
         const loadModels = async () => {
@@ -130,10 +147,10 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
         return null;
     };
 
-/**
- * FUNÇÃO MODIFICADA: Envia o Embedding Facial para o Flask usando email.
- * @param {number[]} embedding - O vetor de características do rosto.
- */
+    /**
+     * FUNÇÃO MODIFICADA: Envia o Embedding Facial para o Flask usando email.
+     * @param {number[]} embedding - O vetor de características do rosto.
+     */
 
     const enviarBiometria = async (embedding) => {
         setMensagem("⌛ Enviando Embedding Biomérico...");
@@ -144,7 +161,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: clienteB.email,      // usamos o email passado via props
+                    email: cliente.email,      // usamos o email passado via props
                     embedding: embedding,
                 }),
             });
@@ -302,24 +319,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
         }
     }, [finalizado]);
 
-    useEffect(() => {
-    const buscarCliente = async () => {
-        try {
-            const searchParams = new URLSearchParams(location.search);
-            const matricula = searchParams.get("external_reference");
 
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
-                params: { matricula: matricula }
-            });
-            setCliente(res.data.cliente);
-            setClienteB(res.data.cliente) // cuidado: a API retorna {"cliente": {...}}
-        } catch (error) {
-            console.error("Erro ao buscar cliente:", error);
-        }
-    };
-
-    buscarCliente();
-}, [location.search]);
 
 
     // Seu bloco JSX (Visual) permanece inalterado
