@@ -302,11 +302,24 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     }, [finalizado]);
 
     useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const matricula = searchParams.get("external_reference");
-        const res = axios.get("https://joaofarias16.pythonanywhere.com/cliente", {params: {matricula: matricula}});
-        setCliente(res.data);
-    }, [location.search]);
+    const buscarCliente = async () => {
+        try {
+            const searchParams = new URLSearchParams(location.search);
+            const matricula = searchParams.get("external_reference");
+
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+                params: { matricula: matricula }
+            });
+
+            setCliente(res.data.cliente); // cuidado: a API retorna {"cliente": {...}}
+        } catch (error) {
+            console.error("Erro ao buscar cliente:", error);
+        }
+    };
+
+    buscarCliente();
+}, [location.search]);
+
 
     // Seu bloco JSX (Visual) permanece inalterado
     return (
