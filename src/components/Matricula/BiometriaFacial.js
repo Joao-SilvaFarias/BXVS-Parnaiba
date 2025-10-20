@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import * as faceapi from "face-api.js";
 import styles from "./BiometriaFacial.module.css";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 // INSTRUÇÃO "OLHAR PARA BAIXO" REMOVIDA
 const instrucoes = [
@@ -13,7 +14,7 @@ const instrucoes = [
 ];
 // Total de 5 instruções
 
-export default function BiometriaFacial({ email, setBiometria }) {
+export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [cameraAtiva, setCameraAtiva] = useState(false);
@@ -24,7 +25,7 @@ export default function BiometriaFacial({ email, setBiometria }) {
     const [faceEmbedding, setFaceEmbedding] = useState(null);
     const [finalizado, setFinalizado] = useState(false);
     const [modelsLoaded, setModelsLoaded] = useState(false);
-     const [searchParams] = useSearchParams();
+    const location = useLocation();
 
     // Options de detecção com threshold um pouco mais alto para mais confiança
     const detectorOptions = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.6 });
@@ -142,7 +143,7 @@ export default function BiometriaFacial({ email, setBiometria }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: email,      // usamos o email passado via props
+                    email: cliente.email,      // usamos o email passado via props
                     embedding: embedding,
                 }),
             });
@@ -299,6 +300,13 @@ export default function BiometriaFacial({ email, setBiometria }) {
             setBiometria("concluido");
         }
     }, [finalizado]);
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const matricula = searchParams.get("external_reference");
+        const res = axios.get("https://joaofarias16.pythonanywhere.com/cliente", {params: {matricula: matricula}});
+        setCliente(res.data);
+    }, [location.search]);
 
     // Seu bloco JSX (Visual) permanece inalterado
     return (
