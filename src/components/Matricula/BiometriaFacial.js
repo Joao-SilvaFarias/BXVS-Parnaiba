@@ -310,7 +310,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
                 params: { matricula: matricula }
             });
-
+            alert(res.data.cliente)
             setCliente(res.data.cliente); // cuidado: a API retorna {"cliente": {...}}
         } catch (error) {
             console.error("Erro ao buscar cliente:", error);
@@ -328,7 +328,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                 {cameraAtiva ? (
                     <>
                         <div className={styles.tituloContainer}>
-                            <p className={styles.txtEtapa} onClick={() => alert(cliente.email)}>3° Etapa de Verificação</p>
+                            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
                             <h2 className={styles.txtBiometriaFacial}>
                                 Biometria Facial <span className={styles.txtFoto}>{"<"} Liveness</span> {/* Mudança de Foto para Liveness */}
                             </h2>
