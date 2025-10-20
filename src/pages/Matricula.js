@@ -9,9 +9,9 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Matricula(props) {
 
-    const [dadosPessoais, setDadosPessoais] = useState("concluido");
-    const [escolhaPlano, setEscolhaPlano] = useState("concluido");
-    const [biometria, setBiometria] = useState("andamento");
+    const [dadosPessoais, setDadosPessoais] = useState("andamento");
+    const [escolhaPlano, setEscolhaPlano] = useState("");
+    const [biometria, setBiometria] = useState("");
     const [searchParams] = useSearchParams();
 
     // 🔹 Recuperar email do localStorage caso o usuário volte do pagamento
