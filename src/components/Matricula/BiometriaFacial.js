@@ -4,6 +4,7 @@ import styles from "./BiometriaFacial.module.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
+// INSTRUÇÃO "OLHAR PARA BAIXO" REMOVIDA
 const instrucoes = [
     "Olhar frontal, rosto neutro",
     "Olhar para a esquerda",
@@ -11,6 +12,7 @@ const instrucoes = [
     "Sorrindo, frontal",
     "Olhar para cima",
 ];
+// Total de 5 instruções
 
 export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     const videoRef = useRef(null);
@@ -19,14 +21,18 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
     const [mensagem, setMensagem] = useState("Aguardando modelos de segurança...");
     const [erro, setErro] = useState(null);
     const [instrucoesIndex, setInstrucoesIndex] = useState(0);
+    // Armazenará APENAS o embedding do primeiro rosto (frontal e neutro)
     const [faceEmbedding, setFaceEmbedding] = useState(null);
     const [finalizado, setFinalizado] = useState(false);
     const [modelsLoaded, setModelsLoaded] = useState(false);
+    // Novo estado para rastrear o carregamento inicial do cliente
+    const [clienteCarregado, setClienteCarregado] = useState(false);
     const location = useLocation();
 
+    // Options de detecção com threshold um pouco mais alto para mais confiança
     const detectorOptions = new faceapi.TinyFaceDetectorOptions({ inputSize: 416, scoreThreshold: 0.6 });
 
-    // 🔹 Carregar modelos
+    // Carregar modelos
     useEffect(() => {
         const loadModels = async () => {
             try {
@@ -35,10 +41,11 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                     faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
                     faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
                     faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
+                    // 1. CARREGAR MODELO DE RECONHECIMENTO FACIAL
                     faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
                 ]);
                 setModelsLoaded(true);
-                setMensagem("Modelos de biometria carregados. Clique em Continuar.");
+                setMensagem("Modelos de biometria carregados. Aguardando dados do cliente...");
             } catch (err) {
                 console.error("Erro ao carregar modelos:", err);
                 setErro("Erro ao carregar modelos. Verifique a pasta /models.");
@@ -47,7 +54,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
         loadModels();
     }, []);
 
-    // 🔹 Ativar câmera
+    // Ativar câmera
     useEffect(() => {
         if (!cameraAtiva || !modelsLoaded) return;
         const iniciarCamera = async () => {
@@ -72,7 +79,8 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
         return () => {
             if (videoRef.current?.srcObject) {
                 const stream = videoRef.current.srcObject;
-                stream.getTracks().forEach(track => track.stop());
+                const tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
             }
         };
     }, [cameraAtiva, modelsLoaded]);
@@ -104,92 +112,115 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
         });
     };
 
+    /**
+     * NOVA FUNÇÃO: Gera o vetor numérico do rosto (Embedding)
+     * @param {HTMLVideoElement} videoElement
+     * @returns {number[] | null} O array de números (embedding) ou null
+     */
     const gerarEmbedding = async (videoElement) => {
         const detection = await faceapi.detectSingleFace(videoElement, detectorOptions)
             .withFaceLandmarks()
-            .withFaceDescriptor();
-        if (detection) return Array.from(detection.descriptor);
+            .withFaceDescriptor(); // Este é o passo crucial
+
+        if (detection) {
+            // O descritor é um Float32Array
+            const descriptorArray = detection.descriptor;
+            // Converte para Array JS, que é JSON-serializável
+            return Array.from(descriptorArray);
+        }
         return null;
     };
 
-    // 🔹 Envio seguro da biometria
-    const enviarBiometria = async (embedding) => {
-        if (!cliente || !cliente.email) {
-            console.error("❌ Cliente ainda não carregado. Abortando envio.");
-            setErro("Erro: cliente ainda não carregado. Tente novamente.");
-            return;
-        }
-
-        setMensagem("⌛ Enviando Embedding Biométrico...");
+    /**
+    * FUNÇÃO MODIFICADA: Envia o Embedding Facial para o Flask usando email.
+    * @param {number[]} embedding - O vetor de características do rosto.
+    * @param {string} email - O email do cliente. <--- NOVO PARÂMETRO
+    */
+    const enviarBiometria = async (embedding, email) => { // <--- RECEBE O EMAIL
+        setMensagem("⌛ Enviando Embedding Biomérico...");
         try {
-            const response = await fetch('https://joaofarias16.pythonanywhere.com/api/biometria/upload_embedding_email', {
+            const response = await fetch('https://joaofarias16.pythonanywhere.com/api/biometria/upload_embedding_email', { // endpoint com email
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify({
-                    email: cliente.email,
+                    email: email,      // <--- USA O ARGUMENTO
                     embedding: embedding,
                 }),
             });
 
-            const data = await response.json();
             if (response.ok) {
+                const data = await response.json();
                 console.log("Resposta da API:", data);
-                setMensagem("✅ Cadastro facial concluído e enviado com sucesso!");
-                setFinalizado(true);
+                setMensagem("✅ Cadastro facial concluído e enviado com sucesso! Você será redirecionado(a) em breve.");
+                // O estado finalizado já é definido em validarRosto, mas o feedback visual aqui é importante
+                // setFinalizado(true); 
             } else {
-                console.error("Erro no envio da biometria:", data);
-                setErro(`Falha ao enviar dados: ${data.message || response.statusText}`);
-                setFinalizado(false);
+                const errorData = await response.json();
+                console.error("Erro no envio da biometria:", errorData);
+                setErro(`Falha ao enviar dados: ${errorData.message || response.statusText}. Por favor, tente novamente.`);
+                setFinalizado(false); // Permite uma nova tentativa
             }
         } catch (error) {
             console.error("Erro na comunicação de rede:", error);
             setErro("Erro de rede ao tentar enviar os dados. Verifique sua conexão.");
+            setFinalizado(false); // Permite uma nova tentativa
         }
     };
 
-    // 🔹 Validação de rosto
+    // Função de validação de pose e expressão
     const validarRosto = async () => {
-        if (!cameraAtiva || finalizado || !videoRef.current) return;
+        if (!cameraAtiva || finalizado || !videoRef.current || !cliente?.email) return; // Adiciona verificação do email
 
+        // Detectar com landmarks e expressões (NÃO precisamos de descriptor aqui)
         const detection = await faceapi.detectSingleFace(videoRef.current, detectorOptions)
             .withFaceLandmarks()
             .withFaceExpressions();
 
         if (!detection) {
-            setMensagem("Rosto não detectado. Centralize seu rosto.");
-            canvasRef.current?.getContext("2d")?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+            setMensagem("Rosto não detectado. Centralize seu rosto na área indicada.");
+            if (canvasRef.current) canvasRef.current.getContext("2d")?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
             return;
         }
 
         drawDetections(detection);
 
+        // ... (Seus critérios de segurança básicos - qualidade, tamanho e centralização) ...
         const box = detection.detection.box;
         const boxScore = detection.detection.score;
         const landmarks = detection.landmarks;
         const expressions = detection.expressions;
 
+        const boxW = box.width;
+        const boxH = box.height;
+
         if (boxScore < 0.8) {
-            setMensagem("Detecção de baixa qualidade. Tente novamente.");
+            setMensagem("Detecção de baixa qualidade. Mantenha a câmera estável e com boa iluminação.");
             return;
         }
 
-        const boxH = box.height;
         const minFaceHeight = videoRef.current.videoHeight * 0.25;
         if (boxH < minFaceHeight) {
-            setMensagem("Aproxime-se da câmera.");
+            setMensagem("Aproxime-se. O rosto deve preencher a moldura.");
             return;
         }
 
         const videoCenterX = videoRef.current.videoWidth / 2;
-        const faceCenterX = box.x + box.width / 2;
-        if (Math.abs(faceCenterX - videoCenterX) > videoRef.current.videoWidth * 0.15) {
-            setMensagem("Centralize o rosto.");
+        const faceCenterX = box.x + boxW / 2;
+        const maxOffCenter = videoRef.current.videoWidth * 0.15;
+
+        if (Math.abs(faceCenterX - videoCenterX) > maxOffCenter) {
+            setMensagem("Mantenha o rosto na área central da câmera.");
             return;
         }
+        // Fim dos critérios de segurança
 
         const nose = centro(landmarks.getNose());
-        const noseRelX = (nose.x - (box.x + box.width / 2)) / box.width;
-        const noseRelY = (nose.y - (box.y + box.height / 2)) / box.height;
+        const noseRelX = (nose.x - (box.x + boxW / 2)) / boxW;
+        const noseRelY = (nose.y - (box.y + boxH / 2)) / boxH;
+
+        console.log(`[DEBUG] Instrução: ${instrucoes[instrucoesIndex]} | noseRelX: ${noseRelX.toFixed(4)} | noseRelY: ${noseRelY.toFixed(4)}`);
 
         const instrucaoAtual = instrucoes[instrucoesIndex];
         let posicaoCorreta = false;
@@ -217,147 +248,180 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
         if (posicaoCorreta) {
             let embeddingParaSalvar = null;
 
+            // 2. Ação Condicional: Salvar o embedding APENAS no primeiro passo (frontal e neutro)
             if (instrucoesIndex === 0) {
+                // GERA O VETOR NUMÉRICO AQUI
                 embeddingParaSalvar = await gerarEmbedding(videoRef.current);
                 if (embeddingParaSalvar) {
-                    setFaceEmbedding(embeddingParaSalvar);
-                    console.log("Embedding gerado com sucesso!");
+                    setFaceEmbedding(embeddingParaSalvar); // Armazena o vetor no estado
+                    console.log("Embedding Facial (vetor) gerado com sucesso! Próxima etapa...");
                 } else {
-                    setMensagem("Falha ao gerar o código biométrico. Reposicione o rosto.");
+                    // Não foi possível gerar o embedding (erro raro, mas possível)
+                    setMensagem("Falha ao gerar o código biométrico. Tente reposicionar o rosto.");
                     return;
                 }
             }
 
+            // Avançar para a próxima instrução
             const proximoIndex = instrucoesIndex + 1;
 
             if (proximoIndex === instrucoes.length) {
+                // **PONTO DE ALTERAÇÃO:** Finaliza a Captura dos Liveness Checks
                 setFinalizado(true);
                 setCameraAtiva(false);
-                if (faceEmbedding || embeddingParaSalvar) {
-                    enviarBiometria(embeddingParaSalvar || faceEmbedding);
+
+                // 3. CHAMA O ENVIO COM O EMBEDDING GERADO ANTERIORMENTE E O EMAIL
+                const finalEmbedding = embeddingParaSalvar || faceEmbedding;
+
+                if (finalEmbedding && cliente?.email) {
+                    enviarBiometria(finalEmbedding, cliente.email); // <--- CHAMA COM EMAIL
                 } else {
-                    setErro("Erro: embedding não gerado.");
+                    setErro("Erro interno: O código biométrico ou o email do cliente não foram gerados/encontrados. Recarregue.");
                 }
+
             } else {
+                // Próxima instrução
                 setInstrucoesIndex(proximoIndex);
                 setMensagem(`✅ Capturado! Próxima instrução: ${instrucoes[proximoIndex]}`);
             }
+
         } else {
-            setMensagem(`❌ Posição incorreta. ${instrucaoAtual}.`);
+            // A posição/expressão não está correta
+            let mensagemIncorreta = `❌ Posição incorreta. Por favor, ${instrucaoAtual}.`;
+            setMensagem(mensagemIncorreta);
         }
     };
 
+    // Loop de detecção
     useEffect(() => {
         if (!cameraAtiva || finalizado) return;
         const interval = setInterval(validarRosto, 1000);
         return () => clearInterval(interval);
-    }, [cameraAtiva, instrucoesIndex, finalizado, faceEmbedding]);
+    }, [cameraAtiva, instrucoesIndex, finalizado, faceEmbedding, cliente]); // Adicionado 'cliente' para garantir que validarRosto use o valor mais recente
 
+    // Monitora a finalização
     useEffect(() => {
-        if (finalizado) setBiometria("concluido");
-    }, [finalizado]);
+        if (finalizado) {
+            setBiometria("concluido");
+        }
+    }, [finalizado, setBiometria]); // Adicionei setBiometria às dependências
 
-    // 🔹 Buscar cliente automaticamente
+    // Buscador de Cliente (Mantido)
     useEffect(() => {
         const buscarCliente = async () => {
             try {
                 const searchParams = new URLSearchParams(location.search);
                 const matricula = searchParams.get("external_reference");
+
+                if (!matricula) {
+                    setErro("Parâmetro 'external_reference' (matrícula) não encontrado na URL.");
+                    setClienteCarregado(true);
+                    return;
+                }
+
                 const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
-                    params: { matricula },
+                    params: { matricula: matricula }
                 });
-                console.log("✅ Cliente carregado:", res.data.cliente);
-                setCliente(res.data.cliente);
+                setCliente(res.data.cliente); // cuidado: a API retorna {"cliente": {...}}
+                setClienteCarregado(true);
+                setMensagem("Modelos de biometria carregados. Dados do cliente prontos. Clique em Continuar.");
+
+
             } catch (error) {
                 console.error("Erro ao buscar cliente:", error);
+                setErro(`Falha ao carregar dados do cliente: ${error.message}.`);
+                setClienteCarregado(true);
             }
         };
+
         buscarCliente();
-    }, [location.search]);
+    }, [location.search, setCliente]); // Adicionei setCliente às dependências
 
-    // 🔹 Layout (não alterado)
+
+    // Seu bloco JSX (Visual) permanece inalterado
+    const canStart = modelsLoaded && clienteCarregado && cliente?.email && !erro;
+    const btnText = !modelsLoaded
+        ? "Carregando Modelos..."
+        : !clienteCarregado
+            ? "Carregando Dados do Cliente..."
+            : !cliente?.email
+                ? "Erro: Email do cliente ausente"
+                : "Iniciar Captura Facial";
+
+
     return (
-  <div className={styles.container}>
-    <div className={styles.conteudo}>
-      {cameraAtiva ? (
-        <>
-          <div className={styles.tituloContainer}>
-            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
-            <h2 className={styles.txtBiometriaFacial}>
-              Biometria Facial <span className={styles.txtFoto}>{"<"} Liveness</span>
-            </h2>
-          </div>
+        <div className={styles.container}>
+            <div className={styles.conteudo}>
+                {cameraAtiva ? (
+                    <>
+                        <div className={styles.tituloContainer}>
+                            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
+                            <h2 className={styles.txtBiometriaFacial}>
+                                Biometria Facial <span className={styles.txtFoto}>{"<"} Liveness</span> {/* Mudança de Foto para Liveness */}
+                            </h2>
+                        </div>
 
-          <div className={styles.containerVideo}>
-            <div className={styles.boxVideo} style={{ position: "relative" }}>
-              <video ref={videoRef} autoPlay playsInline muted className={styles.video} />
-              <canvas
-                ref={canvasRef}
-                style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}
-              />
-              <div className={styles.moldura}></div>
-              <p className={styles.mensagemRosto}>{mensagem}</p>
+                        <div className={styles.containerVideo}>
+                            <div className={styles.boxVideo} style={{ position: "relative" }}>
+                                <video ref={videoRef} autoPlay playsInline muted className={styles.video} />
+                                <canvas
+                                    ref={canvasRef}
+                                    style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}
+                                />
+                                <div className={styles.moldura}></div>
+                                <p className={styles.mensagemRosto}>{mensagem}</p>
+                            </div>
+
+                            <div className={styles.containerBoasPraticas}>
+                                <p className={styles.tituloBoasPraticas}>Requisitos de Segurança para Bancos Digitais:</p>
+                                <div className={styles.listaBoasPraticas}>
+                                    <p className={styles.boaPratica}>1. Limpe a câmera do seu aparelho</p>
+                                    <p className={styles.boaPratica}>2. Mantenha o rosto centralizado e totalmente visível na área indicada.</p>
+                                    <p className={styles.boaPratica}>3. Esteja em um ambiente bem iluminado, evitando sombras no rosto.</p>
+                                    <p className={styles.boaPratica}>4. Não use óculos escuros, bonés ou acessórios que cubram o rosto.</p>
+                                    <p className={styles.boaPratica}>5. Olhe diretamente para a câmera e evite movimentos durante a captura.</p>
+                                    <p className={styles.boaPratica}>6. Apenas uma pessoa por foto.</p>
+                                </div>
+
+                                <div className={styles.tirarFotoContainer}>
+                                    <p className={styles.txtImagem}>
+                                        Sua biometria será tratada como **dado sensível** e usada exclusivamente para validação de identidade e controle de acesso, em total conformidade com a **LGPD**.
+                                    </p>
+                                    <hr className={styles.linhaImagem} />
+                                    <p className={styles.txtInstrucaoAtual}>
+                                        **Instrução Atual ({instrucoesIndex + 1} de {instrucoes.length}):** **{instrucoes[instrucoesIndex]}**
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className={styles.tituloContainer}>
+                            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
+                            <h2 className={styles.txtTitulo}>Cadastro de Biometria Facial</h2>
+                            <p className={styles.txtDescricao}>
+                                Para completar sua assinatura, realize as etapas necessárias para cadastrar sua biometria facial para o ingresso em nossa academia!
+                            </p>
+                        </div>
+                        <button
+                            className={styles.btnContinuar}
+                            onClick={() => canStart && setCameraAtiva(true)}
+                            disabled={!canStart || finalizado}
+                        >
+                            {btnText}
+                        </button>
+                    </>
+                )}
+
+                {erro && <p style={{ color: "red", marginTop: '10px' }}>⚠️ **Erro de Sistema:** {erro}</p>}
+                {!erro && clienteCarregado && !cliente?.email && (
+                    <p style={{ color: "red", marginTop: '10px' }}>⚠️ **Erro de Dados:** O email do cliente é necessário, mas não foi encontrado.</p>
+                )}
             </div>
-
-            <div className={styles.containerBoasPraticas}>
-              <p className={styles.tituloBoasPraticas}>Requisitos de Segurança para Bancos Digitais:</p>
-              <div className={styles.listaBoasPraticas}>
-                <p className={styles.boaPratica}>1. Limpe a câmera do seu aparelho</p>
-                <p className={styles.boaPratica}>2. Mantenha o rosto centralizado e totalmente visível na área indicada.</p>
-                <p className={styles.boaPratica}>3. Esteja em um ambiente bem iluminado, evitando sombras no rosto.</p>
-                <p className={styles.boaPratica}>4. Não use óculos escuros, bonés ou acessórios que cubram o rosto.</p>
-                <p className={styles.boaPratica}>5. Olhe diretamente para a câmera e evite movimentos durante a captura.</p>
-                <p className={styles.boaPratica}>6. Apenas uma pessoa por foto.</p>
-              </div>
-
-              <div className={styles.tirarFotoContainer}>
-                <p className={styles.txtImagem}>
-                  Sua biometria será tratada como **dado sensível** e usada exclusivamente para validação de identidade e controle de acesso, em total conformidade com a **LGPD**.
-                </p>
-                <hr className={styles.linhaImagem} />
-                <p className={styles.txtInstrucaoAtual}>
-                  **Instrução Atual ({instrucoesIndex + 1} de {instrucoes.length}):** **{instrucoes[instrucoesIndex]}**
-                </p>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className={styles.tituloContainer}>
-            <p className={styles.txtEtapa}>3° Etapa de Verificação</p>
-            <h2 className={styles.txtTitulo}>Cadastro de Biometria Facial</h2>
-            <p className={styles.txtDescricao}>
-              Para completar sua assinatura, realize as etapas necessárias para cadastrar sua biometria facial para o ingresso em nossa academia!
+            <p className={styles.leiDados}>
+                Seus dados biométricos são classificados como dados sensíveis e serão utilizados exclusivamente para **autenticação e segurança** da sua conta, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), garantindo criptografia e confidencialidade.
             </p>
-          </div>
-
-          {/* 🔒 Botão atualizado — só habilita quando o cliente e modelos estiverem prontos */}
-          <button
-            className={styles.btnContinuar}
-            onClick={() => modelsLoaded && cliente && setCameraAtiva(true)}
-            disabled={!modelsLoaded || !cliente || finalizado}
-          >
-            {!modelsLoaded
-              ? "Carregando Modelos..."
-              : !cliente
-                ? "Carregando Cliente..."
-                : "Iniciar Captura Facial"}
-          </button>
-        </>
-      )}
-
-      {erro && (
-        <p style={{ color: "red", marginTop: "10px" }}>
-          ⚠️ <strong>Erro de Sistema:</strong> {erro}
-        </p>
-      )}
-    </div>
-
-    <p className={styles.leiDados}>
-      Seus dados biométricos são classificados como dados sensíveis e serão utilizados exclusivamente para **autenticação e segurança** da sua conta, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), garantindo criptografia e confidencialidade.
-    </p>
-  </div>
-);
-
+        </div>
+    );
 }
