@@ -14,6 +14,9 @@ export default function Matricula(props) {
     const [biometria, setBiometria] = useState("");
     const [searchParams] = useSearchParams();
 
+    const matricula = searchParams.get("external_reference");
+    if(matricula) setDadosPessoais("concluido"); setEscolhaPlano("andamento");
+
     return (
         <>
             <Header />
