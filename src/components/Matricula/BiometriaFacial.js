@@ -312,6 +312,22 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                 params: { matricula: matricula }
             });
             setCliente(res.data);
+
+
+            try {
+                const res = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
+                    email: res.data.email,
+                    senha: res.data.senha
+                });
+                if (res.data.cliente) {
+                    // Salva no localStorage
+                    localStorage.setItem("cliente", JSON.stringify(res.data.cliente));
+                    localStorage.setItem("token", res.data.token);
+                }
+            } catch (err) {
+                console.error(err);
+                setErro(err.response?.data?.message || "Erro ao fazer login");
+            }
         }
         buscarCliente();
     }, [setCliente, location.search]);
