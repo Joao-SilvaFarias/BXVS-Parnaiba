@@ -25,7 +25,7 @@ export default function Matricula(props) {
 
     return (
         <>
-            <Header />
+            <Header cliente={props.cliente} setCliente={props.setCliente} />
             <div className={styles.container}>
                 <ProgressoMatricula
                     dadosPessoais={{ dadosPessoais, setDadosPessoais }}
