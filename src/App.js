@@ -7,14 +7,14 @@ import { useState } from "react"
 
 export default function App() {
 
-  const [cliente, setCliente] = useState({});
+  const [cliente, setCliente] = useState(null);
 
   return (
     <div className={styles.container}>
       <BrowserRouter>
       <ScrollToTop/>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home cliente={cliente} setCliente={setCliente}/>} />
           <Route path="/matricula" element={<Matricula cliente={cliente} setCliente={setCliente} />} />
         </Routes>
       </BrowserRouter>

@@ -3,11 +3,11 @@ import styles from './Home.module.css';
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 
-export default function Home() {
+export default function Home(props) {
 
     return (
         <>
-            <Header />
+            <Header cliente={props.cliente} setCliente={props.setCliente} />
             <div className={styles.container}>
                 <div className={styles.imgInicio}>
                     <div className={styles.boxInicio}>

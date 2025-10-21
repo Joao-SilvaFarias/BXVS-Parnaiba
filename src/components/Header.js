@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 
-export default function Header() {
+export default function Header({ cliente, setCliente }) {
     const [largura, setLargura] = useState(window.innerWidth);
-    const [alunoMatriculado, setAlunoMatriculado] = useState(false);
+    const location = useLocation();
     useEffect(() => {
         const handleResize = () => setLargura(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
     return (
         <header>
             <Link to={"/"}>
-            <div className={styles.title}>
-                <img src="/img/logo.png" alt="Logo" className={styles.logoTitle} />
-                <p className={styles.txtTitle}>BXVS PARNAÍBA</p>
-            </div>
+                <div className={styles.title}>
+                    <img src="/img/logo.png" alt="Logo" className={styles.logoTitle} />
+                    <p className={styles.txtTitle}>BXVS PARNAÍBA</p>
+                </div>
             </Link>
             {largura > 768 &&
                 <nav>
@@ -26,22 +28,23 @@ export default function Header() {
                     <a href="#matricula"><p className={styles.link}>MATRÍCULA</p></a>
                 </nav>
             }
-            {!alunoMatriculado ? (
-                <div className={styles.usuarioContainer} onClick={() => setAlunoMatriculado(!alunoMatriculado)}>
+            {cliente ? (
+                <div className={styles.usuarioContainer}>
+                    <div className={styles.txtUsuarioContainer}>
+                        <p className={styles.nomeUsuario}>{cliente.email}</p>
+                        <p className={`${styles.statusMatricula} ${cliente && styles.verde}`}>matriculado</p>
+                    </div>
+                    <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser} />
+                </div>
+            ) : (
+                <div className={styles.usuarioContainer}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>Anônimo</p>
                         <p className={styles.statusMatricula}>não matriculado</p>
                     </div>
                     <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser} />
                 </div>
-            ) : (
-                <div className={styles.usuarioContainer} onClick={() => setAlunoMatriculado(!alunoMatriculado)}>
-                <div className={styles.txtUsuarioContainer}>
-                    <p className={styles.nomeUsuario}>VITOR AMORIM SPAOLONSE</p>
-                    <p className={`${styles.statusMatricula} ${alunoMatriculado && styles.verde}`}>matriculado</p>
-                </div>
-                <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser}/>
-            </div>
+
             )}
 
         </header>
