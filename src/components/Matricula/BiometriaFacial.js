@@ -311,9 +311,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
                 params: { matricula: matricula }
             });
-            if(res.data.face_embedding){
-                setCliente(res.data);
-            }
+            setCliente(res.data);
         }
         buscarCliente();
     }, [setCliente, location.search]);
