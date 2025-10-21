@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import styles from "./EscolhaPlano.module.css"
+import styles from "./EscolhaPlano.module.css";
 import Plano from "./Plano";
 import parseReal from "../ParseReal";
 import { useLocation, useSearchParams } from "react-router-dom";
@@ -8,9 +8,9 @@ import axios from "axios";
 export default function EscolhaPlano(props) {
     const [planos, setPlanos] = useState([]);
     const [planoSelecionado, setPlanoSelecionado] = useState(null);
-    const [cupom, setCupom] = useState("");
+    const [cupom, setCupom] = useState("");         // 🔹 Agora cupom é o texto digitado
+    const [desconto, setDesconto] = useState(0);    // 🔹 Percentual de desconto numérico
     const [pagamento, setPagamento] = useState(false);
-    const [desconto, setDesconto] = useState("");
     const [searchParams] = useSearchParams();
     const location = useLocation();
 
@@ -43,27 +43,34 @@ export default function EscolhaPlano(props) {
     const total = () => {
         if (!planoSelecionado) return "R$ 0,00";
         let preco = parseFloat(planoSelecionado.preco);
-        if (desconto) {
-            preco -= (parseFloat(desconto) / 100) * preco;
+        if (desconto > 0) {
+            preco -= (desconto / 100) * preco;
         }
         return parseReal(preco);
     };
 
-    // 🔹 Iniciar pagamento (com salvamento do email)
+    // 🔹 Iniciar pagamento (com salvamento do cupom e cliente)
     const iniciarPagamento = async () => {
         if (!planoSelecionado) {
             alert("Selecione um plano antes de prosseguir com o pagamento.");
             return;
         }
 
-        try {
+        if (!props.cliente?.idCliente) {
+            alert("Cliente não carregado. Faça login novamente.");
+            return;
+        }
 
+        try {
             const res = await fetch(
                 `https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ cupom: desconto, idCliente: props.cliente.idCliente }) // cupom enviado
+                    body: JSON.stringify({
+                        cupom,
+                        idCliente: props.cliente.idCliente
+                    })
                 }
             );
 
@@ -81,21 +88,21 @@ export default function EscolhaPlano(props) {
         }
     };
 
-
-    // 🔹 Função que processa e verifica pagamento
+    // 🔹 Processar e verificar pagamento
     const processarEVerificarPagamento = async (payment_id, external_reference) => {
         try {
-            // 1️⃣ Processa pagamento no backend (insere/atualiza matricula e pagamento)
+            // 1️⃣ Processa pagamento no backend
             await axios.post(
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/processar_pagamento",
                 { payment_id, external_reference }
             );
 
-            // 2️⃣ Verifica no backend se o pagamento está realmente pago
+            // 2️⃣ Verifica se o pagamento foi aprovado
             const response = await axios.get(
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/status_pagamento",
                 { params: { external_reference } }
             );
+            alert(response.data);
 
             if (response.data.pago) {
                 setPagamento(true);
@@ -109,7 +116,7 @@ export default function EscolhaPlano(props) {
         }
     };
 
-    // 🔹 Chamar a função ao detectar parâmetros do checkout na URL
+    // 🔹 Detectar retorno do checkout na URL
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const payment_id = searchParams.get("payment_id");
@@ -119,7 +126,6 @@ export default function EscolhaPlano(props) {
             processarEVerificarPagamento(payment_id, external_reference);
         }
     }, [location]);
-
 
     return (
         <div className={styles.container}>
@@ -154,8 +160,8 @@ export default function EscolhaPlano(props) {
                         type="text"
                         placeholder="Insira o cupom de desconto válido"
                         className={styles.inputCupomDesconto}
-                        value={desconto}
-                        onChange={event => setDesconto(event.target.value)}
+                        value={cupom}
+                        onChange={event => setCupom(event.target.value)}
                     />
                 </div>
 
