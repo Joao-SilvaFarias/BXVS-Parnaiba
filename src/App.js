@@ -3,11 +3,23 @@ import Home from "./pages/Home"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Matricula from "./pages/Matricula"
 import ScrollToTop from "./components/ScrollToTop"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 export default function App() {
 
   const [cliente, setCliente] = useState(null);
+  useEffect(() => {
+    const storedCliente = localStorage.getItem("cliente");
+    const storedToken = localStorage.getItem("token");
+
+    if (storedCliente && storedToken) {
+        setCliente(JSON.parse(storedCliente));
+        // opcional: você pode setar o token em algum estado global ou axios defaults
+        axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+    }
+}, [setCliente]);
+
 
   return (
     <div className={styles.container}>
