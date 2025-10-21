@@ -516,6 +516,24 @@ main {
   margin-bottom: 200px;
 }
 
+.btnGarantirVagaDesativado{
+  width: 400px;
+  height: 70px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: linear-gradient(to right, #9ECD1D, #688810);
+  border: none;
+  border-radius: 10px;
+  font-family: "BebasNeue";
+  margin-top: 10px;
+  z-index: 2;
+  margin-bottom: 200px;
+  opacity: 0.5;
+}
+
 .btnGarantirVaga:hover {
   background: linear-gradient(to right, #688810, #9ECD1D);
   transition: 0.3s;
