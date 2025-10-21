@@ -222,7 +222,7 @@ export default function Home(props) {
                         <hr className={styles.hr}></hr>
                         <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
                         {props.cliente ? 
-                        <Link className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</Link> : 
+                        <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> : 
                         <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
                     </div>
                 </main>
