@@ -102,7 +102,6 @@ export default function EscolhaPlano(props) {
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/status_pagamento",
                 { params: { external_reference } }
             );
-            alert(response.data);
 
             if (response.data.pago) {
                 setPagamento(true);

@@ -39,8 +39,6 @@ export default function DadosPessoais(props) {
         props.setDadosPessoais("concluido");
         props.setEscolhaPlano("andamento");
       }
-
-      alert("Cliente cadastrado com sucesso!");
     } catch (err) {
       console.error("Erro ao cadastrar cliente:", err);
       alert("Erro ao cadastrar cliente. Verifique as informações e tente novamente.");
