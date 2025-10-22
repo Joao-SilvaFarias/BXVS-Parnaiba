@@ -37,7 +37,7 @@ export default function Header({ cliente, setCliente }) {
                     <a href="#matricula"><p className={styles.link}>MATRÍCULA</p></a>
                 </nav>
             }
-            {localStorage.getItem("cliente") ? (
+            {cliente ? (
                 <div className={styles.usuarioContainer} onClick={logout}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>{cliente.email}</p>
