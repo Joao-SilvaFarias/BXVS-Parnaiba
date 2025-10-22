@@ -11,6 +11,7 @@ export default function Home(props) {
     useEffect(() => {
         const buscarCliente = async () => {
             const storedCliente = localStorage.getItem("cliente");
+            alert(storedCliente.idCliente)
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", { params: { id: storedCliente.idCliente } });
             if (res.data) {
                 setCadastroRosto(res.data.face_embedding);
