@@ -62,7 +62,7 @@ export default function EscolhaPlano(props) {
         }
 
         try {
-            const resp = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", {params: {email: props.form.email}})
+            const resp = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", { params: { email: props.form.email } })
             const res = await fetch(
                 `https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`,
                 {
@@ -107,9 +107,15 @@ export default function EscolhaPlano(props) {
             if (response.data.pago) {
                 setPagamento(true);
                 try {
+                    const searchParams = new URLSearchParams(location.search);
+                    const matricula = searchParams.get("external_reference");
+
+                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+                        params: { matricula: matricula }
+                    });
                     const login = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
-                        email: props.form.email,
-                        senha: props.form.senha
+                        email: res.data.email,
+                        senha: res.data.senha
                     });
                     if (login.data.cliente) {
                         // Salva no localStorage
