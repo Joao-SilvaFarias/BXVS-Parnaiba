@@ -154,20 +154,6 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                 console.log("Resposta da API:", data);
                 setMensagem("✅ Cadastro facial concluído e enviado com sucesso! Você será redirecionado(a) em breve.");
                 setFinalizado(true);
-                try {
-                    const login = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
-                        email: cliente.email,
-                        senha: cliente.senha
-                    });
-                    if (login.data.cliente) {
-                        // Salva no localStorage
-                        localStorage.setItem("cliente", JSON.stringify(login.data.cliente));
-                        localStorage.setItem("token", login.data.token);
-                    }
-                } catch (err) {
-                    console.error(err);
-                    setErro(err.response?.data?.message || "Erro ao fazer login");
-                }
             } else {
                 const errorData = await response.json();
                 console.error("Erro no envio da biometria:", errorData);
@@ -327,6 +313,21 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
             });
             setCliente(res.data);
 
+
+            try {
+                const login = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
+                    email: res.data.email,
+                    senha: res.data.senha
+                });
+                if (login.data.cliente) {
+                    // Salva no localStorage
+                    localStorage.setItem("cliente", JSON.stringify(login.data.cliente));
+                    localStorage.setItem("token", login.data.token);
+                }
+            } catch (err) {
+                console.error(err);
+                setErro(err.response?.data?.message || "Erro ao fazer login");
+            }
         }
         buscarCliente();
     }, [setCliente, location.search]);
