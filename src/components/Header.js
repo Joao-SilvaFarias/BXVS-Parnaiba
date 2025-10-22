@@ -11,6 +11,15 @@ export default function Header({ cliente, setCliente }) {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+    const logout = () => {
+        // Remove dados salvos
+        localStorage.removeItem("cliente");
+        localStorage.removeItem("token");
+
+        // Reseta o estado do React
+        setCliente(null);
+    };
+
 
     return (
         <header>
@@ -29,7 +38,7 @@ export default function Header({ cliente, setCliente }) {
                 </nav>
             }
             {cliente ? (
-                <div className={styles.usuarioContainer}>
+                <div className={styles.usuarioContainer} onClick={logout}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>{cliente.email}</p>
                         <p className={`${styles.statusMatricula} ${cliente && styles.verde}`}>matriculado</p>
