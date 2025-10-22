@@ -151,13 +151,14 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
 
             if (response.ok) {
                 try {
-                    const login = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
-                        email: cliente.email,
-                        senha: cliente.senha
+                    const login = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", {
+                        params: {
+                            email: cliente.email
+                        }
                     });
-                    if (login.data.cliente) {
-                        setCliente(login.data.cliente);
-                        localStorage.setItem("cliente", JSON.stringify(login.data.cliente));
+                    if (login.data) {
+                        setCliente(login.data);
+                        localStorage.setItem("cliente", JSON.stringify(login.data));
                         localStorage.setItem("token", login.data.token);
                     }
                 } catch (err) {
