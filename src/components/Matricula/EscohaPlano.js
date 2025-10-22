@@ -69,7 +69,7 @@ export default function EscolhaPlano(props) {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         cupom,
-                        idCliente: props.cliente.idCliente
+                        idCliente: props.form.idCliente
                     })
                 }
             );
@@ -105,6 +105,19 @@ export default function EscolhaPlano(props) {
 
             if (response.data.pago) {
                 setPagamento(true);
+                try {
+                    const login = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
+                        email: props.form.email,
+                        senha: props.form.senha
+                    });
+                    if (login.data.cliente) {
+                        // Salva no localStorage
+                        localStorage.setItem("cliente", JSON.stringify(login.data.cliente));
+                        localStorage.setItem("token", login.data.token);
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
             } else {
                 setPagamento(false);
             }

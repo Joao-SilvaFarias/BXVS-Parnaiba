@@ -13,6 +13,18 @@ export default function Matricula(props) {
     const [escolhaPlano, setEscolhaPlano] = useState("");
     const [biometria, setBiometria] = useState("");
     const [searchParams] = useSearchParams();
+    const [form, setForm] = useState({
+        nome: "",
+        email: "",
+        senha: "",
+        telefone: "",
+        sexo: "",
+        rg: "",
+        cpf: "",
+        dataNascimento: "",
+        estadoCivil: "",
+    });
+
 
     useEffect(() => {
         const matricula = searchParams.get("external_reference");
@@ -39,12 +51,15 @@ export default function Matricula(props) {
                         setEscolhaPlano={setEscolhaPlano}
                         setCliente={props.setCliente}
                         cliente={props.cliente}
+                        form={form}
+                        setForm={setForm}
                     />
                 ) : escolhaPlano === "andamento" ? (
                     <EscolhaPlano
                         setEscolhaPlano={setEscolhaPlano}
                         setBiometria={setBiometria}
                         cliente={props.cliente}
+                        form={form}
                     />
                 ) : biometria === "andamento" ? (
                     <BiometriaFacial setBiometria={setBiometria} cliente={props.cliente} setCliente={props.setCliente} />
