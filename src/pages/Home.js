@@ -7,6 +7,21 @@ import axios from 'axios';
 
 export default function Home(props) {
 
+    const [rosto, setRosto] = useState(null);
+
+    useEffect(() => {
+        const buscarRosto = async () => {
+            if(!props.cliente) return;
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", {
+                params: {
+                    email: props.cliente.email
+                }
+            }); 
+            setRosto(res.data.face_embedding);
+        }
+        buscarRosto();
+    }, []);
+
     return (
         <>
             <Header cliente={props.cliente} setCliente={props.setCliente} />
@@ -223,7 +238,7 @@ export default function Home(props) {
                     <div className={styles.garantirVagaContainer} id="matricula">
                         <hr className={styles.hr}></hr>
                         <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
-                        {props.cliente && props.cliente.face_embedding ?
+                        {rosto ?
                             <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> :
                             <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
                     </div>
