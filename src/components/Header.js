@@ -40,7 +40,7 @@ export default function Header({ cliente, setCliente }) {
             {cliente ? (
                 <div className={styles.usuarioContainer} onClick={logout}>
                     <div className={styles.txtUsuarioContainer}>
-                        <p className={styles.nomeUsuario}>{cliente.email}</p>
+                        <p className={styles.nomeUsuario}>{cliente.nome}</p>
                         <p className={`${styles.statusMatricula} ${cliente && styles.verde}`}>matriculado</p>
                     </div>
                     <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser} />
