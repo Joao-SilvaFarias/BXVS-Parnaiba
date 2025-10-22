@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export default function Home(props) {
 
-    const [cadastroRosto, setCadastroRosto] = useState();
+    const [cadastroRosto, setCadastroRosto] = useState(null);
     useEffect(() => {
         const buscarCliente = async () => {
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {params: {id: props.cliente.idCliente}});
