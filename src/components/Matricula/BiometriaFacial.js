@@ -150,6 +150,25 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
             });
 
             if (response.ok) {
+                try {
+                    const searchParams = new URLSearchParams(location.search);
+                    const matricula = searchParams.get("external_reference");
+
+                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+                        params: { matricula: matricula }
+                    });
+                    const login = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
+                        email: res.data.email,
+                        senha: res.data.senha
+                    });
+                    if (login.data.cliente) {
+                        setCliente(login.data.cliente);
+                        localStorage.setItem("cliente", JSON.stringify(login.data.cliente));
+                        localStorage.setItem("token", login.data.token);
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
                 const data = await response.json();
                 console.log("Resposta da API:", data);
                 setMensagem("✅ Cadastro facial concluído e enviado com sucesso! Você será redirecionado(a) em breve.");
