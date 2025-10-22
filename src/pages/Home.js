@@ -13,6 +13,7 @@ export default function Home(props) {
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {params: {id: props.cliente.idCliente}});
             if(res.data){
                 setCadastroRosto(res.data.face_embedding);
+                alert(res.data.face_embedding);
             }
         }
     }, []);
