@@ -10,12 +10,13 @@ export default function Home(props) {
     const [cadastroRosto, setCadastroRosto] = useState(null);
     useEffect(() => {
         const buscarCliente = async () => {
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {params: {id: props.cliente.idCliente}});
-            if(res.data){
+            const storedCliente = localStorage.getItem("cliente");
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", { params: { id: storedCliente.idCliente } });
+            if (res.data) {
                 setCadastroRosto(res.data.face_embedding);
             }
         }
-        if(props.cliente && props.cliente.idCliente) buscarCliente();
+        buscarCliente();
     }, []);
 
     return (
@@ -234,9 +235,9 @@ export default function Home(props) {
                     <div className={styles.garantirVagaContainer} id="matricula">
                         <hr className={styles.hr}></hr>
                         <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
-                        {cadastroRosto ? 
-                        <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> : 
-                        <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
+                        {cadastroRosto ?
+                            <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> :
+                            <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
                     </div>
                 </main>
             </div>
