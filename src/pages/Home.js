@@ -20,7 +20,7 @@ export default function Home(props) {
             setRosto(res.data.face_embedding);
         }
         buscarRosto();
-    }, []);
+    }, [props.cliente]);
 
     return (
         <>
