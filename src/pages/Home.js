@@ -17,7 +17,7 @@ export default function Home(props) {
             }
         }
         if(props.cliente) buscarCliente();
-    }, [props.cliente]);
+    }, []);
 
     return (
         <>
