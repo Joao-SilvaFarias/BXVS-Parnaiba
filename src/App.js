@@ -8,17 +8,11 @@ import axios from "axios"
 
 export default function App() {
 
-  const [cliente, setCliente] = useState(null);
-  useEffect(() => {
+  const [cliente, setCliente] = useState(() => {
     const storedCliente = localStorage.getItem("cliente");
-    const storedToken = localStorage.getItem("token");
+    return storedCliente ? JSON.parse(storedCliente) : null;
+});
 
-    if (storedCliente && storedToken) {
-        setCliente(JSON.parse(storedCliente));
-        // opcional: você pode setar o token em algum estado global ou axios defaults
-        axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-    }
-}, [setCliente]);
 
 
   return (
