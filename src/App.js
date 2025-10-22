@@ -15,6 +15,7 @@ export default function App() {
 
     if (storedCliente && storedToken) {
         setCliente(JSON.parse(storedCliente));
+        alert(cliente.idCliente);
         // opcional: você pode setar o token em algum estado global ou axios defaults
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
     }
