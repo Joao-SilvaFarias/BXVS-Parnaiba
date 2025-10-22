@@ -7,21 +7,6 @@ import axios from 'axios';
 
 export default function Home(props) {
 
-    const [cadastroRosto, setCadastroRosto] = useState(null);
-    useEffect(() => {
-        const buscarCliente = async () => {
-            const storedCliente = localStorage.getItem("cliente");
-            alert(storedCliente.idCliente)
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", { params: { id: storedCliente.idCliente } });
-            if (res.data) {
-                setCadastroRosto(res.data.face_embedding);
-            }
-        }
-        setTimeout(() => {
-            if(localStorage.getItem("cliente")) buscarCliente();
-        }, 500);
-    }, []);
-
     return (
         <>
             <Header cliente={props.cliente} setCliente={props.setCliente} />
@@ -238,7 +223,7 @@ export default function Home(props) {
                     <div className={styles.garantirVagaContainer} id="matricula">
                         <hr className={styles.hr}></hr>
                         <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
-                        {cadastroRosto ?
+                        {props.cliente && props.cliente.face_embedding ?
                             <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> :
                             <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
                     </div>
