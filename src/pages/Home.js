@@ -15,7 +15,7 @@ export default function Home(props) {
                 setCadastroRosto(res.data.face_embedding);
             }
         }
-        buscarCliente();
+        if(props.cliente) buscarCliente();
     }, [props.cliente]);
 
     return (
