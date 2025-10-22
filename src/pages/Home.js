@@ -10,14 +10,25 @@ export default function Home(props) {
     const [cadastroRosto, setCadastroRosto] = useState(null);
     useEffect(() => {
         const buscarCliente = async () => {
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {params: {id: props.cliente.idCliente}});
-            if(res.data){
-                setCadastroRosto(res.data.face_embedding);
-                alert(cadastroRosto);
+            if (!props.cliente) return;
+
+            try {
+                const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {
+                    params: { id: props.cliente.idCliente }
+                });
+
+                if (res.data) {
+                    setCadastroRosto(res.data.face_embedding);
+                    console.log(res.data.face_embedding); // use console.log, não alert
+                }
+            } catch (error) {
+                console.error("Erro ao buscar cliente:", error);
             }
-        }
-        if(props.cliente) buscarCliente();
-    }, []);
+        };
+
+        buscarCliente();
+    }, [props.cliente]); // <-- agora vai rodar sempre que props.cliente mudar
+
 
     return (
         <>
@@ -235,9 +246,9 @@ export default function Home(props) {
                     <div className={styles.garantirVagaContainer} id="matricula">
                         <hr className={styles.hr}></hr>
                         <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
-                        {cadastroRosto ? 
-                        <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> : 
-                        <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
+                        {cadastroRosto ?
+                            <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> :
+                            <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
                     </div>
                 </main>
             </div>
