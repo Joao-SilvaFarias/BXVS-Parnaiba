@@ -18,7 +18,7 @@ export default function App() {
         // opcional: você pode setar o token em algum estado global ou axios defaults
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
     }
-}, [setCliente, cliente]);
+}, [setCliente]);
 
 
   return (
