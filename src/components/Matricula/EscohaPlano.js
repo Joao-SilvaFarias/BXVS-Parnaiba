@@ -62,6 +62,7 @@ export default function EscolhaPlano(props) {
         }
 
         try {
+            const resp = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", {params: {email: props.form.email}})
             const res = await fetch(
                 `https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`,
                 {
@@ -69,7 +70,7 @@ export default function EscolhaPlano(props) {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         cupom,
-                        idCliente: props.form.idCliente
+                        idCliente: resp.data.idCliente
                     })
                 }
             );
