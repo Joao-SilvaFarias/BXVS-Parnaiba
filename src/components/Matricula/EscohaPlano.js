@@ -56,7 +56,7 @@ export default function EscolhaPlano(props) {
             return;
         }
 
-        if (!props.cliente?.idCliente) {
+        if (!props.form?.email) {
             alert("Cliente não carregado. Faça login novamente.");
             return;
         }
