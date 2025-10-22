@@ -14,7 +14,7 @@ export default function Home(props) {
             if(!props.cliente) return;
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {
                 params: {
-                    id: props.cliente.idCliente
+                    id: 144
                 }
             }); 
             setRosto(res.data.face_embedding);
