@@ -118,7 +118,7 @@ export default function EscolhaPlano(props) {
                         senha: res.data.senha
                     });
                     if (login.data.cliente) {
-                        // Salva no localStorage
+                        props.setCliente(login.data);
                         localStorage.setItem("cliente", JSON.stringify(login.data.cliente));
                         localStorage.setItem("token", login.data.token);
                     }
