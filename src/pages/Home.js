@@ -2,22 +2,9 @@ import { Link } from 'react-router-dom';
 import styles from './Home.module.css';
 import Header from "../components/Header"
 import Footer from "../components/Footer"
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 export default function Home(props) {
 
-    const [cadastroRosto, setCadastroRosto] = useState(null);
-    useEffect(() => {
-        const buscarCliente = async () => {
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {params: {id: localStorage.getItem("cliente").idCliente}});
-            if(res.data){
-                setCadastroRosto(res.data.face_embedding);
-                alert(cadastroRosto);
-            }
-        }
-        buscarCliente();
-    }, []);
 
     return (
         <>
@@ -235,7 +222,7 @@ export default function Home(props) {
                     <div className={styles.garantirVagaContainer} id="matricula">
                         <hr className={styles.hr}></hr>
                         <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
-                        {cadastroRosto ? 
+                        {props.cliente.face_embedding ? 
                         <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> : 
                         <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
                     </div>
