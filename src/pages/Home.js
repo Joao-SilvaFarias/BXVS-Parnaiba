@@ -12,9 +12,9 @@ export default function Home(props) {
     useEffect(() => {
         const buscarRosto = async () => {
             if(!props.cliente) return;
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/api/cliente", {
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {
                 params: {
-                    email: props.cliente.email
+                    id: props.cliente.idCliente
                 }
             }); 
             setRosto(res.data.face_embedding);
