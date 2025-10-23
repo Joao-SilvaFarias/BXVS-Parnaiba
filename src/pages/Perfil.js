@@ -21,43 +21,43 @@ export default function Perfil({ cliente, setCliente }) {
                         <div className={styles.containerInputs}>
                             <div className={styles.containerInput}>
                                 <label>Nome completo</label>
-                                <input type="text" className={styles.inputPerfil} value={cliente.nome} />
+                                <input type="text" className={styles.inputPerfil} value={cliente.nome} readOnly/>
                             </div>
                             <div className={styles.containerInput}>
                                 <label>CPF</label>
-                                <input type="text" className={styles.inputPerfil} value={cliente.cpf} />
+                                <input type="text" className={styles.inputPerfil} value={cliente.cpf} readOnly/>
                             </div>
                             <div className={styles.containerInput}>
                                 <label>Contato de emergência</label>
-                                <input type="text" className={styles.inputPerfil} value={cliente.telefone} />
+                                <input type="text" className={styles.inputPerfil} value={cliente.telefone} readOnly/>
                             </div>
                         </div>
                         <div className={styles.containerInputs}>
                             <div className={styles.containerInput}>
                                 <label>Data de nascimento</label>
-                                <input type="date" className={styles.inputPerfil} value={cliente.dataNascimento} />
+                                <input type="date" className={styles.inputPerfil} value={cliente.dataNascimento} readOnly/>
                             </div>
                             <div className={styles.containerInput}>
                                 <label>RG</label>
-                                <input type="text" className={styles.inputPerfil} value={cliente.rg} />
+                                <input type="text" className={styles.inputPerfil} value={cliente.rg} readOnly/>
                             </div>
                             <div className={styles.containerInput}>
                                 <label>Email</label>
-                                <input type="text" className={styles.inputPerfil} value={cliente.email} />
+                                <input type="text" className={styles.inputPerfil} value={cliente.email} readOnly/>
                             </div>
                         </div>
                         <div className={styles.containerInputs}>
                             <div className={styles.containerInput}>
                                 <label>Sexo</label>
-                                <input type="text" className={styles.inputPerfil} value={cliente.sexo}/>
+                                <input type="text" className={styles.inputPerfil} value={cliente.sexo} readOnly/>
                             </div>
                             <div className={styles.containerInput}>
                                 <label>Telefone</label>
-                                <input type="text" className={styles.inputPerfil} value={cliente.telefone} />
+                                <input type="text" className={styles.inputPerfil} value={cliente.telefone} readOnly/>
                             </div>
                             <div className={styles.containerInput}>
                                 <label>Endereço completo</label>
-                                <input type="text" className={styles.inputPerfil} />
+                                <input type="text" className={styles.inputPerfil} readOnly/>
                             </div>
                         </div>
                         <div className={styles.containerCardPlano}>
