@@ -35,7 +35,7 @@ export default function Perfil({ cliente, setCliente }) {
                         <div className={styles.containerInputs}>
                             <div className={styles.containerInput}>
                                 <label>Data de nascimento</label>
-                                <input type="date" className={styles.inputPerfil} value={cliente.dataNacimento} />
+                                <input type="date" className={styles.inputPerfil} value={cliente.dataNascimento} />
                             </div>
                             <div className={styles.containerInput}>
                                 <label>RG</label>
