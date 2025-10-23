@@ -49,6 +49,23 @@
     transform: scale(0.98);
 }
 
+.btnX{
+    font-size: 15px;
+    padding: 20px;
+    border-radius: 50%;
+}
+
+.btnX:hover{
+    background-color: #434343;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btnX:active{
+    transition: 0.1s;
+    transform: scale(0.98);
+}
+
 hr{
     height: 1px;
     width: 100%;

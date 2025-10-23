@@ -17,7 +17,7 @@ export default function Perfil({ cliente, setCliente }) {
                         <p className={styles.tituloMatricula}>Minha matrícula</p>
                         {soLer ? 
                         <button onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</button> : 
-                        <p onClick={toggleEdit}>x</p>}
+                        <p onClick={toggleEdit} className={styles.btnX}>x</p>}
                     </div>
                     <hr></hr>
                     <div className={styles.containerPerfil}>
