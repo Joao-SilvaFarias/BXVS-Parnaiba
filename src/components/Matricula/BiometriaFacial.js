@@ -321,7 +321,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
             const searchParams = new URLSearchParams(location.search);
             const matricula = searchParams.get("external_reference");
 
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorMatricula", {
                 params: { matricula: matricula }
             });
             setCliente(res.data);

@@ -110,7 +110,7 @@ export default function EscolhaPlano(props) {
                     const searchParams = new URLSearchParams(location.search);
                     const matricula = searchParams.get("external_reference");
 
-                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
+                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorMatricula", {
                         params: { matricula: matricula }
                     });
                     const login = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
