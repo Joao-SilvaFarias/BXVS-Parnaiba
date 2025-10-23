@@ -47,7 +47,7 @@ export default function Header({ cliente, setCliente }) {
                     <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser} />
                 </div>
             ) : (
-                <div className={styles.usuarioContainer} onClick={() => navigate("/perfil")}>
+                <div className={styles.usuarioContainer}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>Anônimo</p>
                         <p className={styles.statusMatricula}>não matriculado</p>
