@@ -1,8 +1,22 @@
+import { useState } from "react";
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import styles from "./Perfil.module.css"
 
 export default function Perfil({ cliente, setCliente }) {
+
+    const [editar, setEditar] = useState(false);
+    const toggleEdit = () => {
+        const inputs = document.querySelectorAll(".inputPerfil");
+        if(editar){
+            setEditar(false);
+            inputs.forEach(input => input.setAttribute("readonly", true));
+        } else{
+            setEditar(true);
+            inputs.forEach(input => input.removeAttribute("readonly"));
+        }
+    }
+
     return (
         <>
             <Header cliente={cliente} setCliente={setCliente} />
@@ -10,7 +24,9 @@ export default function Perfil({ cliente, setCliente }) {
                 <div className={styles.cardMatricula}>
                     <div className={styles.headerCardMatricula}>
                         <p className={styles.tituloMatricula}>Minha matrícula</p>
-                        <button className={styles.btnInformacoes}>Editar informações</button>
+                        {editar ? 
+                        <p onClick={toggleEdit}>x</p> : 
+                        <button onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</button>}
                     </div>
                     <hr></hr>
                     <div className={styles.containerPerfil}>
