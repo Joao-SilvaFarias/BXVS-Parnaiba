@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css"
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Header({ cliente, setCliente }) {
     const [largura, setLargura] = useState(window.innerWidth);
     const location = useLocation();
+    const navigate = useNavigate();
     useEffect(() => {
         const handleResize = () => setLargura(window.innerWidth);
         window.addEventListener('resize', handleResize);
@@ -38,7 +39,7 @@ export default function Header({ cliente, setCliente }) {
                 </nav>
             }
             {cliente ? (
-                <div className={styles.usuarioContainer} onClick={logout}>
+                <div className={styles.usuarioContainer} onClick={() => navigate("/perfil")}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>{cliente.nome}</p>
                         <p className={`${styles.statusMatricula} ${cliente && styles.verde}`}>matriculado</p>
@@ -46,7 +47,7 @@ export default function Header({ cliente, setCliente }) {
                     <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser} />
                 </div>
             ) : (
-                <div className={styles.usuarioContainer}>
+                <div className={styles.usuarioContainer} onClick={() => navigate("/perfil")}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>Anônimo</p>
                         <p className={styles.statusMatricula}>não matriculado</p>

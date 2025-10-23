@@ -5,6 +5,7 @@ import Matricula from "./pages/Matricula"
 import ScrollToTop from "./components/ScrollToTop"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import Perfil from "./pages/Perfil"
 
 export default function App() {
 
@@ -28,6 +29,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home cliente={cliente} setCliente={setCliente}/>} />
           <Route path="/matricula" element={<Matricula cliente={cliente} setCliente={setCliente} />} />
+          <Route path="/perfil" element={<Perfil cliente={cliente} setCliente={setCliente} />} />
         </Routes>
       </BrowserRouter>
     </div>
