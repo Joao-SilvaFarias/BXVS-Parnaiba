@@ -12,7 +12,7 @@ export default function Home(props) {
     useEffect(() => {
         const buscarRosto = async () => {
             if(!props.cliente) return;
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
                 params: {
                     id: props.cliente.idCliente
                 }

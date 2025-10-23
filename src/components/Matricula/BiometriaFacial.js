@@ -151,7 +151,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
 
             if (response.ok) {
                 try {
-                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/buscarCliente", {
+                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
                 params: {
                     id: cliente.idCliente
                 }
