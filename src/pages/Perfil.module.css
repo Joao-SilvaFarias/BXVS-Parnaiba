@@ -15,9 +15,8 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
-    position: relative;
 }
 
 .headerCardMatricula{
@@ -82,6 +81,7 @@ hr{
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    width: 100%;
 }
 
 .imgPerfil{
@@ -206,9 +206,6 @@ hr{
     justify-content: center;
     align-items: center;
     gap: 5px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
 }
 
 .btnSalvar:hover{
