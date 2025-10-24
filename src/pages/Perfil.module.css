@@ -194,3 +194,26 @@ hr{
 .imgMercadoPago{
     height: 20px;
 }
+
+.btnSalvar{
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #42e93f;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.btnSalvar:hover{
+    cursor: pointer;
+    transition: 0.3;
+    background-color: #43ff40;
+}
+
+.btnSalvar:active{
+    transition: 0.1s;
+    transform: scale(0.98);
+}

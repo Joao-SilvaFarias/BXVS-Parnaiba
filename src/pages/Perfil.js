@@ -18,6 +18,7 @@ export default function Perfil({ cliente, setCliente }) {
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             alert("Dados atualizados com sucesso!");
+            setSoLer(true);
         } catch (error) {
             console.error(error);
             alert("Erro ao atualizar dados!");
@@ -107,7 +108,7 @@ export default function Perfil({ cliente, setCliente }) {
                             </div>
                         </div>
                     </div>
-                    <button type="submit">Salvar</button>
+                    <button type="submit" className={styles.btnSalvar}>Salvar</button>
                 </form>
             </div>
             <Footer />
