@@ -13,9 +13,17 @@ export default function Perfil({ cliente, setCliente }) {
         setCliente(prev => ({ ...prev, [e.target.name]: e.target.value }));
     }
 
-    const hadleSubmit = async () => {
-        axios.put("https://joaofarias16.pythonanywhere.com/cliente/"+cliente.idCliente, cliente);
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
+            alert("Dados atualizados com sucesso!");
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao atualizar dados!");
+        }
+    };
+
 
     return (
         <>
@@ -30,47 +38,47 @@ export default function Perfil({ cliente, setCliente }) {
                     </div>
                     <hr></hr>
                     <div className={styles.containerPerfil}>
-                        <img className={styles.imgPerfil} alt="Perfil" src="/img/iconUser.png" />
+                        <img className={styles.imgPerfil} alt="Perfil" src="/img/iconUser.png"/>
                         <p className={styles.nomePerfil}>{cliente.nome}</p>
                     </div>
-                    <form onSubmit={hadleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <div className={styles.containerDados}>
                             <div className={styles.containerInputs}>
                                 <div className={styles.containerInput}>
                                     <label>Nome completo</label>
-                                    <input type="text" className={styles.inputPerfil} value={cliente.nome} readOnly={soLer} onChange={handleChange} />
+                                    <input type="text" name="nome" className={styles.inputPerfil} value={cliente.nome} readOnly={soLer} onChange={handleChange} />
                                 </div>
                                 <div className={styles.containerInput}>
                                     <label>CPF</label>
-                                    <input type="text" className={styles.inputPerfil} value={cliente.cpf} readOnly={soLer} onChange={handleChange} />
+                                    <input type="text" name="cpf" className={styles.inputPerfil} value={cliente.cpf} readOnly={soLer} onChange={handleChange} />
                                 </div>
                                 <div className={styles.containerInput}>
                                     <label>Contato de emergência</label>
-                                    <input type="text" className={styles.inputPerfil} value={cliente.telefone} readOnly={soLer} onChange={handleChange} />
+                                    <input type="text" name="telefone" className={styles.inputPerfil} value={cliente.telefone} readOnly={soLer} onChange={handleChange} />
                                 </div>
                             </div>
                             <div className={styles.containerInputs}>
                                 <div className={styles.containerInput}>
                                     <label>Data de nascimento</label>
-                                    <input type="date" className={styles.inputPerfil} value={cliente.dataNascimento} readOnly={soLer} onChange={handleChange} />
+                                    <input type="date" name="dataNascimento" className={styles.inputPerfil} value={cliente.dataNascimento} readOnly={soLer} onChange={handleChange} />
                                 </div>
                                 <div className={styles.containerInput}>
                                     <label>RG</label>
-                                    <input type="text" className={styles.inputPerfil} value={cliente.rg} readOnly={soLer} onChange={handleChange} />
+                                    <input type="text" name="rg" className={styles.inputPerfil} value={cliente.rg} readOnly={soLer} onChange={handleChange} />
                                 </div>
                                 <div className={styles.containerInput}>
                                     <label>Email</label>
-                                    <input type="text" className={styles.inputPerfil} value={cliente.email} readOnly={soLer} onChange={handleChange} />
+                                    <input type="text" name="email" className={styles.inputPerfil} value={cliente.email} readOnly={soLer} onChange={handleChange} />
                                 </div>
                             </div>
                             <div className={styles.containerInputs}>
                                 <div className={styles.containerInput}>
                                     <label>Sexo</label>
-                                    <input type="text" className={styles.inputPerfil} value={cliente.sexo} readOnly={soLer} onChange={handleChange} />
+                                    <input type="text" name="sexo" className={styles.inputPerfil} value={cliente.sexo} readOnly={soLer} onChange={handleChange} />
                                 </div>
                                 <div className={styles.containerInput}>
                                     <label>Telefone</label>
-                                    <input type="text" className={styles.inputPerfil} value={cliente.telefone} readOnly={soLer} onChange={handleChange} />
+                                    <input type="text" name="telefone" className={styles.inputPerfil} value={cliente.telefone} readOnly={soLer} onChange={handleChange} />
                                 </div>
                                 <div className={styles.containerInput}>
                                     <label>Endereço completo</label>
