@@ -23,6 +23,7 @@ export default function Matricula(props) {
         cpf: "",
         dataNascimento: "",
         estadoCivil: "",
+        endereco: ""
     });
 
 

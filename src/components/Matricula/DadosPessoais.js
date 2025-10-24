@@ -170,6 +170,19 @@ export default function DadosPessoais(props) {
             </select>
           </div>
 
+          <div className={styles.inputContainer}>
+            <p className={styles.labelInput}>Endereço completo</p>
+            <input
+              type="date"
+              name="dataNascimento"
+              value={props.form.endereco}
+              className={styles.inputDados}
+              required
+              onChange={handleChange}
+              placeholder="Cidade, bairro e rua"
+            />
+          </div>
+
           <button className={styles.btnContinuar} type="submit">
             Continuar
           </button>

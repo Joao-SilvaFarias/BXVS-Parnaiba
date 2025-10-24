@@ -81,7 +81,7 @@ export default function Perfil({ cliente, setCliente }) {
                             </div>
                             <div className={styles.containerInput}>
                                 <label>Endereço completo</label>
-                                <input type="text" className={styles.inputPerfil} readOnly={soLer} onChange={handleChange} />
+                                <input type="text" name="endereco" className={styles.inputPerfil} value={cliente.endereco} readOnly={soLer} onChange={handleChange} />
                             </div>
                         </div>
                         <div className={styles.containerCardPlano}>
