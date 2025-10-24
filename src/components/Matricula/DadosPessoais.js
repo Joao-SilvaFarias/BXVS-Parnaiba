@@ -173,7 +173,7 @@ export default function DadosPessoais(props) {
           <div className={styles.inputContainer}>
             <p className={styles.labelInput}>Endereço completo</p>
             <input
-              type="date"
+              type="text"
               name="dataNascimento"
               value={props.form.endereco}
               className={styles.inputDados}
