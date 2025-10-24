@@ -45,6 +45,7 @@ export default function Header({ cliente, setCliente }) {
                         <p className={`${styles.statusMatricula} ${cliente && styles.verde}`}>matriculado</p>
                     </div>
                     <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser} />
+                    <button onClick={logout}>Logout</button>
                 </div>
             ) : (
                 <div className={styles.usuarioContainer}>
