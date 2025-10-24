@@ -125,7 +125,7 @@ export default function Perfil({ cliente, setCliente }) {
                                     <div className={styles.containerPagamento}>
                                         <div className={styles.containerValor}>
                                             <p className={styles.textPlano}>Valor:</p>
-                                            <p className={styles.textPlano}>R$ {cliente.valorPago}</p>
+                                            <p className={styles.textPlano}>R$ {cliente.valorPlano}</p>
                                         </div>
                                         <button className={styles.btnMercadoPago}>
                                             <img alt="Mercado pago" src="/img/mercadoPagoIcon.png" className={styles.imgMercadoPago} />
