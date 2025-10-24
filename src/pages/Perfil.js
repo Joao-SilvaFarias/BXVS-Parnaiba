@@ -127,10 +127,17 @@ export default function Perfil({ cliente, setCliente }) {
                                             <p className={styles.textPlano}>Valor:</p>
                                             <p className={styles.textPlano}>R$ {cliente.valorPlano}</p>
                                         </div>
-                                        <button className={styles.btnMercadoPago}>
+                                        {cliente.statusPagamento === "Pago" ? (
+                                            <button className={styles.btnMercadoPagoDesativado}>
                                             <img alt="Mercado pago" src="/img/mercadoPagoIcon.png" className={styles.imgMercadoPago} />
                                             <p>Realizar pagamento</p>
                                         </button>
+                                        ) : (
+                                            <button className={styles.btnMercadoPago}>
+                                            <img alt="Mercado pago" src="/img/mercadoPagoIcon.png" className={styles.imgMercadoPago} />
+                                            <p>Realizar pagamento</p>
+                                        </button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
