@@ -11,6 +11,7 @@ export default function Header({ cliente, setCliente }) {
         const handleResize = () => setLargura(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
+        logout();
     }, []);
     const logout = () => {
         // Remove dados salvos
