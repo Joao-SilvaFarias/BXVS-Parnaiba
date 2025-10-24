@@ -197,10 +197,8 @@
 }
 
 .btnSalvar{
-    width: 200px;
-    height: 50px;
     border-radius: 10px;
-    background-color: #3ac437;
+    background: linear-gradient(to right, #9ECD1D, #4F670F);
     display: flex;
     padding: 10px;
     justify-content: center;
@@ -211,7 +209,7 @@
 .btnSalvar:hover{
     cursor: pointer;
     transition: 0.3;
-    background-color: #43ff40;
+    background: linear-gradient(to right, #4F670F, #9ECD1D);
 }
 
 .btnSalvar:active{
