@@ -39,7 +39,7 @@ export default function Header({ cliente, setCliente }) {
                 </nav>
             }
             {cliente ? (
-                <div className={styles.usuarioContainer} onClick={logout}>
+                <div className={styles.usuarioContainer} onClick={() => navigate("/perfil")}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>{cliente.nome}</p>
                         <p className={`${styles.statusMatricula} ${cliente && styles.verde}`}>matriculado</p>
