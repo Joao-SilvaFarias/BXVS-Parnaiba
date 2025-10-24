@@ -70,7 +70,7 @@
     transform: scale(0.98);
 }
 
-hr{
+.hr{
     height: 1px;
     width: 100%;
     background-color: #fff;

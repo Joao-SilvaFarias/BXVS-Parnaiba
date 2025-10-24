@@ -36,7 +36,7 @@ export default function Perfil({ cliente, setCliente }) {
                             <button onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</button> :
                             <p onClick={toggleEdit} className={styles.btnX}>x</p>}
                     </div>
-                    <hr></hr>
+                    <hr className={styles.hr}></hr>
                     <div className={styles.containerPerfil}>
                         <img className={styles.imgPerfil} alt="Perfil" src="/img/iconUser.png" />
                         <p className={styles.nomePerfil}>{cliente.nome}</p>
@@ -93,7 +93,7 @@ export default function Perfil({ cliente, setCliente }) {
                                     <p className={styles.textPlano}>Vence em:</p>
                                     <p className={styles.vencimento}>10/12/2025</p>
                                 </div>
-                                <hr></hr>
+                                <hr className={styles.hr}></hr>
                                 <div className={styles.containerPagamento}>
                                     <div className={styles.containerValor}>
                                         <p className={styles.textPlano}>Valor:</p>
