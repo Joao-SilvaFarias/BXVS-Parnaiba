@@ -12,11 +12,7 @@ export default function Home(props) {
     useEffect(() => {
         const buscarRosto = async () => {
             if(!props.cliente) return;
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
-                params: {
-                    id: props.cliente.idCliente
-                }
-            }); 
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/"+props.cliente.idCliente); 
             setRosto(res.data.face_embedding);
         }
         buscarRosto();

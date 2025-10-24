@@ -18,7 +18,7 @@ export default function DadosPessoais(props) {
     };
 
     try {
-      const res = await axios.post("https://joaofarias16.pythonanywhere.com/api/cliente/cadastrar", dadosCliente);
+      const res = await axios.post("https://joaofarias16.pythonanywhere.com/cliente", dadosCliente);
       console.log("Cliente cadastrado:", res.data);
 
       // Atualiza o fluxo de etapas (caso esteja em um fluxo de cadastro)

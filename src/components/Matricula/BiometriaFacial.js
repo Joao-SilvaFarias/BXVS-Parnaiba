@@ -151,11 +151,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
 
             if (response.ok) {
                 try {
-                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente", {
-                params: {
-                    id: cliente.idCliente
-                }
-            }); 
+                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/"+cliente.idCliente); 
                     if (res.data) {
                         setCliente(res.data);
                         localStorage.setItem("cliente", JSON.stringify(res.data));
@@ -321,12 +317,8 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
             const searchParams = new URLSearchParams(location.search);
             const matricula = searchParams.get("external_reference");
 
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorMatricula", {
-                params: { matricula: matricula }
-            });
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorMatricula/"+matricula);
             setCliente(res.data);
-
-
         }
         buscarCliente();
     }, [setCliente, location.search]);
