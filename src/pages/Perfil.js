@@ -17,7 +17,6 @@ export default function Perfil({ cliente, setCliente }) {
         e.preventDefault();
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
-            alert("Dados atualizados com sucesso!");
             setSoLer(true);
         } catch (error) {
             console.error(error);
