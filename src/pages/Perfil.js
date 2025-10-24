@@ -25,7 +25,6 @@ export default function Perfil({ cliente, setCliente }) {
 
         const semAlteracao = JSON.stringify(cliente) === JSON.stringify(clienteOriginal);
         if (semAlteracao) {
-            alert("Nenhuma alteração detectada!");
             setSoLer(true);
             return;
         }
@@ -33,6 +32,7 @@ export default function Perfil({ cliente, setCliente }) {
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             setSoLer(true);
+            setClienteOriginal(cliente);
         } catch (error) {
             console.error(error);
             alert("Erro ao atualizar dados!");
