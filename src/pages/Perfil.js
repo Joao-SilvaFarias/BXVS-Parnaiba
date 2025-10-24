@@ -35,7 +35,7 @@ export default function Perfil({ cliente, setCliente }) {
                         {soLer ?
                             <button onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</button> :
                             <form onSubmit={handleSubmit}>
-                                <button type="submit" className={styles.btnSalvar}>Salvar</button>
+                                <button type="submit" className={styles.btnSalvar}>Confirmar</button>
                             </form>}
                     </div>
                     <hr className={styles.hr}></hr>
