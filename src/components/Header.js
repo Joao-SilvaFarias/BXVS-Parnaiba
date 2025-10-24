@@ -11,7 +11,6 @@ export default function Header({ cliente, setCliente }) {
         const handleResize = () => setLargura(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-        logout();
     }, []);
     const logout = () => {
         // Remove dados salvos
@@ -40,7 +39,7 @@ export default function Header({ cliente, setCliente }) {
                 </nav>
             }
             {cliente ? (
-                <div className={styles.usuarioContainer} onClick={() => navigate("/perfil")}>
+                <div className={styles.usuarioContainer} onClick={logout}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>{cliente.nome}</p>
                         <p className={`${styles.statusMatricula} ${cliente && styles.verde}`}>matriculado</p>
