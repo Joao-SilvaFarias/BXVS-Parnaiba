@@ -17,6 +17,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .headerCardMatricula{
@@ -199,12 +200,15 @@ hr{
     width: 200px;
     height: 50px;
     border-radius: 10px;
-    background-color: #42e93f;
+    background-color: #3ac437;
     display: flex;
     padding: 10px;
     justify-content: center;
     align-items: center;
     gap: 5px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .btnSalvar:hover{
