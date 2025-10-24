@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import styles from "./Perfil.module.css"
@@ -8,7 +8,17 @@ export default function Perfil({ cliente, setCliente }) {
 
     const [soLer, setSoLer] = useState(true);
     const [clienteOriginal, setClienteOriginal] = useState();
-    const toggleEdit = () => setSoLer(!soLer);
+    const nomeRef = useRef(null);
+    const toggleEdit = () => {
+        setSoLer(prev => {
+        const novoEstado = !prev;
+        if (novoEstado === false) {
+            // Espera o input liberar o readOnly e então foca
+            setTimeout(() => nomeRef.current?.focus(), 0);
+        }
+        return novoEstado;
+    });
+    };
 
     useEffect(() => {
         if(cliente){
@@ -62,7 +72,7 @@ export default function Perfil({ cliente, setCliente }) {
                         <div className={styles.containerInputs}>
                             <div className={styles.containerInput}>
                                 <label>Nome completo</label>
-                                <input type="text" name="nome" className={styles.inputPerfil} value={cliente.nome} readOnly={soLer} onChange={handleChange} />
+                                <input type="text" name="nome" ref={nomeRef} className={styles.inputPerfil} value={cliente.nome} readOnly={soLer} onChange={handleChange}/>
                             </div>
                             <div className={styles.containerInput}>
                                 <label>CPF</label>
