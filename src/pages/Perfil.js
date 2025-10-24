@@ -34,7 +34,9 @@ export default function Perfil({ cliente, setCliente }) {
                         <p className={styles.tituloMatricula}>Minha matrícula</p>
                         {soLer ?
                             <button onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</button> :
-                            <p onClick={toggleEdit} className={styles.btnX}>x</p>}
+                            <form onSubmit={handleSubmit}>
+                                <button type="submit" className={styles.btnSalvar}>Salvar</button>
+                            </form>}
                     </div>
                     <hr className={styles.hr}></hr>
                     <div className={styles.containerPerfil}>
@@ -107,11 +109,6 @@ export default function Perfil({ cliente, setCliente }) {
                             </div>
                         </div>
                     </div>
-                    {!soLer && (
-                        <form onSubmit={handleSubmit}>
-                            <button type="submit" className={styles.btnSalvar}>Salvar</button>
-                        </form>
-                    )}
                 </div>
             </div>
             <Footer />
