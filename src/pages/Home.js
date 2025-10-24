@@ -16,6 +16,7 @@ export default function Home(props) {
             console.log(res.data);
             setRosto(res.data.face_embedding);
             props.setCliente(res.data);
+            localStorage.setItem("cliente", JSON.stringify(res.data));
         }
         buscarRosto();
     }, [props.cliente]);
