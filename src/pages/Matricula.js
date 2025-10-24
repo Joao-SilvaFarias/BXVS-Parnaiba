@@ -13,18 +13,7 @@ export default function Matricula(props) {
     const [escolhaPlano, setEscolhaPlano] = useState("");
     const [biometria, setBiometria] = useState("");
     const [searchParams] = useSearchParams();
-    const [form, setForm] = useState({
-        nome: "",
-        email: "",
-        senha: "",
-        telefone: "",
-        sexo: "",
-        rg: "",
-        cpf: "",
-        dataNascimento: "",
-        estadoCivil: "",
-        endereco: ""
-    });
+    const [form, setForm] = useState({});
 
 
     useEffect(() => {

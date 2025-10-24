@@ -51,7 +51,6 @@ export default function DadosPessoais(props) {
               type="text"
               name="nome"
               placeholder="Digite seu nome"
-              value={props.form.nome}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -64,7 +63,6 @@ export default function DadosPessoais(props) {
               type="email"
               name="email"
               placeholder="Ex: aluno@bxvs.com"
-              value={props.form.email}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -77,7 +75,6 @@ export default function DadosPessoais(props) {
               type="password"
               name="senha"
               placeholder="Crie uma senha segura"
-              value={props.form.senha}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -91,7 +88,6 @@ export default function DadosPessoais(props) {
                 type="tel"
                 name="telefone"
                 placeholder="(00) 00000-0000"
-                value={props.form.telefone}
                 className={styles.inputDados}
                 required
                 onChange={handleChange}
@@ -103,7 +99,6 @@ export default function DadosPessoais(props) {
               <select
                 name="sexo"
                 className={styles.inputDados}
-                value={props.form.sexo}
                 onChange={handleChange}
                 required
               >
@@ -121,7 +116,6 @@ export default function DadosPessoais(props) {
               type="text"
               name="rg"
               placeholder="000.000.000-0"
-              value={props.form.rg}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -134,7 +128,6 @@ export default function DadosPessoais(props) {
               type="text"
               name="cpf"
               placeholder="000.000.000-00"
-              value={props.form.cpf}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -146,7 +139,6 @@ export default function DadosPessoais(props) {
             <input
               type="date"
               name="dataNascimento"
-              value={props.form.dataNascimento}
               className={styles.inputDados}
               required
               onChange={handleChange}
@@ -158,7 +150,6 @@ export default function DadosPessoais(props) {
             <select
               name="estadoCivil"
               className={styles.inputDados}
-              value={props.form.estadoCivil}
               onChange={handleChange}
               required
             >
@@ -174,8 +165,7 @@ export default function DadosPessoais(props) {
             <p className={styles.labelInput}>Endereço completo</p>
             <input
               type="text"
-              name="dataNascimento"
-              value={props.form.endereco}
+              name="endereco"
               className={styles.inputDados}
               required
               onChange={handleChange}
