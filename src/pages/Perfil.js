@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import styles from "./Perfil.module.css"
@@ -7,7 +7,14 @@ import axios from "axios";
 export default function Perfil({ cliente, setCliente }) {
 
     const [soLer, setSoLer] = useState(true);
+    const [clienteOriginal, setClienteOriginal] = useState();
     const toggleEdit = () => setSoLer(!soLer);
+
+    useEffect(() => {
+        if(cliente){
+            setClienteOriginal(cliente);
+        }
+    }, [cliente]);
 
     const handleChange = e => {
         setCliente(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -15,6 +22,14 @@ export default function Perfil({ cliente, setCliente }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const semAlteracao = JSON.stringify(cliente) === JSON.stringify(clienteOriginal);
+        if (semAlteracao) {
+            alert("Nenhuma alteração detectada!");
+            setSoLer(true);
+            return;
+        }
+
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             setSoLer(true);
