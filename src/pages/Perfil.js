@@ -108,7 +108,7 @@ export default function Perfil({ cliente, setCliente }) {
                             </div>
                         </div>
                     </div>
-                    <button type="submit" className={styles.btnSalvar}>Salvar</button>
+                    {!soLer && <button type="submit" className={styles.btnSalvar}>Salvar</button>}
                 </form>
             </div>
             <Footer />
