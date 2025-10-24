@@ -115,17 +115,17 @@ export default function Perfil({ cliente, setCliente }) {
                             <div className={styles.containerCardPlano}>
                                 <label>Meu plano</label>
                                 <div className={styles.cardPlano}>
-                                    <div className={styles.textPlano}>Plano PRO</div>
-                                    <p className={styles.textPlano}>Pensado para quem quer performance máxima. Acesso total às aulas, suporte exclusivo dos coaches e prioridade em eventos e desafios da comunidade BXVS.</p>
+                                    <div className={styles.textPlano}>{cliente.nomePlano}</div>
+                                    <p className={styles.textPlano}>{cliente.descricaoPlano}</p>
                                     <div className={styles.vencimentoContainer}>
                                         <p className={styles.textPlano}>Vence em:</p>
-                                        <p className={styles.vencimento}>10/12/2025</p>
+                                        <p className={styles.vencimento}>{cliente.dataPagamento}</p>
                                     </div>
                                     <hr className={styles.hr}></hr>
                                     <div className={styles.containerPagamento}>
                                         <div className={styles.containerValor}>
                                             <p className={styles.textPlano}>Valor:</p>
-                                            <p className={styles.textPlano}>R$ 150,00</p>
+                                            <p className={styles.textPlano}>R$ {cliente.valorPago}</p>
                                         </div>
                                         <button className={styles.btnMercadoPago}>
                                             <img alt="Mercado pago" src="/img/mercadoPagoIcon.png" className={styles.imgMercadoPago} />
