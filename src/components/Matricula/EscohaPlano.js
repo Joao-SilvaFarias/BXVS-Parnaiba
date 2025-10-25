@@ -8,11 +8,13 @@ import axios from "axios";
 export default function EscolhaPlano(props) {
 
     useEffect(() => {
-    if(props.cliente){
-      props.setEscolhaPlano("concluido");
-      props.setBiometria("andamento");
-    }
-  }, [props.cliente]);
+        if (props.cliente) {
+            if (props.cliente.statusPagamento === "Pago") {
+                props.setEscolhaPlano("concluido");
+                props.setBiometria("andamento");
+            }
+        }
+    }, [props.cliente]);
 
     const [planos, setPlanos] = useState([]);
     const [planoSelecionado, setPlanoSelecionado] = useState(null);
@@ -70,7 +72,7 @@ export default function EscolhaPlano(props) {
         }
 
         try {
-            const resp = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorEmail/"+props.form.email)
+            const resp = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorEmail/" + props.form.email)
             const res = await fetch(
                 `https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`,
                 {
@@ -118,7 +120,7 @@ export default function EscolhaPlano(props) {
                     const searchParams = new URLSearchParams(location.search);
                     const matricula = searchParams.get("external_reference");
 
-                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorMatricula/"+matricula);
+                    const res = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorMatricula/" + matricula);
                     const login = await axios.post("https://joaofarias16.pythonanywhere.com/login", {
                         email: res.data.email,
                         senha: res.data.senha
