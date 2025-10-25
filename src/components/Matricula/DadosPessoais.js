@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./DadosPessoais.module.css";
 
@@ -31,6 +31,13 @@ export default function DadosPessoais(props) {
       alert("Erro ao cadastrar cliente. Verifique as informações e tente novamente.");
     }
   };
+{
+  useEffect(() => {
+    if(props.cliente){
+      props.setDadosPessoais("concluido");
+      props.setEscolhaPlano("andamento");
+    }
+  }, [props.cliente]);
 
   return (
     <div className={styles.container}>
