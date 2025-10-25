@@ -66,7 +66,7 @@ export default function Matricula(props) {
                     />
                 ) : biometria === "andamento" ? (
                     <BiometriaFacial setBiometria={setBiometria} cliente={props.cliente} setCliente={props.setCliente} />
-                ) : <Concluido/>}
+                ) : <Concluido nome={props.cliente.nome}/>}
             </div>
         </>
     );
