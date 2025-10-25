@@ -37,7 +37,6 @@ export default function Matricula(props) {
     }, [searchParams]);
 
     useEffect(() => {
-        if(!props.cliente) return;
         if(props.cliente){
             setDadosPessoais("concluido");
             setEscolhaPlano("andamento");
@@ -45,7 +44,7 @@ export default function Matricula(props) {
             setEscolhaPlano("concluido");
             setBiometria("andamento");
         }
-    }, []);
+    }, [props.cliente]);
 
 
     return (
