@@ -57,6 +57,12 @@ export default function Perfil({ cliente, setCliente }) {
         }
     };
 
+    useEffect(() => {
+        if(cliente){
+            setClienteOriginal(cliente);
+        }
+    }, [cliente]);
+
 
     return (
         <>
