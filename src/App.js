@@ -15,6 +15,7 @@ export default function App() {
     const storedToken = localStorage.getItem("token");
 
     if (storedCliente && storedToken) {
+      console.log(storedCliente);
         setCliente(JSON.parse(storedCliente));
         // opcional: você pode setar o token em algum estado global ou axios defaults
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
