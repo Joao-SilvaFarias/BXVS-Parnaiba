@@ -11,29 +11,27 @@ export default function App() {
 
   const [cliente, setCliente] = useState(null);
   useEffect(() => {
-  const storedCliente = localStorage.getItem("cliente");
-  const storedToken = localStorage.getItem("token");
+    const storedCliente = localStorage.getItem("cliente");
+    const storedToken = localStorage.getItem("token");
 
-  if (storedCliente && storedToken) {
-    try {
-      const parsedCliente = JSON.parse(storedCliente);
-      setCliente(parsedCliente);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-    } catch (err) {
-      console.error("Erro ao parsear cliente:", err);
-      localStorage.removeItem("cliente"); // limpa dados corrompidos
+    if (storedCliente && storedToken) {
+      try {
+        const parsedCliente = JSON.parse(storedCliente);
+        setCliente(parsedCliente);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+      } catch (err) {
+        console.error("Erro ao parsear cliente:", err);
+        localStorage.removeItem("cliente"); // limpa dados corrompidos
+      }
     }
-  }
-}, []);
-
-
+  }, []);
 
   return (
     <div className={styles.container}>
       <BrowserRouter>
-      <ScrollToTop/>
+        <ScrollToTop />
         <Routes>
-          <Route path="/" element={<Home cliente={cliente} setCliente={setCliente}/>} />
+          <Route path="/" element={<Home cliente={cliente} setCliente={setCliente} />} />
           <Route path="/matricula" element={<Matricula cliente={cliente} setCliente={setCliente} />} />
           <Route path="/perfil" element={<Perfil cliente={cliente} setCliente={setCliente} />} />
         </Routes>
