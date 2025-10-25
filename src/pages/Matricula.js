@@ -44,7 +44,7 @@ export default function Matricula(props) {
             setEscolhaPlano("concluido");
             setBiometria("andamento");
         }
-    }, [props.cliente]);
+    }, []);
 
 
     return (

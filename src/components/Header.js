@@ -30,7 +30,7 @@ export default function Header({ cliente, setCliente }) {
                     <a href="#matricula"><p className={styles.link}>MATRÍCULA</p></a>
                 </nav>
             }
-            {cliente ? (
+            {cliente && cliente.statusPagamento === "Pago" ? (
                 <div className={styles.usuarioContainer} onClick={() => navigate("/perfil")}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>{cliente.nome}</p>
