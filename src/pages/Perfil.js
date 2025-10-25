@@ -59,8 +59,7 @@ export default function Perfil({ cliente, setCliente }) {
                             <div className={styles.headerCardMatricula}>
                                 <p className={styles.tituloMatricula}>Minha matrícula</p>
                                 {soLer ?
-                                    <div onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</div> :
-
+                                    <button type="button" onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</button> :
                                     <button type="submit" className={styles.btnSalvar}>Confirmar</button>
                                 }
                             </div>
