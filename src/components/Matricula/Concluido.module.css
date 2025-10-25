@@ -5,6 +5,7 @@
     width: fit-content;
     height: 100vh;
     justify-content: center;
+    position: absolute;
 }
 
 .logo{
