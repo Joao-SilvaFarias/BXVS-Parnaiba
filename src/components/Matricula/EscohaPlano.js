@@ -8,11 +8,11 @@ import axios from "axios";
 export default function EscolhaPlano(props) {
 
     useEffect(() => {
-    if(props.cliente?.statusPagamento === "Pago"){
+    if(props.cliente.statusPagamento === "Pago"){
       props.setEscolhaPlano("concluido");
       props.setBiometria("andamento");
     }
-  }, [props.cliente?.statusPagamento]);
+  }, [props.cliente]);
 
     const [planos, setPlanos] = useState([]);
     const [planoSelecionado, setPlanoSelecionado] = useState(null);
