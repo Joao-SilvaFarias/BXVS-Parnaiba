@@ -45,6 +45,7 @@ export default function Perfil({ cliente, setCliente }) {
         }
 
         try {
+            if(!cliente.idCliente) return;
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             setSoLer(true);
         } catch (error) {
