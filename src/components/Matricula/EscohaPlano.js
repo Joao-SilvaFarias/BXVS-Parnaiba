@@ -6,6 +6,14 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
 export default function EscolhaPlano(props) {
+
+    useEffect(() => {
+    if(props.cliente?.statusPagamento === "Pago"){
+      props.setEscolhaPlano("concluido");
+      props.setBiometria("andamento");
+    }
+  }, [props.cliente?.statusPagamento]);
+
     const [planos, setPlanos] = useState([]);
     const [planoSelecionado, setPlanoSelecionado] = useState(null);
     const [cupom, setCupom] = useState("");         // 🔹 Agora cupom é o texto digitado
