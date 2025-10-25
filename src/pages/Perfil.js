@@ -6,36 +6,39 @@ import axios from "axios";
 
 export default function Perfil({ cliente, setCliente }) {
   const [soLer, setSoLer] = useState(true);
-  const [clienteOriginal, setClienteOriginal] = useState(null);
+  const [formCliente, setFormCliente] = useState(cliente || {});
   const nomeRef = useRef(null);
 
   // Alterna entre modo leitura e edição
   const toggleEdit = () => setSoLer(prev => !prev);
 
-  // Foco automático no nome quando entrar em edição
+  // Foco automático no input "nome" quando entrar em edição
   useEffect(() => {
     if (!soLer) {
       nomeRef.current?.focus();
     }
   }, [soLer]);
 
-  // Inicializa clienteOriginal
+  // Atualiza formCliente sempre que a prop cliente mudar
   useEffect(() => {
-    if (cliente) setClienteOriginal(cliente);
+    if (cliente) {
+      setFormCliente(cliente);
+    }
   }, [cliente]);
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setCliente(prev => ({ ...prev, [name]: value }));
+    setFormCliente(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       await axios.put(
-        `https://joaofarias16.pythonanywhere.com/cliente/${cliente.idCliente}`,
-        cliente
+        `https://joaofarias16.pythonanywhere.com/cliente/${formCliente.idCliente}`,
+        formCliente
       );
+      setCliente(formCliente); // Atualiza o estado global
       setSoLer(true);
       alert("Dados atualizados com sucesso!");
     } catch (error) {
@@ -44,7 +47,7 @@ export default function Perfil({ cliente, setCliente }) {
     }
   };
 
-  if (!cliente) return null;
+  if (!formCliente) return null;
 
   return (
     <>
@@ -70,7 +73,7 @@ export default function Perfil({ cliente, setCliente }) {
               alt="Perfil"
               src="/img/iconUser.png"
             />
-            <p className={styles.nomePerfil}>{cliente.nome}</p>
+            <p className={styles.nomePerfil}>{formCliente.nome}</p>
           </div>
 
           <div className={styles.containerDados}>
@@ -82,7 +85,7 @@ export default function Perfil({ cliente, setCliente }) {
                   name="nome"
                   ref={nomeRef}
                   className={styles.inputPerfil}
-                  value={cliente.nome}
+                  value={formCliente.nome || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -93,7 +96,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="cpf"
                   className={styles.inputPerfil}
-                  value={cliente.cpf}
+                  value={formCliente.cpf || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -104,7 +107,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="telefoneEmergencia"
                   className={styles.inputPerfil}
-                  value={cliente.telefoneEmergencia || ""}
+                  value={formCliente.telefoneEmergencia || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -118,7 +121,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="date"
                   name="dataNascimento"
                   className={styles.inputPerfil}
-                  value={cliente.dataNascimento}
+                  value={formCliente.dataNascimento || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -129,7 +132,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="rg"
                   className={styles.inputPerfil}
-                  value={cliente.rg}
+                  value={formCliente.rg || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -140,7 +143,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="email"
                   className={styles.inputPerfil}
-                  value={cliente.email}
+                  value={formCliente.email || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -154,7 +157,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="sexo"
                   className={styles.inputPerfil}
-                  value={cliente.sexo}
+                  value={formCliente.sexo || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -165,7 +168,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="telefone"
                   className={styles.inputPerfil}
-                  value={cliente.telefone}
+                  value={formCliente.telefone || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -176,7 +179,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="endereco"
                   className={styles.inputPerfil}
-                  value={cliente.endereco}
+                  value={formCliente.endereco || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -186,25 +189,27 @@ export default function Perfil({ cliente, setCliente }) {
             <div className={styles.containerCardPlano}>
               <label>Meu plano</label>
               <div className={styles.cardPlano}>
-                <div className={styles.textPlano}>{cliente.nomePlano}</div>
-                <p className={styles.textPlano}>{cliente.descricaoPlano}</p>
+                <div className={styles.textPlano}>{formCliente.nomePlano}</div>
+                <p className={styles.textPlano}>{formCliente.descricaoPlano}</p>
                 <div className={styles.vencimentoContainer}>
                   <p className={styles.textPlano}>Vence em:</p>
-                  <p className={styles.vencimento}>{cliente.dataPagamento}</p>
+                  <p className={styles.vencimento}>
+                    {formCliente.dataPagamento}
+                  </p>
                 </div>
                 <hr className={styles.hr} />
                 <div className={styles.containerPagamento}>
                   <div className={styles.containerValor}>
                     <p className={styles.textPlano}>Valor:</p>
-                    <p className={styles.textPlano}>R$ {cliente.valorPlano}</p>
+                    <p className={styles.textPlano}>R$ {formCliente.valorPlano}</p>
                   </div>
                   <button
                     className={
-                      cliente.statusPagamento === "Pago"
+                      formCliente.statusPagamento === "Pago"
                         ? styles.btnMercadoPagoDesativado
                         : styles.btnMercadoPago
                     }
-                    disabled={cliente.statusPagamento === "Pago"}
+                    disabled={formCliente.statusPagamento === "Pago"}
                   >
                     <img
                       alt="Mercado pago"
