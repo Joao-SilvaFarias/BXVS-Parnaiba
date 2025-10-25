@@ -32,12 +32,12 @@ export default function Perfil({ cliente, setCliente }) {
             return;
         }
 
-        if (cliente.nome === clienteOriginal.nome && 
-            cliente.cpf === clienteOriginal.cpf && 
+        if (cliente.nome === clienteOriginal.nome &&
+            cliente.cpf === clienteOriginal.cpf &&
             cliente.dataNascimento === clienteOriginal.dataNascimento &&
-            cliente.rg === clienteOriginal.rg && 
-            cliente.sexo === clienteOriginal.sexo && 
-            cliente.telefone === clienteOriginal.telefone && 
+            cliente.rg === clienteOriginal.rg &&
+            cliente.sexo === clienteOriginal.sexo &&
+            cliente.telefone === clienteOriginal.telefone &&
             cliente.endereco === clienteOriginal.endereco
         ) {
             setSoLer(true);
@@ -47,7 +47,7 @@ export default function Perfil({ cliente, setCliente }) {
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             setSoLer(true);
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/"+cliente.idCliente);
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente);
             setCliente(res.data);
             localStorage.setItem("cliente", JSON.stringify(res.data));
             setClienteOriginal(res.data);
@@ -58,10 +58,11 @@ export default function Perfil({ cliente, setCliente }) {
     };
 
     useEffect(() => {
-        if(cliente){
+        if (cliente) {
             setClienteOriginal(cliente);
         }
     }, [cliente]);
+
 
 
     return (
