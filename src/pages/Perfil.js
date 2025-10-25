@@ -27,8 +27,8 @@ export default function Perfil({ cliente, setCliente }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(cliente.nome === clienteOriginal.nome && cliente.cpf === clienteOriginal.cpf && cliente.dataNascimento === clienteOriginal.dataNascimento &&
-            cliente.rg === clienteOriginal.rg &&cliente.sexo === clienteOriginal.sexo && cliente.telefone === clienteOriginal.telefone && cliente.endereco === clienteOriginal.endereco
-        ) return;
+            cliente.rg === clienteOriginal.rg && cliente.sexo === clienteOriginal.sexo && cliente.telefone === clienteOriginal.telefone && cliente.endereco === clienteOriginal.endereco
+        ) setSoLer(true);
 
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
