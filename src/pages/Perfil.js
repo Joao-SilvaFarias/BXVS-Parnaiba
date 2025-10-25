@@ -58,12 +58,11 @@ export default function Perfil({ cliente, setCliente }) {
     }
   };
 
-  if (!formCliente) return null;
-
   return (
     <>
       <Header cliente={formCliente} setCliente={setCliente} />
-      <div className={styles.container}>
+      {formCliente ? (
+        <div className={styles.container}>
         <form onSubmit={handleSubmit} className={styles.cardMatricula}>
           <div className={styles.headerCardMatricula}>
             <p className={styles.tituloMatricula}>Minha matrícula</p>
@@ -233,6 +232,7 @@ export default function Perfil({ cliente, setCliente }) {
           </div>
         </form>
       </div>
+      ) : null}
       <Footer />
     </>
   );
