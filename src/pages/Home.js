@@ -11,8 +11,8 @@ export default function Home(props) {
 
     useEffect(() => {
         const buscarRosto = async () => {
-            if(!props.cliente) return;
-            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/"+props.cliente.idCliente); 
+            if (!props.cliente) return;
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/" + props.cliente.idCliente);
             setRosto(res.data.face_embedding);
             props.setCliente(res.data);
             localStorage.setItem("cliente", JSON.stringify(res.data));
@@ -238,7 +238,10 @@ export default function Home(props) {
                         <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
                         {props.cliente && props.cliente.face_embedding ?
                             <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> :
-                            <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
+                            <>
+                                <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>
+                                <p className={styles.txtMatriculado}>Já matriculado. <Link to={"/perfil"} className={styles.linkVerMatricula}>Ver minha matrícula</Link></p>
+                            </>}
                     </div>
                 </main>
             </div>
