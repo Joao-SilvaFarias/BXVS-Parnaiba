@@ -3,13 +3,11 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import styles from "./Perfil.module.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export default function Perfil({ cliente, setCliente }) {
   const [soLer, setSoLer] = useState(true);
   const [formCliente, setFormCliente] = useState(null);
   const nomeRef = useRef(null);
-  const navigate = useNavigate();
 
   // Alterna entre modo leitura e edição
   const toggleEdit = () => setSoLer(prev => !prev);
@@ -60,17 +58,6 @@ export default function Perfil({ cliente, setCliente }) {
     }
   };
 
-  const logout = () => {
-        // Remove dados salvos
-        navigate("/");
-        localStorage.removeItem("cliente");
-        localStorage.removeItem("token");
-        
-
-        // Reseta o estado do React
-        setCliente(null);
-    };
-
   return (
     <>
       <Header cliente={formCliente} setCliente={setCliente} />
@@ -79,12 +66,9 @@ export default function Perfil({ cliente, setCliente }) {
           <div className={styles.headerCardMatricula}>
             <p className={styles.tituloMatricula}>Minha matrícula</p>
             {soLer ? (
-              <>
               <div onClick={toggleEdit} className={styles.btnInformacoes}>
                 Editar informações
               </div>
-              <button onClick={logout}>Logout</button>
-              </>
             ) : (
               <button type="submit" className={styles.btnSalvar}>
                 Confirmar
