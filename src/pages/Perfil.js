@@ -50,6 +50,7 @@ export default function Perfil({ cliente, setCliente }) {
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/"+cliente.idCliente);
             setCliente(res.data);
             localStorage.setItem("cliente", JSON.stringify(res.data));
+            setClienteOriginal(cliente);
         } catch (error) {
             console.error(error);
             alert("Erro ao atualizar dados!");
