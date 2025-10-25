@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import BiometriaFacial from "../components/Matricula/BiometriaFacial";
+import Concluido from "../components/Matricula/Concluido";
 import DadosPessoais from "../components/Matricula/DadosPessoais";
 import EscolhaPlano from "../components/Matricula/EscohaPlano";
 import ProgressoMatricula from "../components/Matricula/ProgressoMatricula";
@@ -65,7 +66,7 @@ export default function Matricula(props) {
                     />
                 ) : biometria === "andamento" ? (
                     <BiometriaFacial setBiometria={setBiometria} cliente={props.cliente} setCliente={props.setCliente} />
-                ) : null}
+                ) : <Concluido/>}
             </div>
         </>
     );
