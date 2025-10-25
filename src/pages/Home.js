@@ -237,11 +237,12 @@ export default function Home(props) {
                         <hr className={styles.hr}></hr>
                         <p className={styles.tituloGarantirVaga}>GARANTA SUA VAGA E COMECE SUA<br /> JORNADA NO BXVS PARNAÍBA!</p>
                         {props.cliente && props.cliente.face_embedding ?
-                            <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button> :
                             <>
-                                <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>
+                                <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button>
                                 <p className={styles.txtMatriculado}>Já matriculado. <Link to={"/perfil"} className={styles.linkVerMatricula}>Ver minha matrícula</Link></p>
-                            </>}
+                            </>
+                            :
+                            <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
                     </div>
                 </main>
             </div>
