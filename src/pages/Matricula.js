@@ -26,16 +26,6 @@ export default function Matricula(props) {
         endereco: ""
     });
 
-    useEffect(() => {
-        if(!props.cliente) return;
-        setDadosPessoais("concluido");
-        setEscolhaPlano("andamento");
-        if(props.cliente.statusPagamento === "Pago"){
-            setEscolhaPlano("concluido");
-            setBiometria("andamento");
-        }
-    }, [props.cliente]);
-
 
     useEffect(() => {
         const matricula = searchParams.get("external_reference");
