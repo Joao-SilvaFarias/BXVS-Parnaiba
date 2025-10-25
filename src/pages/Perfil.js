@@ -7,7 +7,6 @@ import axios from "axios";
 export default function Perfil({ cliente, setCliente }) {
 
     const [soLer, setSoLer] = useState(true);
-    const [clienteOriginal, setClienteOriginal] = useState();
     const nomeRef = useRef(null);
     const toggleEdit = () => {
         setSoLer(prev => {
@@ -20,12 +19,6 @@ export default function Perfil({ cliente, setCliente }) {
         });
     };
 
-    useEffect(() => {
-        if (cliente) {
-            setClienteOriginal(cliente);
-        }
-    }, [cliente]);
-
     const handleChange = e => {
         setCliente(prev => ({ ...prev, [e.target.name]: e.target.value }));
     }
@@ -35,8 +28,8 @@ export default function Perfil({ cliente, setCliente }) {
 
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
+            localStorage.setItem("cliente", cliente);
             setSoLer(true);
-            setClienteOriginal(cliente);
         } catch (error) {
             console.error(error);
             alert("Erro ao atualizar dados!");
