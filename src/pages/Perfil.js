@@ -36,11 +36,6 @@ export default function Perfil({ cliente, setCliente }) {
         `https://joaofarias16.pythonanywhere.com/cliente/${cliente.idCliente}`,
         cliente
       );
-      const res = await axios.get(
-        `https://joaofarias16.pythonanywhere.com/cliente/${cliente.idCliente}`,
-        cliente
-      );
-      setCliente(res.data);
       setSoLer(true);
       alert("Dados atualizados com sucesso!");
     } catch (error) {
