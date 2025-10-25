@@ -16,6 +16,7 @@ export default function Header({ cliente, setCliente }) {
         // Remove dados salvos
         localStorage.removeItem("cliente");
         localStorage.removeItem("token");
+        navigate("/");
 
         // Reseta o estado do React
         setCliente(null);
