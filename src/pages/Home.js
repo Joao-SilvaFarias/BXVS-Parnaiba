@@ -13,7 +13,6 @@ export default function Home(props) {
         const buscarRosto = async () => {
             if(!props.cliente) return;
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/"+props.cliente.idCliente); 
-            console.log(res.data);
             setRosto(res.data.face_embedding);
             props.setCliente(res.data);
             localStorage.setItem("cliente", JSON.stringify(res.data));
