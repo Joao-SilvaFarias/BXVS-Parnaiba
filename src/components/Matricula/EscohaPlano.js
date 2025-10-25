@@ -8,7 +8,7 @@ import axios from "axios";
 export default function EscolhaPlano(props) {
 
     useEffect(() => {
-    if(props.cliente.statusPagamento === "Pago"){
+    if(props.cliente){
       props.setEscolhaPlano("concluido");
       props.setBiometria("andamento");
     }
