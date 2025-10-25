@@ -37,14 +37,19 @@ export default function Matricula(props) {
     }, [searchParams]);
 
     useEffect(() => {
-        if(props.cliente){
-            setDadosPessoais("concluido");
-            setEscolhaPlano("andamento");
-        } else if(props.cliente?.statusPagamento === "Pago"){
-            setEscolhaPlano("concluido");
-            setBiometria("andamento");
-        }
-    }, [props.cliente]);
+  if (props.cliente) {
+    setDadosPessoais("concluido");
+    setEscolhaPlano("andamento");
+  }
+}, [props.cliente]);
+
+useEffect(() => {
+  if (props.cliente?.statusPagamento === "Pago") {
+    setEscolhaPlano("concluido");
+    setBiometria("andamento");
+  }
+}, [props.cliente?.statusPagamento]);
+
 
 
     return (
