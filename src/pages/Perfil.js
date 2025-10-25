@@ -36,6 +36,9 @@ export default function Perfil({ cliente, setCliente }) {
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             setSoLer(true);
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/"+cliente.idCliente);
+            setCliente(res.data);
+            localStorage.setItem("cliente", JSON.stringify(res.data));
         } catch (error) {
             console.error(error);
             alert("Erro ao atualizar dados!");
