@@ -12,15 +12,6 @@ export default function Header({ cliente, setCliente }) {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    const logout = () => {
-        // Remove dados salvos
-        localStorage.removeItem("cliente");
-        localStorage.removeItem("token");
-        navigate("/");
-
-        // Reseta o estado do React
-        setCliente(null);
-    };
 
 
     return (
@@ -46,7 +37,6 @@ export default function Header({ cliente, setCliente }) {
                         <p className={`${styles.statusMatricula} ${cliente && styles.verde}`}>matriculado</p>
                     </div>
                     <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser}/>
-                    <button onClick={logout}>deslogar</button>
                 </div>
             ) : (
                 <div className={styles.usuarioContainer}>
