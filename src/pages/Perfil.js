@@ -55,12 +55,11 @@ export default function Perfil({ cliente, setCliente }) {
             <Header cliente={cliente} setCliente={setCliente} />
             {cliente &&
                 <div className={styles.container}>
-                    <div className={styles.cardMatricula}>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className={styles.cardMatricula}>
                             <div className={styles.headerCardMatricula}>
                                 <p className={styles.tituloMatricula}>Minha matrícula</p>
                                 {soLer ?
-                                    <button onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</button> :
+                                    <div onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</div> :
 
                                     <button type="submit" className={styles.btnSalvar}>Confirmar</button>
                                 }
@@ -144,7 +143,6 @@ export default function Perfil({ cliente, setCliente }) {
                                 </div>
                             </div>
                         </form>
-                    </div>
                 </div>}
             <Footer />
         </>
