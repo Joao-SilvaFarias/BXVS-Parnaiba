@@ -53,19 +53,6 @@ export default function Perfil({ cliente, setCliente }) {
         }
     };
 
-    useEffect(() => {
-        try {
-            const clienteSalvo = localStorage.getItem("cliente");
-            const res = axios.get("https://joaofarias16.pythonanywhere.com/cliente/" + clienteSalvo.idCliente);
-            setCliente(res.data);
-            localStorage.setItem("cliente", JSON.stringify(res.data));
-            setClienteOriginal(res.data);
-        } catch (e) {
-
-        }
-    }, [cliente]);
-
-
 
     return (
         <>
