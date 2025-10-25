@@ -25,6 +25,7 @@
     border-radius: 10px;
     background: linear-gradient(to right, #9ECD1D, #688810);
     font-family: "BebasNeue";
+    width: max-content;
 }
 
 .btnPaginaInicial:hover{
