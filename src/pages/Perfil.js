@@ -33,31 +33,15 @@ export default function Perfil({ cliente, setCliente }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const dadosAtualizacao = {
-            nome: cliente.nome,
-            email: cliente.email,
-            telefone: cliente.telefone,
-            sexo: cliente.sexo,
-            rg: cliente.rg,
-            cpf: cliente.cpf,
-            dataNascimento: cliente.dataNascimento,
-            endereco: cliente.endereco
-        };
-
         try {
-            await axios.put(
-                "https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente,
-                dadosAtualizacao,
-                { headers: { "Content-Type": "application/json" } }
-            );
+            console.log(cliente)
+            await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             setSoLer(true);
-            alert("Atualizado com sucesso!");
         } catch (error) {
             console.error(error);
             alert("Erro ao atualizar dados!");
         }
     };
-
 
 
     return (
