@@ -33,12 +33,6 @@ export default function Perfil({ cliente, setCliente }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const semAlteracao = JSON.stringify(cliente) === JSON.stringify(clienteOriginal);
-        if (semAlteracao) {
-            setSoLer(true);
-            return;
-        }
-
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             setSoLer(true);
