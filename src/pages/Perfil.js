@@ -55,7 +55,7 @@ export default function Perfil({ cliente, setCliente }) {
             <Header cliente={cliente} setCliente={setCliente} />
             {cliente &&
                 <div className={styles.container}>
-                    <form className={styles.cardMatricula}>
+                    <form onSubmit={handleSubmit} className={styles.cardMatricula}>
                         <div className={styles.headerCardMatricula}>
                             <p className={styles.tituloMatricula}>Minha matrícula</p>
                             {soLer ?
