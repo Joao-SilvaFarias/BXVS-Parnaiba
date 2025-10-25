@@ -8,7 +8,7 @@ export default function Concluido() {
             <p className={styles.titulo}>matrícula concluída</p>
             <p className={styles.descricao}>Seja bem-vindo ao BXVS – Box Vida Saudável
                 Vitor.</p>
-            <button className={styles.btnPaginaInicial}>voltar à pagina inicial</button>
+            <Link to={"/"} className={styles.btnPaginaInicial}>voltar à pagina inicial</Link>
             <Link to={"/perfil"} className={styles.linkMatricula}>Ver minha matrícula</Link>
         </div>
     )
