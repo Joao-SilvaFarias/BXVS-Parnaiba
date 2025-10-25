@@ -7,8 +7,8 @@ import axios from "axios";
 export default function Perfil({ cliente, setCliente }) {
 
     const [soLer, setSoLer] = useState(true);
+    const [clienteOriginal, setClienteOriginal] = useState();
     const nomeRef = useRef(null);
-    const [clienteOriginal, setClienteOriginal] = useState(cliente);
     const toggleEdit = () => {
         setSoLer(prev => {
             const novoEstado = !prev;
@@ -20,6 +20,12 @@ export default function Perfil({ cliente, setCliente }) {
         });
     };
 
+    useEffect(() => {
+        if (cliente) {
+            setClienteOriginal(cliente);
+        }
+    }, [cliente]);
+
     const handleChange = e => {
         setCliente(prev => ({ ...prev, [e.target.name]: e.target.value }));
     }
@@ -27,27 +33,16 @@ export default function Perfil({ cliente, setCliente }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!cliente || !clienteOriginal) {
-            console.warn("Cliente ou clienteOriginal está null, cancelando envio");
-            return;
-        }
-
-        if (cliente.nome === clienteOriginal.nome &&
-            cliente.cpf === clienteOriginal.cpf &&
-            cliente.dataNascimento === clienteOriginal.dataNascimento &&
-            cliente.rg === clienteOriginal.rg &&
-            cliente.sexo === clienteOriginal.sexo &&
-            cliente.telefone === clienteOriginal.telefone &&
-            cliente.endereco === clienteOriginal.endereco
-        ) {
+        const semAlteracao = JSON.stringify(cliente) === JSON.stringify(clienteOriginal);
+        if (semAlteracao) {
             setSoLer(true);
             return;
         }
 
         try {
-            if(!cliente.idCliente) return;
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
             setSoLer(true);
+            setClienteOriginal(cliente);
         } catch (error) {
             console.error(error);
             alert("Erro ao atualizar dados!");
@@ -60,13 +55,12 @@ export default function Perfil({ cliente, setCliente }) {
             <Header cliente={cliente} setCliente={setCliente} />
             {cliente &&
                 <div className={styles.container}>
-                    <form onSubmit={handleSubmit} className={styles.cardMatricula}>
+                    <form className={styles.cardMatricula}>
                         <div className={styles.headerCardMatricula}>
                             <p className={styles.tituloMatricula}>Minha matrícula</p>
                             {soLer ?
-                                <div onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</div> :
-                                <button type="submit" className={styles.btnSalvar}>Confirmar</button>
-                            }
+                                <button onClick={toggleEdit} className={styles.btnInformacoes}>Editar informações</button> :
+                                <button type="submit" className={styles.btnSalvar}>Confirmar</button>}
                         </div>
                         <hr className={styles.hr}></hr>
                         <div className={styles.containerPerfil}>
