@@ -40,7 +40,7 @@ export default function Matricula(props) {
         if(props.cliente){
             setDadosPessoais("concluido");
             setEscolhaPlano("andamento");
-        } else if(props.cliente.statusPagamento === "Pago"){
+        } else if(props.cliente?.statusPagamento === "Pago"){
             setEscolhaPlano("concluido");
             setBiometria("andamento");
         }
