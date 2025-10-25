@@ -58,10 +58,12 @@ export default function Perfil({ cliente, setCliente }) {
     }
   };
 
+  if (!formCliente) return null;
+
   return (
     <>
       <Header cliente={formCliente} setCliente={setCliente} />
-        <div className={styles.container}>
+      <div className={styles.container}>
         <form onSubmit={handleSubmit} className={styles.cardMatricula}>
           <div className={styles.headerCardMatricula}>
             <p className={styles.tituloMatricula}>Minha matrícula</p>
@@ -82,7 +84,7 @@ export default function Perfil({ cliente, setCliente }) {
               alt="Perfil"
               src="/img/iconUser.png"
             />
-            <p className={styles.nomePerfil}>{formCliente?.nome}</p>
+            <p className={styles.nomePerfil}>{formCliente.nome}</p>
           </div>
 
           <div className={styles.containerDados}>
@@ -94,7 +96,7 @@ export default function Perfil({ cliente, setCliente }) {
                   name="nome"
                   ref={nomeRef}
                   className={styles.inputPerfil}
-                  value={formCliente?.nome || ""}
+                  value={formCliente.nome || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -105,7 +107,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="cpf"
                   className={styles.inputPerfil}
-                  value={formCliente?.cpf || ""}
+                  value={formCliente.cpf || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -116,7 +118,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="telefoneEmergencia"
                   className={styles.inputPerfil}
-                  value={formCliente?.telefoneEmergencia || ""}
+                  value={formCliente.telefoneEmergencia || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -130,7 +132,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="date"
                   name="dataNascimento"
                   className={styles.inputPerfil}
-                  value={formCliente?.dataNascimento || ""}
+                  value={formCliente.dataNascimento || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -141,7 +143,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="rg"
                   className={styles.inputPerfil}
-                  value={formCliente?.rg || ""}
+                  value={formCliente.rg || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -152,7 +154,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="email"
                   className={styles.inputPerfil}
-                  value={formCliente?.email || ""}
+                  value={formCliente.email || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -166,7 +168,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="sexo"
                   className={styles.inputPerfil}
-                  value={formCliente?.sexo || ""}
+                  value={formCliente.sexo || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -177,7 +179,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="telefone"
                   className={styles.inputPerfil}
-                  value={formCliente?.telefone || ""}
+                  value={formCliente.telefone || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -188,7 +190,7 @@ export default function Perfil({ cliente, setCliente }) {
                   type="text"
                   name="endereco"
                   className={styles.inputPerfil}
-                  value={formCliente?.endereco || ""}
+                  value={formCliente.endereco || ""}
                   readOnly={soLer}
                   onChange={handleChange}
                 />
@@ -198,25 +200,25 @@ export default function Perfil({ cliente, setCliente }) {
             <div className={styles.containerCardPlano}>
               <label>Meu plano</label>
               <div className={styles.cardPlano}>
-                <div className={styles.textPlano}>{formCliente?.nomePlano}</div>
-                <p className={styles.textPlano}>{formCliente?.descricaoPlano}</p>
+                <div className={styles.textPlano}>{formCliente.nomePlano}</div>
+                <p className={styles.textPlano}>{formCliente.descricaoPlano}</p>
                 <div className={styles.vencimentoContainer}>
                   <p className={styles.textPlano}>Vence em:</p>
-                  <p className={styles.vencimento}>{formCliente?.dataPagamento}</p>
+                  <p className={styles.vencimento}>{formCliente.dataPagamento}</p>
                 </div>
                 <hr className={styles.hr} />
                 <div className={styles.containerPagamento}>
                   <div className={styles.containerValor}>
                     <p className={styles.textPlano}>Valor:</p>
-                    <p className={styles.textPlano}>R$ {formCliente?.valorPlano}</p>
+                    <p className={styles.textPlano}>R$ {formCliente.valorPlano}</p>
                   </div>
                   <button
                     className={
-                      formCliente?.statusPagamento === "Pago"
+                      formCliente.statusPagamento === "Pago"
                         ? styles.btnMercadoPagoDesativado
                         : styles.btnMercadoPago
                     }
-                    disabled={formCliente?.statusPagamento === "Pago"}
+                    disabled={formCliente.statusPagamento === "Pago"}
                   >
                     <img
                       alt="Mercado pago"
