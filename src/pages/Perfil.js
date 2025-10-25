@@ -39,6 +39,16 @@ export default function Perfil({ cliente, setCliente }) {
         }
     };
 
+    useEffect(() => {
+        const buscarPerfil = async () => {
+            if(!cliente) return;
+            const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/"+cliente.idCliente); 
+            setCliente(res.data);
+            localStorage.setItem("cliente", JSON.stringify(res.data));
+        }
+        buscarPerfil();
+    }, [cliente]);
+
 
     return (
         <>
