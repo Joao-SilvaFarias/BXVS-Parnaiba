@@ -28,7 +28,7 @@
     align-items: center;
     text-align: center;
   }
-} 
+}
 
 
 .titleInicio {
@@ -81,8 +81,10 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 100px; /* Largura do box */
-  height: 100vh; /* Altura total da tela */
+  width: 100px;
+  /* Largura do box */
+  height: 100vh;
+  /* Altura total da tela */
   background-color: #000;
 }
 
@@ -90,8 +92,10 @@
   position: absolute;
   top: 0;
   right: 100px;
-  width: 100px; /* Largura do box */
-  height: 100vh; /* Altura total da tela */
+  width: 100px;
+  /* Largura do box */
+  height: 100vh;
+  /* Altura total da tela */
   background: linear-gradient(to left, #000, rgba(0, 0, 0, 0));
 }
 
@@ -142,7 +146,7 @@ main {
 @media screen and (max-width: 768px) {
   main {
     padding-inline: 20px;
-  } 
+  }
 }
 
 
@@ -178,8 +182,9 @@ main {
   font-family: "BebasNeue";
   margin-bottom: 40px;
   background: linear-gradient(to right, #fff, #c8c8c8);
-  -webkit-background-clip: text; /* Necessário para Chrome/Safari */
-  -webkit-text-fill-color: transparent; 
+  -webkit-background-clip: text;
+  /* Necessário para Chrome/Safari */
+  -webkit-text-fill-color: transparent;
 
 }
 
@@ -203,7 +208,7 @@ main {
 }
 
 
-.professoresContainer{
+.professoresContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -211,7 +216,7 @@ main {
   padding-top: 90px;
 }
 
-.tituloProfessores{
+.tituloProfessores {
   font-family: "BebasNeue";
   font-size: 50px;
   margin-bottom: 30px;
@@ -219,38 +224,38 @@ main {
   text-align: center;
 }
 
-.cardsProfessor{
+.cardsProfessor {
   display: flex;
   align-items: center;
   gap: 50px;
 }
 
 @media screen and (max-width: 1024px) {
-  .cardsProfessor{
+  .cardsProfessor {
     flex-direction: column;
   }
 }
 
-.cardProfessor{
+.cardProfessor {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 }
 
-.imgProfessor{
+.imgProfessor {
   width: 250px;
   height: 250px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.nomeProfessor{
+.nomeProfessor {
   font-family: "BebasNeue";
   font-size: 30px;
 }
 
-.hr{
+.hr {
   width: 230px;
   height: 1px;
   background-color: white;
@@ -259,7 +264,7 @@ main {
   transform: translateX(-50%);
 }
 
-.planosContainer{
+.planosContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -267,26 +272,26 @@ main {
 }
 
 @media screen and (max-width: 1024px) {
-  .cardsPlanosContainer{
+  .cardsPlanosContainer {
     flex-direction: column;
   }
 }
 
-.tituloPlanos{
+.tituloPlanos {
   font-family: "BebasNeue";
   font-size: 50px;
   margin-top: 90px;
   margin-bottom: 20px;
 }
 
-.cardsPlanosContainer{
+.cardsPlanosContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
   margin-top: 50px;
 }
 
-.cardPlano{
+.cardPlano {
   height: fit-content;
   border: 1px solid #fff;
   border-radius: 10px;
@@ -298,56 +303,56 @@ main {
   height: 600px;
 }
 
-.logoPlano{
+.logoPlano {
   width: 30px;
 }
 
-.nomePlano{
+.nomePlano {
   font-family: "BebasNeue";
   font-size: 30px;
 }
 
-.descricaoPlano{
+.descricaoPlano {
   font-size: 18px;
   font-family: "Inter";
 }
 
-.precoPlano{
+.precoPlano {
   font-family: "BebasNeue";
   font-size: 40px;
 }
 
-.precoPlano span{
+.precoPlano span {
   font-size: 10px;
 }
 
-.tituloBeneficios{
+.tituloBeneficios {
   font-family: "BebasNeue";
   font-size: 24px;
 }
 
-.listaBeneficios{
+.listaBeneficios {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.beneficioItem{
+.beneficioItem {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.iconCheck{
+.iconCheck {
   width: 20px;
 }
 
-.txtBeneficioItem{
+.txtBeneficioItem {
   font-size: 16px;
   font-family: "BebasNeue";
 }
 
-.btnAssinarPlano{
+.btnAssinarPlano {
   width: 100%;
   height: 60px;
   font-size: 20px;
@@ -378,7 +383,7 @@ main {
   }
 }
 
-.treinosEspeciaisContainer{
+.treinosEspeciaisContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -386,14 +391,14 @@ main {
   width: 100%;
 }
 
-.tituloTreinosEspeciais{
+.tituloTreinosEspeciais {
   font-family: "BebasNeue";
   font-size: 50px;
   margin-block: 20px;
   text-align: center;
 }
 
-.cardsTreinosEspeciais{
+.cardsTreinosEspeciais {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -401,7 +406,7 @@ main {
   width: 100%;
 }
 
-.cardTreinoEspecial{
+.cardTreinoEspecial {
   width: 500px;
   height: 500px;
   display: flex;
@@ -412,20 +417,20 @@ main {
 }
 
 @media screen and (max-width: 768px) {
-  .cardTreinoEspecial{
+  .cardTreinoEspecial {
     width: 90vw;
     height: 90vw;
   }
 }
 
-.imgTreinoEspecial{
+.imgTreinoEspecial {
   width: 100%;
   height: 100%;
   border-radius: 10px;
   position: absolute;
 }
 
-.txtCardTreinoEspecial{
+.txtCardTreinoEspecial {
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -435,13 +440,14 @@ main {
   left: 20px;
 }
 
-.nomeTreinoEspecial{
+.nomeTreinoEspecial {
   font-family: "BebasNeue";
   font-size: 40px;
   z-index: 1;
   background: linear-gradient(to right, #fff, #c8c8c8);
-  -webkit-background-clip: text; /* Necessário para Chrome/Safari */
-  -webkit-text-fill-color: transparent; 
+  -webkit-background-clip: text;
+  /* Necessário para Chrome/Safari */
+  -webkit-text-fill-color: transparent;
 }
 
 @media screen and (max-width: 1024px) {
@@ -451,12 +457,12 @@ main {
 }
 
 
-.descricaoTreinoEspecial{
+.descricaoTreinoEspecial {
   font-family: "BebasNeue";
   font-size: 20px;
   z-index: 1;
   max-width: 400px;
-} 
+}
 
 @media screen and (max-width: 1024px) {
   .descricaoTreinoEspecial {
@@ -464,13 +470,14 @@ main {
   }
 }
 
-.greenGradient{
+.greenGradient {
   background: linear-gradient(to right, #9ECD1D, #81A817);
-  -webkit-background-clip: text; /* Necessário para Chrome/Safari */
-  -webkit-text-fill-color: transparent; 
+  -webkit-background-clip: text;
+  /* Necessário para Chrome/Safari */
+  -webkit-text-fill-color: transparent;
 }
 
-.gradientTreinoEspecial{
+.gradientTreinoEspecial {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -481,7 +488,7 @@ main {
   z-index: 0;
 }
 
-.garantirVagaContainer{
+.garantirVagaContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -490,7 +497,7 @@ main {
   padding-top: 90px;
 }
 
-.tituloGarantirVaga{
+.tituloGarantirVaga {
   font-family: "BebasNeue";
   font-size: 40px;
   text-align: center;
@@ -498,7 +505,7 @@ main {
 }
 
 
-.btnGarantirVaga{
+.btnGarantirVaga {
   width: 400px;
   height: 70px;
   font-size: 20px;
@@ -516,7 +523,7 @@ main {
   margin-bottom: 200px;
 }
 
-.btnGarantirVagaDesativado{
+.btnGarantirVagaDesativado {
   width: 400px;
   height: 70px;
   font-size: 20px;
@@ -530,7 +537,6 @@ main {
   font-family: "BebasNeue";
   margin-top: 10px;
   z-index: 2;
-  margin-bottom: 200px;
   opacity: 0.5;
 }
 
@@ -544,11 +550,12 @@ main {
   transition: 0.1s;
 }
 
-.txtMatriculado{
+.txtMatriculado {
   font-size: 12px;
   font-family: "Inter";
+  margin-bottom: 200px;
 }
 
-.linkVerMatricula{
+.linkVerMatricula {
   color: #3F92FF;
 }
