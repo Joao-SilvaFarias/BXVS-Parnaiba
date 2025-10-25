@@ -8,6 +8,7 @@ export default function Perfil({ cliente, setCliente }) {
 
     const [soLer, setSoLer] = useState(true);
     const nomeRef = useRef(null);
+    const [clienteOriginal, setClienteOriginal] = useState(cliente);
     const toggleEdit = () => {
         setSoLer(prev => {
             const novoEstado = !prev;
@@ -25,10 +26,10 @@ export default function Perfil({ cliente, setCliente }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(cliente.nome === clienteOriginal.nome) return;
 
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
-            localStorage.setItem("cliente", JSON.stringify(cliente));
             setSoLer(true);
         } catch (error) {
             console.error(error);
