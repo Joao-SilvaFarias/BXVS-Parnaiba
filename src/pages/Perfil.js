@@ -47,7 +47,7 @@ export default function Perfil({ cliente, setCliente }) {
             localStorage.setItem("cliente", JSON.stringify(res.data));
         }
         buscarPerfil();
-    }, [cliente]);
+    }, []);
 
 
     return (
