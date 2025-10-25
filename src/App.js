@@ -11,16 +11,21 @@ export default function App() {
 
   const [cliente, setCliente] = useState(null);
   useEffect(() => {
-    const storedCliente = localStorage.getItem("cliente");
-    const storedToken = localStorage.getItem("token");
+  const storedCliente = localStorage.getItem("cliente");
+  const storedToken = localStorage.getItem("token");
 
-    if (storedCliente && storedToken) {
-      console.log(storedCliente);
-        setCliente(JSON.parse(storedCliente));
-        // opcional: você pode setar o token em algum estado global ou axios defaults
-        axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+  if (storedCliente && storedToken) {
+    try {
+      const parsedCliente = JSON.parse(storedCliente);
+      setCliente(parsedCliente);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+    } catch (err) {
+      console.error("Erro ao parsear cliente:", err);
+      localStorage.removeItem("cliente"); // limpa dados corrompidos
     }
+  }
 }, []);
+
 
 
   return (
