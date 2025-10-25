@@ -28,7 +28,7 @@ export default function Perfil({ cliente, setCliente }) {
 
         try {
             await axios.put("https://joaofarias16.pythonanywhere.com/cliente/" + cliente.idCliente, cliente);
-            localStorage.setItem("cliente", cliente);
+            localStorage.setItem("cliente", JSON.stringify(cliente));
             setSoLer(true);
         } catch (error) {
             console.error(error);
