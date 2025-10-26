@@ -6,6 +6,7 @@ import ScrollToTop from "./components/ScrollToTop"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Perfil from "./pages/Perfil"
+import Login from "./pages/Login"
 
 export default function App() {
 
@@ -32,6 +33,7 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home cliente={cliente} setCliente={setCliente} />} />
+          <Route path="/login" element={<Login setCliente={setCliente}/>}/>
           <Route path="/matricula" element={<Matricula cliente={cliente} setCliente={setCliente} />} />
           <Route path="/perfil" element={<Perfil cliente={cliente} setCliente={setCliente} />} />
         </Routes>

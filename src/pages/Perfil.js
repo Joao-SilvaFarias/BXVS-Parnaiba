@@ -3,11 +3,13 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import styles from "./Perfil.module.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Perfil({ cliente, setCliente }) {
     const [soLer, setSoLer] = useState(true);
     const [formCliente, setFormCliente] = useState(null);
     const nomeRef = useRef(null);
+    const navigate = useNavigate();
 
     // Alterna entre modo leitura e edição
     const toggleEdit = () => setSoLer(prev => !prev);
@@ -70,6 +72,13 @@ export default function Perfil({ cliente, setCliente }) {
         }
     };
 
+    const logout = () => {
+        localStorage.removeItem("cliente");
+        localStorage.removeItem("token");
+        setCliente(null);
+        navigate("/");
+    }
+
 
     if (!formCliente) return null;
 
@@ -126,12 +135,12 @@ export default function Perfil({ cliente, setCliente }) {
                                 />
                             </div>
                             <div className={styles.containerInput}>
-                                <label>Contato de emergência</label>
+                                <label>Estado civil</label>
                                 <input
                                     type="text"
-                                    name="telefoneEmergencia"
+                                    name="estadoCivil"
                                     className={styles.inputPerfil}
-                                    value={formCliente.telefoneEmergencia || ""}
+                                    value={formCliente.estadoCivil || ""}
                                     readOnly={soLer}
                                     onChange={handleChange}
                                 />
@@ -217,7 +226,7 @@ export default function Perfil({ cliente, setCliente }) {
                                 <p className={styles.textPlano}>{formCliente.descricaoPlano}</p>
                                 <div className={styles.vencimentoContainer}>
                                     <p className={styles.textPlano}>Vence em:</p>
-                                    <p className={styles.vencimento}>{formCliente.dataPagamento}</p>
+                                    <p className={styles.vencimento}>{new Date(formCliente.dataFim).toLocaleDateString("pt-BR")}</p>
                                 </div>
                                 <hr className={styles.hr} />
                                 <div className={styles.containerPagamento}>
@@ -245,6 +254,7 @@ export default function Perfil({ cliente, setCliente }) {
                         </div>
                     </div>
                 </form>
+                <button className={styles.btnLogout} onClick={logout}>Sair</button>
             </div>
             <Footer />
         </>

@@ -30,7 +30,7 @@ export default function Header({ cliente, setCliente }) {
                     <a href="#matricula"><p className={styles.link}>MATRÍCULA</p></a>
                 </nav>
             }
-            {cliente && cliente.statusPagamento === "Pago" ? (
+            {cliente ? (
                 <div className={styles.usuarioContainer} onClick={() => navigate("/perfil")}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>{cliente.nome}</p>
@@ -39,7 +39,7 @@ export default function Header({ cliente, setCliente }) {
                     <img src="/img/iconUser.png" alt="Ícone de usuário" className={styles.iconUser}/>
                 </div>
             ) : (
-                <div className={styles.usuarioContainer}>
+                <div className={styles.usuarioContainer} onClick={() => navigate("/login")}>
                     <div className={styles.txtUsuarioContainer}>
                         <p className={styles.nomeUsuario}>Anônimo</p>
                         <p className={styles.statusMatricula}>não matriculado</p>

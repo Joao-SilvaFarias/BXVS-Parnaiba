@@ -1,14 +1,17 @@
 .container{
     height: 100vh;
-    padding-top: 90px;
+    padding-top: 100px;
+    padding-bottom: 10px;
     padding-inline: 100px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    
 }
 
 .cardMatricula{
-    height: 80vh;
+    height: 100%;
     background-color: #3b3b3b;
     width: 100%;
     border-radius: 10px;
@@ -17,6 +20,7 @@
     flex-direction: column;
     align-items: end;
     justify-content: space-between;
+    position: relative;
 }
 
 .headerCardMatricula{
@@ -226,6 +230,28 @@
 }
 
 .btnSalvar:active{
+    transition: 0.1s;
+    transform: scale(0.98);
+}
+
+.btnLogout{
+    padding: 10px;
+    background-color: #ab0808;
+    border-radius: 10px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 70px;
+    font-family: "Inter";
+}
+
+.btnLogout:hover{
+    transition: 0.3s;
+    cursor: pointer;
+    background-color: #bd0a0a;
+}
+
+.btnLogout:active{
     transition: 0.1s;
     transform: scale(0.98);
 }
