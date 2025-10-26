@@ -15,6 +15,15 @@ const instrucoes = [
 // Total de 5 instruções
 
 export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
+
+    useEffect(() => {
+        if (cliente) {
+            if (cliente.face_embedding) {
+                setBiometria("concluido");
+            }
+        }
+    }, [cliente]);
+
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [cameraAtiva, setCameraAtiva] = useState(false);
