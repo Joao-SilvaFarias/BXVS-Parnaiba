@@ -36,6 +36,18 @@ export default function Matricula(props) {
         }
     }, [searchParams]);
 
+    useEffect(() => {
+        if(!props.cliente) return;
+        setDadosPessoais("concluido");
+        setEscolhaPlano("andamento");
+    }, [props.cliente]);
+
+    useEffect(() => {
+        if(!props.statusPagamento) return;
+        setEscolhaPlano("concluido");
+        setBiometria("andamento");
+    }, [props.statusPagamento]);
+
     return (
         <>
             <Header cliente={props.cliente} setCliente={props.setCliente} />
