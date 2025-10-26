@@ -22,7 +22,7 @@ export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
                 setBiometria("concluido");
             }
         }
-    }, [cliente]);
+    }, [cliente, setBiometria]);
 
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
