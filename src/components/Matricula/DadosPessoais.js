@@ -31,6 +31,7 @@ export default function DadosPessoais(props) {
       alert("Erro ao cadastrar cliente. Verifique as informações e tente novamente.");
     }
   };
+  
 
   return (
     <div className={styles.container}>
