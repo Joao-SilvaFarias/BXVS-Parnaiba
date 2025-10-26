@@ -37,11 +37,11 @@ export default function Matricula(props) {
     }, [searchParams]);
 
     useEffect(() => {
-        if (props.cliente) {
+        if (props.cliente.nome) {
             setDadosPessoais("concluido");
             setEscolhaPlano("andamento");
         }
-    }, [props.cliente]);
+    }, [props.cliente.nome]);
 
     useEffect(() => {
         if (props.cliente?.statusPagamento === "Pago") {
