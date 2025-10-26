@@ -43,13 +43,6 @@ export default function Matricula(props) {
         }
     }, [props.cliente.nome]);
 
-    useEffect(() => {
-        if (props.cliente?.statusPagamento === "Pago") {
-            setEscolhaPlano("concluido");
-            setBiometria("andamento");
-        }
-    }, [props.cliente?.statusPagamento]);
-
     return (
         <>
             <Header cliente={props.cliente} setCliente={props.setCliente} />
