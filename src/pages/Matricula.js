@@ -37,16 +37,20 @@ export default function Matricula(props) {
     }, [searchParams]);
 
     useEffect(() => {
-        if(!props.cliente) return;
-        setDadosPessoais("concluido");
-        setEscolhaPlano("andamento");
-    }, [props.cliente]);
+        const cliente = JSON.parse(localStorage.getItem("cliente"));
+        if (cliente) {
+            setDadosPessoais("concluido");
+            setEscolhaPlano("andamento");
+        }
+    }, []);
 
     useEffect(() => {
-        if(!props.statusPagamento) return;
-        setEscolhaPlano("concluido");
-        setBiometria("andamento");
-    }, [props.statusPagamento]);
+        const cliente = JSON.parse(localStorage.getItem("cliente"));
+        if (cliente?.statusPagamento === "Pago") {
+            setEscolhaPlano("concluido");
+            setBiometria("andamento");
+        }
+    }, []);
 
     return (
         <>

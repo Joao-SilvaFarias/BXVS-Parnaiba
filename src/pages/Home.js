@@ -11,7 +11,7 @@ export default function Home(props) {
 
     useEffect(() => {
         const buscarRosto = async () => {
-            if (props.cliente.statusPagamento !== "Pago") return;
+            if (props.cliente?.statusPagamento !== "Pago") return;
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/" + props.cliente.idCliente);
             setRosto(res.data.face_embedding);
             props.setCliente(res.data);
