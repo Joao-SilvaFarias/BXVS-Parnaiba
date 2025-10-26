@@ -57,13 +57,13 @@ export default function EscolhaPlano(props) {
             return;
         }
 
-        if (!props.form?.email) {
+        if (!props.cliente.email) {
             alert("Cliente não carregado. Faça login novamente.");
             return;
         }
 
         try {
-            const resp = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorEmail/" + props.form.email)
+            const resp = await axios.get("https://joaofarias16.pythonanywhere.com/clientePorEmail/" + props.cliente.email)
             const res = await fetch(
                 `https://joaofarias16.pythonanywhere.com/api/mercadopago/checkout/${planoSelecionado.idPlano}`,
                 {

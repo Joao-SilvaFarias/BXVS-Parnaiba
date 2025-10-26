@@ -26,6 +26,7 @@ export default function Matricula(props) {
         estadoCivil: "",
         endereco: ""
     });
+    const cliente = JSON.parse(localStorage.getItem("cliente"));
 
 
     useEffect(() => {
@@ -37,20 +38,18 @@ export default function Matricula(props) {
     }, [searchParams]);
 
     useEffect(() => {
-        const cliente = JSON.parse(localStorage.getItem("cliente"));
         if (cliente) {
             setDadosPessoais("concluido");
             setEscolhaPlano("andamento");
         }
-    }, []);
+    }, [cliente]);
 
     useEffect(() => {
-        const cliente = JSON.parse(localStorage.getItem("cliente"));
-        if (cliente?.statusPagamento === "Pago") {
+        if (cliente.statusPagamento === "Pago") {
             setEscolhaPlano("concluido");
             setBiometria("andamento");
         }
-    }, []);
+    }, [cliente]);
 
     return (
         <>
@@ -75,7 +74,7 @@ export default function Matricula(props) {
                     <EscolhaPlano
                         setEscolhaPlano={setEscolhaPlano}
                         setBiometria={setBiometria}
-                        cliente={props.cliente}
+                        cliente={cliente}
                         setCliente={props.setCliente}
                         form={form}
                     />
