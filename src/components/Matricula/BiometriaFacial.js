@@ -16,12 +16,6 @@ const instrucoes = [
 
 export default function BiometriaFacial({ cliente, setCliente, setBiometria }) {
 
-    useEffect(() => {
-        if (cliente) {
-            setBiometria("concluido");
-        }
-    }, [cliente, setBiometria]);
-
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const [cameraAtiva, setCameraAtiva] = useState(false);
