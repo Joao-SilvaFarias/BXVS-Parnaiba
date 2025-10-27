@@ -23,6 +23,24 @@
     position: relative;
 }
 
+.cardCarregamento{
+    height: 100%;
+    background-color: #3b3b3b;
+    width: 100%;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.txtCarregamento{
+    font-family: "Inter";
+    font-size: 30px;
+}
+
 .headerCardMatricula{
     display: flex;
     justify-content: space-between;  
