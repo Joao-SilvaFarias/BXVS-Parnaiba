@@ -10,6 +10,7 @@ export default function Home(props) {
     const [rosto, setRosto] = useState(null);
 
     useEffect(() => {
+        
         const buscarRosto = async () => {
             if (props.cliente?.statusPagamento !== "Pago") return;
             const res = await axios.get("https://joaofarias16.pythonanywhere.com/cliente/" + props.cliente.idCliente);
