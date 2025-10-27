@@ -38,7 +38,7 @@ export default function Matricula(props) {
     }, [searchParams]);
 
     useEffect(() => {
-        if (cliente) {
+        if (cliente && escolhaPlano !== "concluido") {
             setDadosPessoais("concluido");
             setEscolhaPlano("andamento");
         }
