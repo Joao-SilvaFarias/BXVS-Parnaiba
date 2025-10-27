@@ -14,6 +14,7 @@ export default function EscolhaPlano(props) {
     const [pagamento, setPagamento] = useState(false);
     const [searchParams] = useSearchParams();
     const location = useLocation();
+    const [pago, setPago] = useState(false);
 
     // 🔹 Buscar planos do backend
     useEffect(() => {
@@ -31,7 +32,9 @@ export default function EscolhaPlano(props) {
 
     useEffect(() => {
         setTimeout(() => {
-            alert(props.cliente.statusPagamento)
+            if(props.cliente.statusPagamento === "Pago" || searchParams.get("status") === "approved"){
+                setPago(true);
+            }
         }, 100);
         
     }, []);
@@ -164,7 +167,7 @@ export default function EscolhaPlano(props) {
                         </p>
                     </div>
 
-                    <p className={styles.txtPlanosDisponiveis}>PLANOS DISPONÍVEIS</p>
+                    <p className={`${styles.txtPlanosDisponiveis} ${pago && styles.desativado}`}>PLANOS DISPONÍVEIS</p>
                     <div className={styles.planosContainer}>
                         {planos.length > 0 ? planos.map(plano => (
                             <Plano
