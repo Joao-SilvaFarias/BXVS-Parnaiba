@@ -17,6 +17,7 @@ export default function EscolhaPlano(props) {
     const [pago, setPago] = useState(false);
 
     useEffect(() => {
+        if(!props.cliente.statusPagamento) return;
         if(searchParams.get("status") === "approved"){
             setPago(true);
         } else if(props.cliente?.statusPagamento === "Pago"){
