@@ -101,7 +101,7 @@ export default function EscolhaPlano(props) {
     };
 
     // 🔹 Processar e verificar pagamento
-    const processarEVerificarPagamento = async (payment_id, external_reference) => {
+    const processarEVerificarPagamento = async (payment_id, external_reference, payment_type, status) => {
         try {
             // 1️⃣ Processa pagamento no backend
             await axios.post(
@@ -149,9 +149,11 @@ export default function EscolhaPlano(props) {
         const searchParams = new URLSearchParams(location.search);
         const payment_id = searchParams.get("payment_id");
         const external_reference = searchParams.get("external_reference");
+        const payment_type = searchParams.get("payment_type");
+        const status = searchParams.get("status");
 
         if (payment_id && external_reference) {
-            processarEVerificarPagamento(payment_id, external_reference);
+            processarEVerificarPagamento(payment_id, external_reference, payment_type, status);
         }
     }, [location]);
 
