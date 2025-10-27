@@ -157,8 +157,8 @@ export default function EscolhaPlano(props) {
                         </p>
                     </div>
 
-                    <p className={`${styles.txtPlanosDisponiveis} ${searchParams.get("external_reference") && styles.desativado}`}>PLANOS DISPONÍVEIS</p>
-                    <div className={`${styles.planosContainer} ${searchParams.get("external_reference") && styles.desativado}`}>
+                    <p className={`${styles.txtPlanosDisponiveis} ${searchParams.get("status") === "approved" && styles.desativado}`}>PLANOS DISPONÍVEIS</p>
+                    <div className={`${styles.planosContainer} ${searchParams.get("status") === "approved" && styles.desativado}`}>
                         {planos.length > 0 ? planos.map(plano => (
                             <Plano
                                 key={plano.idPlano}
@@ -173,11 +173,11 @@ export default function EscolhaPlano(props) {
                         )}
                     </div>
 
-                    <p className={`${styles.txtCupomDesconto} ${searchParams.get("external_reference") && styles.desativado}`}>CUPOM DE DESCONTO</p>
+                    <p className={`${styles.txtCupomDesconto} ${searchParams.get("status") === "approved" && styles.desativado}`}>CUPOM DE DESCONTO</p>
                     <input
                         type="text"
                         placeholder="Insira o cupom de desconto válido"
-                        className={`${styles.inputCupomDesconto} ${searchParams.get("external_reference") && styles.desativado}`}
+                        className={`${styles.inputCupomDesconto} ${searchParams.get("status") === "approved" && styles.desativado}`}
                         value={cupom}
                         onChange={event => setCupom(event.target.value)}
                     />
