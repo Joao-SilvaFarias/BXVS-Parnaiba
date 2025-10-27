@@ -236,7 +236,7 @@ export default function Perfil({ cliente, setCliente }) {
                                     <p className={styles.textPlano}>{formCliente.descricaoPlano}</p>
                                     <div className={styles.vencimentoContainer}>
                                         <p className={styles.textPlano}>Vence em:</p>
-                                        <p className={styles.vencimento}>{new Date(formCliente.dataFim).toLocaleDateString("pt-BR")}</p>
+                                        <p className={styles.vencimento}>{formCliente.dataVencimento}</p>
                                     </div>
                                     <hr className={styles.hr} />
                                     <div className={styles.containerPagamento}>
@@ -246,11 +246,11 @@ export default function Perfil({ cliente, setCliente }) {
                                         </div>
                                         <button
                                             className={
-                                                formCliente.statusPagamento === "Pago"
+                                                formCliente.parcelaAtualPaga
                                                     ? styles.btnMercadoPagoDesativado
                                                     : styles.btnMercadoPago
                                             }
-                                            disabled={formCliente.statusPagamento === "Pago"}
+                                            disabled={formCliente.parcelaAtualPaga}
                                         >
                                             <img
                                                 alt="Mercado pago"
