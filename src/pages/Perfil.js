@@ -64,7 +64,6 @@ export default function Perfil({ cliente, setCliente }) {
             );
             setCliente(formCliente); // atualiza estado global
             setSoLer(true);
-            alert("Dados atualizados com sucesso!");
         } catch (error) {
             console.error(error);
             alert("Erro ao atualizar dados!");
