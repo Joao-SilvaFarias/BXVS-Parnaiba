@@ -31,13 +31,14 @@ export default function EscolhaPlano(props) {
     }, []);
 
     useEffect(() => {
-        setTimeout(() => {
-            if(props.cliente.statusPagamento === "Pago" || searchParams.get("status") === "approved"){
-                setPago(true);
-            }
-        }, 100);
-        
-    }, []);
+        if (
+            props.cliente?.statusPagamento === "Pago" ||
+            searchParams.get("status") === "approved"
+        ) {
+            setPago(true);
+        }
+    }, [props.cliente?.statusPagamento, searchParams]);
+
 
     // 🔹 Concluir etapa e ir para biometria
     const concluir = () => {
@@ -168,7 +169,7 @@ export default function EscolhaPlano(props) {
                     </div>
 
                     <p className={`${styles.txtPlanosDisponiveis} ${pago && styles.desativado}`}>PLANOS DISPONÍVEIS</p>
-                    <div className={styles.planosContainer}>
+                    <div className={`${styles.planosContainer} ${pago && styles.desativado}`}>
                         {planos.length > 0 ? planos.map(plano => (
                             <Plano
                                 key={plano.idPlano}
@@ -183,11 +184,11 @@ export default function EscolhaPlano(props) {
                         )}
                     </div>
 
-                    <p className={styles.txtCupomDesconto}>CUPOM DE DESCONTO</p>
+                    <p className={`${styles.txtCupomDesconto} ${pago && styles.desativado}`}>CUPOM DE DESCONTO</p>
                     <input
                         type="text"
                         placeholder="Insira o cupom de desconto válido"
-                        className={styles.inputCupomDesconto}
+                        className={`${styles.inputCupomDesconto} ${pago && styles.desativado}`}
                         value={cupom}
                         onChange={event => setCupom(event.target.value)}
                     />
