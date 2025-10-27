@@ -23,7 +23,7 @@ export default function EscolhaPlano(props) {
         } else if(props.cliente?.statusPagamento === "Pago"){
             setPago(true);
         }
-    }, []);
+    }, [searchParams, props.cliente.statusPagamento]);
 
     // 🔹 Buscar planos do backend
     useEffect(() => {
