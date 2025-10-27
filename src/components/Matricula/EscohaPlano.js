@@ -30,7 +30,10 @@ export default function EscolhaPlano(props) {
     }, []);
 
     useEffect(() => {
-        alert(props.cliente.statusPagamento)
+        setTimeout(() => {
+            alert(props.cliente.statusPagamento)
+        }, 100);
+        
     }, []);
 
     // 🔹 Concluir etapa e ir para biometria
