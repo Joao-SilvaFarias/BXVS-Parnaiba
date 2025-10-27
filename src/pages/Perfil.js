@@ -53,7 +53,6 @@ export default function Perfil({ cliente, setCliente }) {
         );
 
         if (!mudou) {
-            alert("Nenhuma alteração para salvar!");
             setSoLer(true);
             return;
         }
