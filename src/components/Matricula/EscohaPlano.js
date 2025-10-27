@@ -139,8 +139,6 @@ export default function EscolhaPlano(props) {
                 setPagamento(false);
             }
         } catch (err) {
-            alert(payment_type)
-            alert(status)
             console.error("Erro ao processar/verificar pagamento:", err);
             setPagamento(false);
             alert("Erro ao processar/verificar pagamento. Tente novamente.");
