@@ -157,8 +157,8 @@ export default function EscolhaPlano(props) {
                         </p>
                     </div>
 
-                    <p className={`${styles.txtPlanosDisponiveis} ${searchParams.get("status") === "approved" || props.cliente?.statusPagamento === "Pago" ? styles.desativado : ""}`}>PLANOS DISPONÍVEIS</p>
-                    <div className={`${styles.planosContainer} ${searchParams.get("status") === "approved" || props.cliente?.statusPagamento === "Pago" ? styles.desativado : ""}`}>
+                    <p className={styles.txtPlanosDisponiveis}>PLANOS DISPONÍVEIS</p>
+                    <div className={styles.planosContainer}>
                         {planos.length > 0 ? planos.map(plano => (
                             <Plano
                                 key={plano.idPlano}
@@ -173,11 +173,11 @@ export default function EscolhaPlano(props) {
                         )}
                     </div>
 
-                    <p className={`${styles.txtCupomDesconto} ${searchParams.get("status") === "approved" || props.cliente?.statusPagamento === "Pago" ? styles.desativado : ""}`}>CUPOM DE DESCONTO</p>
+                    <p className={styles.txtCupomDesconto}>CUPOM DE DESCONTO</p>
                     <input
                         type="text"
                         placeholder="Insira o cupom de desconto válido"
-                        className={`${styles.inputCupomDesconto} ${searchParams.get("status") === "approved" || props.cliente?.statusPagamento === "Pago" ? styles.desativado : ""}`}
+                        className={styles.inputCupomDesconto}
                         value={cupom}
                         onChange={event => setCupom(event.target.value)}
                     />
