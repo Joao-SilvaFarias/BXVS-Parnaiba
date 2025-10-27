@@ -29,6 +29,11 @@ export default function EscolhaPlano(props) {
         fetchPlanos();
     }, []);
 
+    useEffect(() => {
+        if(!props.cliente.statusPagamento) return;
+        alert(props.cliente.statusPagamento)
+    }, [props.cliente.statusPagamento]);
+
     // 🔹 Concluir etapa e ir para biometria
     const concluir = () => {
         props.setEscolhaPlano("concluido");
