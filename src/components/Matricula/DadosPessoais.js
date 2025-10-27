@@ -8,14 +8,14 @@ export default function DadosPessoais(props) {
   
   const handleChange = (e) => {
     const { name, value } = e.target;
-    props.setForm({ ...props.form, [name]: value });
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const dadosCliente = {
-      ...props.form,
+      ...form,
       dataCadastro: new Date().toISOString().slice(0, 19).replace("T", " "),
     };
 
