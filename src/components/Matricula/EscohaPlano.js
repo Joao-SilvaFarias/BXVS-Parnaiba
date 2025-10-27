@@ -126,9 +126,9 @@ export default function EscolhaPlano(props) {
                         email: res.data.email,
                         senha: res.data.senha
                     });
-                    if (login.data.cliente) {
-                        props.setCliente(login.data.cliente);
-                        localStorage.setItem("cliente", JSON.stringify(login.data.cliente));
+                    if (login.data.dados_completos) {
+                        props.setCliente(login.data.dados_completos);
+                        localStorage.setItem("cliente", JSON.stringify(login.data.dados_completos));
                         localStorage.setItem("token", login.data.token);
                     }
                 } catch (err) {
