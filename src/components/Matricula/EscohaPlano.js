@@ -14,7 +14,6 @@ export default function EscolhaPlano(props) {
     const [pagamento, setPagamento] = useState(false);
     const [searchParams] = useSearchParams();
     const location = useLocation();
-    const [pago, setPago] = useState(false);
 
     // 🔹 Buscar planos do backend
     useEffect(() => {
@@ -35,7 +34,7 @@ export default function EscolhaPlano(props) {
             props.cliente?.statusPagamento === "Pago" ||
             searchParams.get("status") === "approved"
         ) {
-            setPago(true);
+            setPagamento(true);
         }
     }, [props.cliente?.statusPagamento, searchParams]);
 
@@ -168,8 +167,8 @@ export default function EscolhaPlano(props) {
                         </p>
                     </div>
 
-                    <p className={`${styles.txtPlanosDisponiveis} ${pago && styles.desativado}`}>PLANOS DISPONÍVEIS</p>
-                    <div className={`${styles.planosContainer} ${pago && styles.desativado}`}>
+                    <p className={`${styles.txtPlanosDisponiveis} ${pagamento && styles.desativado}`}>PLANOS DISPONÍVEIS</p>
+                    <div className={`${styles.planosContainer} ${pagamento && styles.desativado}`}>
                         {planos.length > 0 ? planos.map(plano => (
                             <Plano
                                 key={plano.idPlano}
@@ -184,11 +183,11 @@ export default function EscolhaPlano(props) {
                         )}
                     </div>
 
-                    <p className={`${styles.txtCupomDesconto} ${pago && styles.desativado}`}>CUPOM DE DESCONTO</p>
+                    <p className={`${styles.txtCupomDesconto} ${pagamento && styles.desativado}`}>CUPOM DE DESCONTO</p>
                     <input
                         type="text"
                         placeholder="Insira o cupom de desconto válido"
-                        className={`${styles.inputCupomDesconto} ${pago && styles.desativado}`}
+                        className={`${styles.inputCupomDesconto} ${pagamento && styles.desativado}`}
                         value={cupom}
                         onChange={event => setCupom(event.target.value)}
                     />
