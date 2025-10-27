@@ -14,18 +14,6 @@ export default function Matricula(props) {
     const [escolhaPlano, setEscolhaPlano] = useState("");
     const [biometria, setBiometria] = useState("");
     const [searchParams] = useSearchParams();
-    const [form, setForm] = useState({
-        nome: "",
-        email: "",
-        senha: "",
-        telefone: "",
-        sexo: "",
-        rg: "",
-        cpf: "",
-        dataNascimento: "",
-        estadoCivil: "",
-        endereco: ""
-    });
     const cliente = JSON.parse(localStorage.getItem("cliente"));
 
 
@@ -60,8 +48,6 @@ export default function Matricula(props) {
                         setEscolhaPlano={setEscolhaPlano}
                         setCliente={props.setCliente}
                         cliente={props.cliente}
-                        form={form}
-                        setForm={setForm}
                     />
                 ) : escolhaPlano === "andamento" ? (
                     <EscolhaPlano
@@ -69,7 +55,6 @@ export default function Matricula(props) {
                         setBiometria={setBiometria}
                         cliente={cliente}
                         setCliente={props.setCliente}
-                        form={form}
                     />
                 ) : biometria === "andamento" ? (
                     <BiometriaFacial setBiometria={setBiometria} cliente={props.cliente} setCliente={props.setCliente} />
