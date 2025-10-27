@@ -224,3 +224,8 @@
     font-size: 15px;
     font-weight: 500;
 }
+
+.desativado{
+    opacity: 0.5;
+    pointer-events: none;
+}
