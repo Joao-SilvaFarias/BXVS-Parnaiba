@@ -14,16 +14,6 @@ export default function EscolhaPlano(props) {
     const [pagamento, setPagamento] = useState(false);
     const [searchParams] = useSearchParams();
     const location = useLocation();
-    const [pago, setPago] = useState(false);
-
-    useEffect(() => {
-        if(!props.cliente.statusPagamento) return;
-        if(searchParams.get("status") === "approved"){
-            setPago(true);
-        } else if(props.cliente?.statusPagamento === "Pago"){
-            setPago(true);
-        }
-    }, [searchParams, props.cliente.statusPagamento]);
 
     // 🔹 Buscar planos do backend
     useEffect(() => {
@@ -167,8 +157,8 @@ export default function EscolhaPlano(props) {
                         </p>
                     </div>
 
-                    <p className={`${styles.txtPlanosDisponiveis} ${pago && styles.desativado}`}>PLANOS DISPONÍVEIS</p>
-                    <div className={`${styles.planosContainer} ${pago && styles.desativado}`}>
+                    <p className={`${styles.txtPlanosDisponiveis} ${searchParams.get("status") === "approved" || props.cliente?.statusPagamento === "Pago" ? styles.desativado : ""}`}>PLANOS DISPONÍVEIS</p>
+                    <div className={`${styles.planosContainer} ${searchParams.get("status") === "approved" || props.cliente?.statusPagamento === "Pago" ? styles.desativado : ""}`}>
                         {planos.length > 0 ? planos.map(plano => (
                             <Plano
                                 key={plano.idPlano}
@@ -183,11 +173,11 @@ export default function EscolhaPlano(props) {
                         )}
                     </div>
 
-                    <p className={`${styles.txtCupomDesconto} ${pago && styles.desativado}`}>CUPOM DE DESCONTO</p>
+                    <p className={`${styles.txtCupomDesconto} ${searchParams.get("status") === "approved" || props.cliente?.statusPagamento === "Pago" ? styles.desativado : ""}`}>CUPOM DE DESCONTO</p>
                     <input
                         type="text"
                         placeholder="Insira o cupom de desconto válido"
-                        className={`${styles.inputCupomDesconto} ${pago && styles.desativado}`}
+                        className={`${styles.inputCupomDesconto} ${searchParams.get("status") === "approved" || props.cliente?.statusPagamento === "Pago" ? styles.desativado : ""}`}
                         value={cupom}
                         onChange={event => setCupom(event.target.value)}
                     />
