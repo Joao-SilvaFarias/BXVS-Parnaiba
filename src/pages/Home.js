@@ -241,7 +241,7 @@ export default function Home(props) {
                             <>
                                 <button className={styles.btnGarantirVagaDesativado} >INICIAR MATRÍCULA</button>
                                 <p className={styles.txtMatriculado}>Já matriculado. <Link to={"/perfil"} className={styles.linkVerMatricula}>Ver minha matrícula</Link></p>
-                            </> : props.cliente ?
+                            </> : localStorage.getItem("cliente") ?
                             <Link className={styles.btnGarantirVaga} to={"/matricula"}>CONTINUAR MATRÍCULA</Link> : 
                             <Link className={styles.btnGarantirVaga} to={"/matricula"}>INICIAR MATRÍCULA</Link>}
                     </div>
