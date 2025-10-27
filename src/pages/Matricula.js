@@ -30,7 +30,7 @@ export default function Matricula(props) {
             setDadosPessoais("concluido");
             setEscolhaPlano("andamento");
         }
-    }, [cliente]);
+    }, [cliente, escolhaPlano]);
 
     return (
         <>
