@@ -106,7 +106,7 @@ export default function EscolhaPlano(props) {
             // 1️⃣ Processa pagamento no backend
             await axios.post(
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/processar_pagamento",
-                { payment_id, external_reference }
+                { payment_id, external_reference, payment_type, status }
             );
 
             // 2️⃣ Verifica se o pagamento foi aprovado
