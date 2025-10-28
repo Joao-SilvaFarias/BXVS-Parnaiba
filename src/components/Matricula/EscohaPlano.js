@@ -199,7 +199,7 @@ export default function EscolhaPlano(props) {
     };
 
     useEffect(() => {
-        if(cupom){
+        if (cupom) {
             validarCupom();
         }
     }, [planoSelecionado]);
@@ -228,7 +228,17 @@ export default function EscolhaPlano(props) {
                                 escolherPlano={() => escolherPlano(plano)}
                             />
                         )) : (
-                            <p>Carregando planos...</p>
+                            <>
+                                <div className={styles.planoCard}>
+
+                                </div>
+                                <div className={styles.planoCard}>
+
+                                </div>
+                                <div className={styles.planoCard}>
+
+                                </div>
+                            </>
                         )}
                     </div>
 
