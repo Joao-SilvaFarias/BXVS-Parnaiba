@@ -4,10 +4,12 @@ import Header from "../components/Header"
 import Footer from "../components/Footer"
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Plano from '../components/Home/Plano';
 
 export default function Home(props) {
 
     const [rosto, setRosto] = useState(null);
+    const [planos, setPlanos] = useState([]);
 
     useEffect(() => {
         
@@ -20,6 +22,10 @@ export default function Home(props) {
         }
         buscarRosto();
     }, [props.cliente]);
+
+    useEffect(() => {
+        axios.get("https://joaofarias16.pythonanywhere.com/api/planos").then(res => setPlanos(res.data));
+    }, []);
 
     return (
         <>
@@ -102,96 +108,7 @@ export default function Home(props) {
                         <hr className={styles.hr}></hr>
                         <p className={styles.tituloPlanos}>PLANOS</p>
                         <div className={styles.cardsPlanosContainer}>
-                            <div className={styles.cardPlano}>
-                                <img src="/img/logo.png" alt="Plano 1" className={styles.logoPlano} />
-                                <p className={styles.nomePlano}>PLANO BÁSICO</p>
-                                <p className={styles.descricaoPlano}>Acesso aos treinos essenciais e suporte dos professores para dar os primeiros passos na comunidade BXVS.</p>
-                                <p className={styles.precoPlano}>R$ 99,90<span>/mês</span></p>
-                                <p className={styles.tituloBeneficios}>BENEFÍCIOS</p>
-                                <ul className={styles.listaBeneficios}>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                </ul>
-                                <button className={styles.btnAssinarPlano}>ASSINAR</button>
-                            </div>
-                            <div className={styles.cardPlano} id={styles.planoDestaque}>
-                                <img src="/img/logo.png" alt="Plano 1" className={styles.logoPlano} />
-                                <p className={styles.nomePlano}>plano médio</p>
-                                <p className={styles.descricaoPlano}>A escolha de quem busca equilíbrio. Além dos treinos completos, inclui acompanhamento mais próximo e flexibilidade de horários.</p>
-                                <p className={styles.precoPlano}>R$ 119,99<span>/mês</span></p>
-                                <p className={styles.tituloBeneficios}>BENEFÍCIOS</p>
-                                <ul className={styles.listaBeneficios}>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                </ul>
-                                <button className={styles.btnAssinarPlano}>ASSINAR</button>
-                            </div>
-                            <div className={styles.cardPlano}>
-                                <img src="/img/logo.png" alt="Plano 1" className={styles.logoPlano} />
-                                <p className={styles.nomePlano}>plano pro</p>
-                                <p className={styles.descricaoPlano}>Pensado para quem quer performance máxima. Acesso total às aulas, suporte exclusivo dos coaches e prioridade em eventos e desafios da comunidade BXVS.</p>
-                                <p className={styles.precoPlano}>R$ 150,00<span>/mês</span></p>
-                                <p className={styles.tituloBeneficios}>BENEFÍCIOS</p>
-                                <ul className={styles.listaBeneficios}>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                    <div className={styles.beneficioItem}>
-                                        <img src="/img/check.svg" alt="Check" className={styles.iconCheck} />
-                                        <p className={styles.txtBeneficioItem}>EXEMPLO DE BENEFÍCIO</p>
-                                    </div>
-                                </ul>
-                                <button className={styles.btnAssinarPlano}>ASSINAR</button>
-                            </div>
+                            {planos?.map(plano => <Plano plano={plano} key={plano.idPlano}/>)}
                         </div>
                     </div>
                     <div className={styles.treinosEspeciaisContainer}>
