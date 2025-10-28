@@ -166,7 +166,7 @@ export default function EscolhaPlano(props) {
         }
 
         try {
-            const res = await fetch("https://joaofarias16.pythonanywhere.com/api/cupom", {
+            const res = await fetch("https://joaofarias16.pythonanywhere.com/cupom", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ codigo: cupom })
