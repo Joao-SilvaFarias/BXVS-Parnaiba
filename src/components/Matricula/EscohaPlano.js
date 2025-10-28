@@ -108,7 +108,7 @@ export default function EscolhaPlano(props) {
                 "https://joaofarias16.pythonanywhere.com/api/mercadopago/processar_pagamento",
                 { payment_id, external_reference, payment_type, status }
             );
-            
+
 
             // 2️⃣ Verifica se o pagamento foi aprovado
             const response = await axios.get(
@@ -158,6 +158,48 @@ export default function EscolhaPlano(props) {
         }
     }, [location]);
 
+    // 🔹 Validar cupom digitado
+    const validarCupom = async () => {
+        if (!cupom) {
+            alert("Digite um cupom antes de validar.");
+            return;
+        }
+
+        try {
+            const res = await fetch("https://joaofarias16.pythonanywhere.com/api/cupom", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ codigo: cupom })
+            });
+
+            const data = await res.json();
+
+            if (data.sucesso) {
+                // Se o cupom for válido, define o desconto
+                if (data.tipo === "porcentagem") {
+                    setDesconto(data.valor);
+                } else {
+                    // Se for desconto fixo em reais, converte para percentual aproximado
+                    if (planoSelecionado) {
+                        const valorPlano = parseFloat(planoSelecionado.preco);
+                        const descontoPercent = (data.valor / valorPlano) * 100;
+                        setDesconto(descontoPercent);
+                    } else {
+                        alert("Selecione um plano para aplicar o desconto fixo.");
+                    }
+                }
+                alert("Cupom aplicado com sucesso!");
+            } else {
+                alert(data.erro || "Cupom inválido.");
+            }
+
+        } catch (err) {
+            console.error("Erro ao validar cupom:", err);
+            alert("Erro ao validar o cupom.");
+        }
+    };
+
+
     return (
         <div className={styles.container}>
             <div className={styles.conteudo}>
@@ -194,6 +236,14 @@ export default function EscolhaPlano(props) {
                         value={cupom}
                         onChange={event => setCupom(event.target.value)}
                     />
+                    <button
+                        onClick={validarCupom}
+                        className={styles.btnValidarCupom}
+                        disabled={!cupom || pagamento}
+                    >
+                        Validar cupom
+                    </button>
+
                 </div>
 
                 <div className={styles.pagamentoCard}>
