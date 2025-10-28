@@ -188,7 +188,6 @@ export default function EscolhaPlano(props) {
                         alert("Selecione um plano para aplicar o desconto fixo.");
                     }
                 }
-                alert("Cupom aplicado com sucesso!");
             } else {
                 alert(data.erro || "Cupom inválido.");
             }
