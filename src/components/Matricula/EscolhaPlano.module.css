@@ -250,3 +250,9 @@
     transition: 0.1s;
     transform: scale(0.98);
 }
+
+.containerDesconto{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

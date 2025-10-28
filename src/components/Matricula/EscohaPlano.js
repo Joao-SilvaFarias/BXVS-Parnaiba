@@ -229,20 +229,22 @@ export default function EscolhaPlano(props) {
                     </div>
 
                     <p className={`${styles.txtCupomDesconto} ${pagamento && styles.desativado}`}>CUPOM DE DESCONTO</p>
-                    <input
-                        type="text"
-                        placeholder="Insira o cupom de desconto válido"
-                        className={`${styles.inputCupomDesconto} ${pagamento && styles.desativado}`}
-                        value={cupom}
-                        onChange={event => setCupom(event.target.value)}
-                    />
-                    <button
-                        onClick={validarCupom}
-                        className={styles.btnValidarCupom}
-                        disabled={!cupom || pagamento}
-                    >
-                        Validar cupom
-                    </button>
+                    <div className={styles.containerDesconto}>
+                        <input
+                            type="text"
+                            placeholder="Insira o cupom de desconto válido"
+                            className={`${styles.inputCupomDesconto} ${pagamento && styles.desativado}`}
+                            value={cupom}
+                            onChange={event => setCupom(event.target.value)}
+                        />
+                        <button
+                            onClick={validarCupom}
+                            className={styles.btnValidarCupom}
+                            disabled={!cupom || pagamento}
+                        >
+                            Validar cupom
+                        </button>
+                    </div>
 
                 </div>
 
