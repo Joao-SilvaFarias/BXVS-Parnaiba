@@ -199,6 +199,11 @@ export default function EscolhaPlano(props) {
         }
     };
 
+    useEffect(() => {
+        if(cupom){
+            validarCupom();
+        }
+    }, [planoSelecionado]);
 
     return (
         <div className={styles.container}>
