@@ -253,6 +253,6 @@
 
 .containerDesconto{
     display: flex;
-    align-items: center;
+    align-items: end;
     gap: 10px;
 }
