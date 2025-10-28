@@ -243,7 +243,7 @@ export default function EscolhaPlano(props) {
                         />
                         <button
                             onClick={validarCupom}
-                            className={styles.btnValidarCupom}
+                            className={`${styles.btnValidarCupom} ${pagamento && styles.desativado}`}
                             disabled={!cupom || pagamento}
                         >
                             Validar cupom
