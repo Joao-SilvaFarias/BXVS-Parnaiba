@@ -80,7 +80,7 @@ export default function EscolhaPlano(props) {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        cupom,
+                        cupom: desconto,
                         idCliente: resp.data.idCliente
                     })
                 }
