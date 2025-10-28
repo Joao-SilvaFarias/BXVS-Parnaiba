@@ -155,19 +155,6 @@
     z-index: 10; 
 }
 
-.moldura::after {
-    content: "POSICIONE O ROSTO";
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-    z-index: 11;
-}
-
 .leiDados{
     font-size: 10px;
     font-family: "Inter";
